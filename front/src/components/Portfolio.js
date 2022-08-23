@@ -8,7 +8,7 @@ import User from "./user/User";
 import Project from "./userpage/project/Project";
 import Certificate from "./userpage/certificate/Certificate";
 import Educations from "./userpage/Educations";
-import Awards from "./userpage/Awards";
+import Awards from "./userpage/Award/Awards";
 
 function Portfolio() {
   const navigate = useNavigate();
