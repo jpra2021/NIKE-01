@@ -48,17 +48,17 @@ const CertificateForm = ({ dispatch, type, handleForm, index }) => {
             return;
         }
 
-        const period = period.current
-
-        dispatch({type, payload: {title, detail, period, handleForm, index}});
+        const periodValue = period.current
+        
+        dispatch({type, payload: {title, detail, date: periodValue, handleForm, index}});
     }
 
     return (
         <Form>
-            <Form.Group controlId="projectAddTitle">
+            <Form.Group controlId="certificateAddTitle">
                 <FormControl type="text" placeholder="자격증 제목" value={title} onChange={(e) => setTitle(e.target.value)} />
             </Form.Group>
-            <Form.Group className="mt-3" controlId="projectAddDescription">
+            <Form.Group className="mt-3" controlId="certificateAddDescription">
                 <FormControl type="text" placeholder="상세내역" value={detail} onChange={(e) => setDetail(e.target.value)} />
             </Form.Group>
             <Row className="mt-3">

@@ -64,7 +64,7 @@ function Portfolio() {
         </Col>
         <Col>
           <Project isEditable={portfolioOwner.id === userState.user?.id} />
-          <div class="mb-2" />
+          <div className="mb-2" />
           <Certificate isEditable={portfolioOwner.id === userState.user?.id} />
         </Col>
       </Row>

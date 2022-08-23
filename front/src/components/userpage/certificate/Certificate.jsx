@@ -4,17 +4,17 @@ import CertificateForm from "./CertificateForm";
 import CertificateInfo from "./CertificateInfo";
 
 const reducer = (state, action) => {
-    const { title, detail, period, handleForm, index } = action.payload;
+    const { title, detail, date, handleForm, index } = action.payload;
 
     switch (action.type) {
         case "add":
             handleForm();
-            const a = [ ...state, {title, detail, period} ];
+            const a = [ ...state, {title, detail, date} ];
             return a
         case "edit":
             const newState = [ ...state ];
 
-            newState[index] = { ...newState[index], title, detail, period };
+            newState[index] = { ...newState[index], title, detail, date };
             
             handleForm();
 
@@ -25,7 +25,7 @@ const reducer = (state, action) => {
 
                 setTitle(certificate.title);
                 setDetail(certificate.detail);
-                setDate(new Date(period));
+                setDate(new Date(certificate.date));
         default:
             return state;
     }
