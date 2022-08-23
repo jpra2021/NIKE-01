@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 
-function AwardAddForm({ portfolioOwnerId, SetAwards, SetIsAdding }) {
+function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -10,8 +10,8 @@ function AwardAddForm({ portfolioOwnerId, SetAwards, SetIsAdding }) {
     e.preventDefault();
     // post
     // get
-    // SetAwards() 로 award 갱신...
-    SetIsAdding(false); // Form 숨기기
+    // setAwards() 로 award 갱신
+    setIsAdding(false); // Form 숨기기
   };
 
   return (
@@ -40,7 +40,7 @@ function AwardAddForm({ portfolioOwnerId, SetAwards, SetIsAdding }) {
             <Button className="me-3" variant="primary" type="submit">
               확인
             </Button>
-            <Button variant="secondary" onClick={() => SetIsAdding(false)}>
+            <Button variant="secondary" onClick={() => setIsAdding(false)}>
               취소
             </Button>
           </Col>
