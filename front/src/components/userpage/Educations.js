@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 
-import EducationBody from "./EducationBody";
-import EducationAddForm from "./EducationAddForm";
+import EducationCard from "./EducationCard";
+import EducationForm from "./EducationForm";
 
 function Educations({ isEditable }) {
-  const [addingNew, setAddingNew] = useState(false);
+  const [addNew, setAddNew] = useState(false);
+  const degree = ["재학중", "학사졸업", "석사졸업", "박사졸업"];
   const sampleData = [
     {
       school: "ERAU",
@@ -19,16 +20,18 @@ function Educations({ isEditable }) {
     },
   ];
 
-  /* TODO: 
-  - radio 버튼 default checked 설정
-  - 데이터 post, put 요청
+  /* TODO: 데이터 post, put 요청
   */
   return (
     <Card>
       <Card.Body>
         <Card.Title>학력</Card.Title>
         {sampleData.map((data) => (
-          <EducationBody data={data} />
+          <EducationCard
+            key={`edu-card-${data.school}`}
+            data={data}
+            degree={degree}
+          />
         ))}
         {isEditable && (
           <Row className="mt-3 text-center mb-4 row">
@@ -36,14 +39,14 @@ function Educations({ isEditable }) {
               <Button
                 variant="primary"
                 className="btn btn-primary"
-                onClick={() => setAddingNew(true)}
+                onClick={() => setAddNew(true)}
               >
                 +
               </Button>
             </Col>
           </Row>
         )}
-        {addingNew && <EducationAddForm setAddingNew={setAddingNew} />}
+        {addNew && <EducationForm degree={degree} setState={setAddNew} />}
       </Card.Body>
     </Card>
   );
