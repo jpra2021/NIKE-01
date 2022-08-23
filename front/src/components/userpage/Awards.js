@@ -8,7 +8,7 @@ import AwardCard from "./AwardCard";
 // Award list 띄우기
 function Awards({ portfolioOwnerId, isEditable }) {
   const [awards, setAwards] = useState(null);
-  const [isAdding, SetIsAdding] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   // const [isEditing, setIsEditing] = useState(false);
   const sampleData = [
     { title: "제 5회 B대회", description: "A해서 B대회에서 우수상" },
@@ -30,7 +30,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
             <Col sm="20">
-              <Button variant="primary" onClick={() => SetIsAdding(true)}>
+              <Button variant="primary" onClick={() => setIsAdding(true)}>
                 +
               </Button>
             </Col>
@@ -42,7 +42,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
           <AwardAddForm
             portfolioOwnerId={portfolioOwnerId}
             setAwards
-            SetIsAdding={SetIsAdding}
+            setIsAdding={setIsAdding}
           />
         )}
       </Card.Body>
