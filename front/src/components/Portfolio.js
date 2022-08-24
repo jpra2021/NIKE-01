@@ -67,10 +67,7 @@ function Portfolio() {
         <Col>
           <Educations isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />
-          <Awards
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}
-          />
+          <Awards isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />
           <Project isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />
