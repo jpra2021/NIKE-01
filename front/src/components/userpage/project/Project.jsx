@@ -14,7 +14,7 @@ const reducer = (state, action) => {
             const filtered = state.filter((project) => project.title === title);
 
             if (filtered.length === 1) {
-                alert("이미 있는 프로젝트 내용입니다.");
+                alert("이미 있는 프로젝트입니다.");
                 return state;
             }
 
