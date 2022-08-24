@@ -4,6 +4,7 @@ import CertificateForm from "./CertificateForm";
 
 const CertificateInfo = ({ certificate, index, dispatch }) => {
     const [ isEditing, setIsEditing ] = useState(false);
+    const { title, detail, date } = certificate;
 
     const handleForm = () => {
         setIsEditing(() => !isEditing);
@@ -19,14 +20,16 @@ const CertificateInfo = ({ certificate, index, dispatch }) => {
         <Card.Text as="div">
             <Row className="justify-content-between align-items-center mb-2">
                 <Col>
-                    {certificate.title}
+                    {title}
                     <br />
-                    <span className="text-muted">{certificate.detail}</span>
+                    <span className="text-muted">{detail}</span>
                     <br />
-                    <span className="text-muted">{certificate.date}</span>
+                    <span className="text-muted">{date}</span>
                 </Col>
                 <Col className="col-lg-1">
                     <Button size="sm" variant="outline-info" onClick={(e) => setIsEditing(() => !isEditing)}>편집</Button>
+                    <div className="mb-2"/>
+                    <Button size="sm" variant="outline-danger" onClick={(e) =>  dispatch({type: "remove", payload: {title}})}>삭제</Button>
                 </Col>
             </Row>
         </Card.Text>
