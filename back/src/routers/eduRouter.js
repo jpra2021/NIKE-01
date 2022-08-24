@@ -1,5 +1,6 @@
 import is from "@sindresorhus/is";
 import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
 import { eduService } from "../services/eduService";
 import { eduService1 } from "../services/eduServiceN";
 //라우터 설정
@@ -19,14 +20,15 @@ const createAndUpdate = async (req, res, next) => {
     const major = req.body.major;
     const position = req.body.position;
 
-    //const userId = req.params.id;
-    const obj_id = req.body.obj_id;
-    console.log("userId:", obj_id);
+    /* req.currentUserId from login-requires */
+    /*upper I */
+    const user_Isd = req.currentUserId;
 
-    const newData = { school, major, position };
-    console.log("newData:", newData);
+    //console.log("userId:", user_id);
+    const newInput = { user_Id, school, major, position };
+    //console.log("newData:", newInput);
 
-    const newEdu = await eduService1.setEdu({ obj_id, newData });
+    const newEdu = await eduService1.setEdu(newInput);
 
     if (newEdu.errorMessage) {
       throw new Error(newEdu.errorMessage);
@@ -48,11 +50,18 @@ const getData = async (req, res, next) => {
 };
 
 /*-------Router-------*/
+
+/*testing with postman*/
 eduRouter.route("/edu/post").post(createAndUpdate);
 
-//eduRouter.route("/userid/:id/edu").post(createAndUpdate);
+/*oldversion*/
+// //eduRouter.route("/userid/:id/edu").post(createAndUpdate);
+// eduRouter.route("/userid/:id/edu").put(createAndUpdate);
+// eduRouter.route("/userid/:id/edu").get(getData);
 
-eduRouter.route("/userid/:id/edu").put(createAndUpdate);
-eduRouter.route("/userid/:id/edu").get(getData);
+/*------testing copying from...------*/
+eduRouter.put("/user/edu", login_required, createAndUpdate);
+eduRouter.post("/user/edu", login_required, createAndUpdate);
+eduRouter.get("/user/edu", login_required, getData);
 
 export { eduRouter };

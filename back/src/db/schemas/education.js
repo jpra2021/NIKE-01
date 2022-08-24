@@ -2,6 +2,10 @@ import mongoose, { Schema, model } from "mongoose";
 
 const EducationSchema = new Schema(
   {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
     school: {
       type: String,
       required: true,
