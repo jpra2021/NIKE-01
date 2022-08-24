@@ -8,6 +8,19 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
   // Form 제출 시 실행
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (title === "") {
+      alert("수상내역이 비어있습니다!");
+
+      return;
+    }
+
+    if (description === "") {
+      alert("상세내역이 비어있습니다!");
+
+      return;
+    }
+
     // post
     // get
     // setAwards() 로 award 갱신
