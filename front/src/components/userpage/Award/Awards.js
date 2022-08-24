@@ -22,8 +22,8 @@ function Awards({ portfolioOwnerId, isEditable }) {
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
         {/**자신의 포트폴리오인 경우 편집버튼이 있고 클릭 시 입력 Form*/}
-        {sampleData.map((award) => (
-          <AwardCard award={award} isEditable={isEditable} />
+        {sampleData.map((award, index) => (
+          <AwardCard award={award} isEditable={isEditable} key={index} />
         ))}
 
         {/**자신의 포트폴리오인 경우에만 +(추가) button이 있다*/}
