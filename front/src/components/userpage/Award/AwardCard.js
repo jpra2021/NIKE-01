@@ -6,9 +6,13 @@ import AwardEditForm from "./AwardEditForm";
 function AwardCard({ award, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
 
+  const handleDelete = (e) => {
+    console.log("delete 기능");
+  };
+
   return (
-    <Card.Text className="align-items-center">
-      <Row>
+    <Card.Text>
+      <Row className="align-items-center">
         {isEditing ? (
           <AwardEditForm
             setIsEditing={setIsEditing}
@@ -18,26 +22,33 @@ function AwardCard({ award, isEditable }) {
             }}
           />
         ) : (
-          <Col>
-            <span>{award.title}</span>
-            <br />
-            <span className="text-muted">{award.description}</span>
-          </Col>
-        )}
+          <>
+            <Col>
+              <span>{award.title}</span>
+              <br />
+              <span className="text-muted">{award.description}</span>
+            </Col>
 
-        {isEditable && (
-          <Col lg="1" xs>
-            {!isEditing && (
-              <Button
-                className="mr-3"
-                size="sm"
-                variant="outline-info"
-                onClick={() => setIsEditing(true)}
-              >
-                편집
-              </Button>
+            {isEditable && (
+              <Col lg="1" xs>
+                <Button
+                  size="sm"
+                  variant="outline-info"
+                  onClick={() => setIsEditing(true)}
+                >
+                  편집
+                </Button>
+                <div className="mb-2" />
+                <Button
+                  size="sm"
+                  variant="outline-danger"
+                  onClick={handleDelete}
+                >
+                  삭제
+                </Button>
+              </Col>
             )}
-          </Col>
+          </>
         )}
       </Row>
     </Card.Text>
