@@ -1,5 +1,6 @@
 import { useState, useReducer } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
+import context from "react-bootstrap/esm/AccordionContext";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
 
@@ -7,11 +8,26 @@ const reducer = (state, action) => {
     const { title, detail, date, handleForm, index } = action.payload;
 
     switch (action.type) {
-        case "add":
+        case "add": {
             handleForm();
-            const a = [ ...state, {title, detail, date} ];
-            return a
-        case "edit":
+
+            const filtered = state.filter((project) => project.title === title);
+
+            if (filtered.length === 1) {
+                alert("이미 있는 프로젝트 내용입니다.");
+                return state;
+            }
+
+            return [ ...state, {title, detail, date} ];
+        }
+        
+        case "remove": {
+            const newState = state.filter((project) => !(project.title === title));
+
+            return newState;
+        }
+
+        case "edit": {
             const newState = [ ...state ];
 
             newState[index] = { ...newState[index], title, detail, date };
@@ -19,7 +35,9 @@ const reducer = (state, action) => {
             handleForm();
 
             return newState;
-        case "load":
+        }
+
+        case "load": {
             const { setTitle, setDetail, setStartDate, setEndDate } = action.payload;
                 const project = state[index];
                 const dates = project.date.split(" ~ ");
@@ -28,6 +46,8 @@ const reducer = (state, action) => {
                 setDetail(project.detail);
                 setStartDate(new Date(dates[0]));
                 setEndDate(new Date(dates[1]));
+        }
+
         default:
             return state;
     }
