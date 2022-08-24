@@ -4,6 +4,17 @@ import context from "react-bootstrap/esm/AccordionContext";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
 
+const overlapCheck = (state, title) => {
+    const filtered = state.filter((project) => project.title === title);
+
+    if (filtered.length === 1) {
+        
+        return true;
+    }
+    
+    return false;
+}
+
 const reducer = (state, action) => {
     const { title, detail, date, handleForm, index } = action.payload;
 
@@ -11,9 +22,7 @@ const reducer = (state, action) => {
         case "add": {
             handleForm();
 
-            const filtered = state.filter((project) => project.title === title);
-
-            if (filtered.length === 1) {
+            if (overlapCheck(state, title)) {
                 alert("이미 있는 프로젝트입니다.");
                 return state;
             }
@@ -28,11 +37,15 @@ const reducer = (state, action) => {
         }
 
         case "edit": {
+            handleForm();
             const newState = [ ...state ];
 
             newState[index] = { ...newState[index], title, detail, date };
             
-            handleForm();
+            if (overlapCheck(state, title)) {
+                alert("이미 있는 프로젝트입니다.");
+                return state;
+            }
 
             return newState;
         }
