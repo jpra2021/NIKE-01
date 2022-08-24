@@ -1,39 +1,58 @@
+import is from "@sindresorhus/is";
 import { Router } from "express";
-import {eduService} from '../services/eduService'
+import { eduService } from "../services/eduService";
+import { eduService1 } from "../services/eduServiceN";
 //라우터 설정
 
 const eduRouter = Router();
 
 /*------Controller------- */
-const createEducation = async (req, res)=>{
-    //req.body 값 받아와서 학력 DB 생성
-    const {school, major, position} = req.body
+const createAndUpdate = async (req, res, next) => {
+  try {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
 
-    const newEducation = await eduService.addEdu({
-        school,
-        major,
-        position
-    })
+    const school = req.body.school;
+    const major = req.body.major;
+    const position = req.body.position;
 
-    return res.json(newEducation);
+    //const userId = req.params.id;
+    const obj_id = req.body.obj_id;
+    console.log("userId:", obj_id);
 
-}
+    const newData = { school, major, position };
+    console.log("newData:", newData);
 
-const editEducation = async (req, res)=>{
-    //req.body 값 받아오는 것
-    const {school, major, position} = req.body
+    const newEdu = await eduService1.setEdu({ obj_id, newData });
 
-    const updateEdu = await eduService.editEdu({
-        school,
-        major,
-        position
-    })
+    if (newEdu.errorMessage) {
+      throw new Error(newEdu.errorMessage);
+    }
 
-    return res.json(updateEdu)
-}
+    res.status(201).json(newEdu);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getData = async (req, res, next) => {
+  try {
+    const edus = await eduService1.getEdu();
+    res.status(201).send(edus);
+  } catch (error) {
+    next(error);
+  }
+};
 
 /*-------Router-------*/
-eduRouter.route('/userid/:id/edu').post(createEducation)
-eduRouter.route('/userid/:id/edu').put(editEducation)
+eduRouter.route("/edu/post").post(createAndUpdate);
 
-export {eduRouter}
+//eduRouter.route("/userid/:id/edu").post(createAndUpdate);
+
+eduRouter.route("/userid/:id/edu").put(createAndUpdate);
+eduRouter.route("/userid/:id/edu").get(getData);
+
+export { eduRouter };
