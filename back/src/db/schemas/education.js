@@ -1,9 +1,9 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const EducationSchema = new Schema(
   {
     id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
     },
     school: {
@@ -26,5 +26,6 @@ const EducationSchema = new Schema(
 );
 
 const EducationModel = model("Education", EducationSchema);
+console.log("모델 있니?", EducationModel);
 
 export { EducationModel };

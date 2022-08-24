@@ -6,7 +6,7 @@ class eduService1 {
   static async setEdu(inputdata) {
     const { user_Id, school } = inputdata;
 
-    let edu = await Education.findById(school);
+    let edu = await Education.findById(user_Id);
     console.log("edu 체킹 서비스에서:", edu);
     console.log("!edu결과는?", !edu);
     console.log("inputdata는?", inputdata);

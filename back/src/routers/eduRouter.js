@@ -22,10 +22,10 @@ const createAndUpdate = async (req, res, next) => {
 
     /* req.currentUserId from login-requires */
     /*upper I */
-    const user_Isd = req.currentUserId;
+    const id = req.currentUserId;
 
     //console.log("userId:", user_id);
-    const newInput = { user_Id, school, major, position };
+    const newInput = { id, school, major, position };
     //console.log("newData:", newInput);
 
     const newEdu = await eduService1.setEdu(newInput);
