@@ -15,7 +15,7 @@ const certificateSchema = new Schema(
       required: true,
     },
     getDate:{
-      type:Date,
+      type:String,
       required:true
     }
   },

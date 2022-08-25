@@ -20,8 +20,6 @@ class certificateService{
             const fieldToUpdate = "title";
             const newValue = title;
 
-            console.log("🙄title 보이니?", title)
-
             updateCertificate = await Certificate.update({id, fieldToUpdate, newValue})
         }
 
@@ -29,16 +27,12 @@ class certificateService{
             const fieldToUpdate = "description";
             const newValue = description;
 
-            console.log("🙄description 보이니?", description)
-
             updateCertificate = await Certificate.update({id, fieldToUpdate, newValue})
         }
 
         if(getDate){
             const fieldToUpdate = "getDate";
             const newValue = getDate;
-
-            console.log("getDate 보이니?", description)
 
             updateCertificate = await Certificate.update({id, fieldToUpdate, newValue})
         }
