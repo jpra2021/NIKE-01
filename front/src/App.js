@@ -12,6 +12,7 @@ import Portfolio from "./components/Portfolio";
 import Notification from "./components/notice/NoticeList";
 import noticeReducer from "./components/notice/noticeReducer";
 import Redirect from "./components/Redirect";
+import Loading from "./components/Loading";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -54,7 +55,7 @@ function App() {
   }, []);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Loading />;
   }
 
   return (

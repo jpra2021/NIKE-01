@@ -9,6 +9,7 @@ import Project from "./userpage/project/Project";
 import Certificate from "./userpage/certificate/Certificate";
 import Educations from "./userpage/Education/Educations";
 import Awards from "./userpage/Award/Awards";
+import Loading from "./Loading";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ function Portfolio() {
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Loading />;
   }
 
   return (
