@@ -10,7 +10,8 @@ import Network from "./components/user/Network";
 import RegisterForm from "./components/user/RegisterForm";
 import Portfolio from "./components/Portfolio";
 import Notification from "./components/notice/NoticeList";
-import noticeReducer from "./components/notice/noticeReducer"
+import noticeReducer from "./components/notice/noticeReducer";
+import Redirect from "./components/Redirect";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -18,10 +19,10 @@ export const NoticeContext = createContext(null);
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
-  const [ userState, dispatch ] = useReducer(loginReducer, {
+  const [userState, dispatch] = useReducer(loginReducer, {
     user: null,
   });
-  const [ notices, setNotices ] = useReducer(noticeReducer, []);
+  const [notices, setNotices] = useReducer(noticeReducer, []);
 
   // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
@@ -55,11 +56,11 @@ function App() {
   if (!isFetchCompleted) {
     return "loading...";
   }
-  
+
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
-        <NoticeContext.Provider value={{notices, setNotices}}>
+        <NoticeContext.Provider value={{ notices, setNotices }}>
           <Router>
             <Notification />
             <Header />
@@ -69,7 +70,7 @@ function App() {
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/users/:userId" element={<Portfolio />} />
               <Route path="/network" element={<Network />} />
-              <Route path="*" element={<Portfolio />} />
+              <Route path="*" element={<Redirect />} />
             </Routes>
           </Router>
         </NoticeContext.Provider>
