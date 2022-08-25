@@ -39,6 +39,7 @@ awardRouter
     .route("/user/award")
     .all(login_required)
     .post(createAndUpdate)
+    .put(createAndUpdate)
 
 
 export {awardRouter}

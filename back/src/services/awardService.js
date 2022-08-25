@@ -20,6 +20,8 @@ class awardService{
             const fieldToUpdate = "title";
             const newValue = title;
 
+            console.log("🙄title 보이니?", title)
+
             updateAward = await Award.update({id, fieldToUpdate, newValue})
         }
 
@@ -27,10 +29,17 @@ class awardService{
             const fieldToUpdate = "description";
             const newValue = description;
 
+            console.log("🙄description 보이니?", description)
+
             updateAward = await Award.update({id, fieldToUpdate, newValue})
         }
 
         return updateAward;
+    }
+
+    static async getAward(id){
+        const getAward = await Award.findById(id)
+        return getAward
     }
 }
 
