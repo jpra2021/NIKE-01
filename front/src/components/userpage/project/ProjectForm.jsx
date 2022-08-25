@@ -2,20 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { NoticeContext } from "../../../App";
-
-const formatDateStr = (date) => {
-    const year = date.getFullYear();
-    const month =('0' + (date.getMonth() + 1));
-    let day = date.getDate();
-
-    if (day <= 9) {
-        day = "0" + day;
-    }
-
-    const period = year + '-' + month + '-' + day;
-
-    return period;
-}
+import { formatDateStr } from "../../util/util";
 
 const ProjectForm = ({ dispatch, type, handleForm, index }) => {
     const [ title, setTitle ] = useState("");

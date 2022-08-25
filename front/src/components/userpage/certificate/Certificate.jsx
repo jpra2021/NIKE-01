@@ -1,72 +1,17 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useContext, useMemo } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import CertificateForm from "./CertificateForm";
 import CertificateInfo from "./CertificateInfo";
-
-const overlapCheck = (state, title) => {
-    const filtered = state.filter((certificate) => certificate.title === title);
-
-    if (filtered.length === 1) {
-        
-        return true;
-    }
-    
-    return false;
-}
-
-const reducer = (state, action) => {
-    const { title, detail, date, handleForm, index } = action.payload;
-
-    switch (action.type) {
-        case "add": {
-            handleForm();
-
-            if(overlapCheck(state, title)) {
-                alert("이미 있는 자격증입니다.");
-                return state;
-            }
-
-            return [ ...state, {title, detail, date} ];
-        }
-                
-        case "remove": {
-            const newState = state.filter((certificate) => !(certificate.title === title));
-
-            return newState;
-        }
-
-        case "edit": {
-            handleForm();
-            const newState = [ ...state ];
-
-            newState[index] = { ...newState[index], title, detail, date };
-            
-            if(overlapCheck(state, title)) {
-                alert("이미 있는 자격증입니다.");
-                return state;
-            }
-
-            return newState;
-        }
-
-        case "load": {
-            const { setTitle, setDetail, setDate } = action.payload;
-                const certificate = state[index];
-
-                setTitle(certificate.title);
-                setDetail(certificate.detail);
-                setDate(new Date(certificate.date));
-        }
-        default:
-            return state;
-    }
-}
+import { NoticeContext } from "../../../App";
+import certificateReducer from "./certificateReducer";
 
 const initialState = [];
 
 const Certificate = ({ isEditable }) => {
-    const [ isForm, setIsForm ] = useState(false);
+    const { setNotices } = useContext(NoticeContext);
+    const reducer = useMemo(() => (certificateReducer(setNotices)), [])
     const [ certificates, dispatch ] = useReducer(reducer, initialState);
+    const [ isForm, setIsForm ] = useState(false);
 
     const handleForm = () => {        
         setIsForm(() => !isForm);

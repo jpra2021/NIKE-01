@@ -1,12 +1,4 @@
-const overlapCheck = (state, title) => {
-    const filtered = state.filter((project) => project.title === title);
-
-    if (filtered.length === 1) {
-        return true;
-    }
-
-    return false;
-}
+import { overlapCheck } from "../../util/util";
 
 const projectsReducer = (dispatch) => {
     const setNotices = dispatch;
@@ -24,6 +16,7 @@ const projectsReducer = (dispatch) => {
                 }
                 
                 setNotices({type: "success", payload: {title: "프로젝트", message: "추가되었습니다."}});
+
                 return [ ...state, {title, detail, date} ];
             }
             
