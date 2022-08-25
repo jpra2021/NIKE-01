@@ -19,16 +19,6 @@ const createAndUpdate = async (req, res, next) => {
     const id = req.currentUserId;
     const { subject, description, startDate, endDate } = req.body;
     const reqData = { id, subject, description, startDate, endDate };
-    console.log(
-      "라우터/제대로 들어왔나요? \n subject:",
-      subject,
-      "\n description:",
-      description,
-      "\nstartDate:",
-      startDate,
-      "\nendDate:",
-      endDate
-    );
 
     const newPro = await projectService.setPro(reqData);
 
