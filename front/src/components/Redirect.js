@@ -57,7 +57,6 @@ function Redirect() {
           Redirect after {count} seconds
         </div>
       </div>
-      ;
     </>
   );
 }
