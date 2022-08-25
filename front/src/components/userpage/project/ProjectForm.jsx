@@ -22,12 +22,12 @@ const ProjectForm = ({ dispatch, type, handleForm, index }) => {
     const [ detail, setDetail ] = useState("");
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
-    const period = useRef("");
     const { setNotices } = useContext(NoticeContext);
+    const period = useRef("");
 
     useEffect (() => {
         if (type === "edit") {
-            dispatch({type: "load", payload: {index, setTitle, setDetail, setStartDate, setEndDate, setNotices}});
+            dispatch({type: "load", payload: {index, setTitle, setDetail, setStartDate, setEndDate}});
         }
     }, []);
 
@@ -42,26 +42,26 @@ const ProjectForm = ({ dispatch, type, handleForm, index }) => {
         e.preventDefault();
 
         if (title === "") {
-            alert("프로젝트 제목이 비어있습니다!");
+            setNotices({type: "warn", payload: {title: "프로젝트", message: "제목이 비어있습니다."}});
 
             return;
         }
 
         if (detail === "") {
-            alert("내용이 비어있습니다!");
-
+            setNotices({type: "warn", payload: {title: "프로젝트", message: "내용이 비어있습니다."}});
+            
             return;
         }
 
         if (startDate.getTime() > endDate.getTime()) {
-            alert("종료일보다 시작일이 더 큽니다!");
+            setNotices({type: "warn", payload: {title: "프로젝트", message: "종료일보다 시작일이 더 큽니다."}});
 
             return;
         }
 
         const date = period.current
 
-        dispatch({type, payload: {title, detail, date, handleForm, index, setNotices}});
+        dispatch({type, payload: {title, detail, date, handleForm, index}});
     }
 
     return (
