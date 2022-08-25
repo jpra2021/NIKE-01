@@ -27,6 +27,10 @@ const UserSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Education",
     },
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
+    },
   },
   {
     timestamps: true,

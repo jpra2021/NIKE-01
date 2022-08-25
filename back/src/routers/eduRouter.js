@@ -47,15 +47,6 @@ const getData = async (req, res, next) => {
 
 /*-------Router-------*/
 
-/*testing with postman*/
-//eduRouter.route("/edu/post").post(createAndUpdate);
-
-/*oldversion*/
-// //eduRouter.route("/userid/:id/edu").post(createAndUpdate);
-// eduRouter.route("/userid/:id/edu").put(createAndUpdate);
-// eduRouter.route("/userid/:id/edu").get(getData);
-
-/*------testing copying from...------*/
 eduRouter.put("/user/edu", login_required, createAndUpdate);
 eduRouter.post("/user/edu", login_required, createAndUpdate);
 eduRouter.get("/user/edu", login_required, getData);
