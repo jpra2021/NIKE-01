@@ -19,6 +19,11 @@ const ProjectSchema = new Schema(
       min: "1990-01-01",
       max: "2100-01-01",
     },
+    endDate: {
+      type: Date,
+      min: "1990-01-01",
+      max: "2100-01-01",
+    },
   },
   {
     timestamps: true,
