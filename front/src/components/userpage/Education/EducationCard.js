@@ -3,7 +3,7 @@ import { Card, Col } from "react-bootstrap";
 
 import EducationForm from "./EducationForm";
 
-function EducationCard({ data, degree }) {
+function EducationCard({ data, degree, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
@@ -19,14 +19,16 @@ function EducationCard({ data, degree }) {
                 {data.major} ({data.degree})
               </span>
             </Col>
-            <Col lg="1">
-              <button
-                className="mr-3 btn btn-outline-info btn-sm"
-                onClick={() => setIsEditing(true)}
-              >
-                편집
-              </button>
-            </Col>
+            {isEditable && (
+              <Col lg="1">
+                <button
+                  className="mr-3 btn btn-outline-info btn-sm"
+                  onClick={() => setIsEditing(true)}
+                >
+                  편집
+                </button>
+              </Col>
+            )}
           </div>
         </Card.Text>
       )}

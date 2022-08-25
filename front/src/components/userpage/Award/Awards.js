@@ -1,48 +1,100 @@
 import { Card, Row, Col, Button } from "react-bootstrap";
-import React, { useState } from "react";
-
-// import * as Api from "../../api";
-import AwardAddForm from "./AwardAddForm";
+import React, { useReducer, useState } from "react";
+import AwardForm from "./AwardForm";
 import AwardCard from "./AwardCard";
 
-// Award list 띄우기
-function Awards({ portfolioOwnerId, isEditable }) {
-  const [awards, setAwards] = useState(null);
-  const [isAdding, setIsAdding] = useState(false);
-  // const [isEditing, setIsEditing] = useState(false);
-  const sampleData = [
-    { title: "제 5회 B대회", description: "A해서 B대회에서 우수상" },
-    { title: "제 5회 A대회", description: "A대회에서 아차상" },
-  ];
+const overlapCheck = (state, title) => {
+  const filtered = state.filter((award) => award.title === title);
 
-  // get , setAwards
+  if (filtered.length === 1) {
+    return true;
+  }
+
+  return false;
+};
+
+const reducer = (state, action) => {
+  const { title, description, handleForm, index } = action.payload;
+
+  switch (action.type) {
+    case "add": {
+      handleForm();
+
+      if (overlapCheck(state, title)) {
+        alert("이미 등록된 수상이력입니다.");
+        return state;
+      }
+
+      return [...state, { title, description }];
+    }
+
+    case "remove": {
+      const newState = state.filter((award) => !(award.title === title));
+
+      return newState;
+    }
+
+    case "edit": {
+      handleForm();
+      const newState = [...state];
+
+      newState[index] = { ...newState[index], title, description };
+
+      if (overlapCheck(state, title)) {
+        alert("이미 존재하는 수상이력입니다.");
+        return state;
+      }
+
+      return newState;
+    }
+
+    case "load": {
+      const { setTitle, setDescription } = action.payload;
+      const award = state[index];
+
+      setTitle(award.title);
+      setDescription(award.description);
+    }
+
+    default:
+      return state;
+  }
+};
+
+const initialState = [];
+
+function Awards({ isEditable }) {
+  const [isForm, setIsForm] = useState(false);
+  const [awards, dispatch] = useReducer(reducer, initialState);
+
+  const handleForm = () => {
+    setIsForm(() => !isForm);
+  };
 
   return (
     <Card>
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
-        {/**자신의 포트폴리오인 경우 편집버튼이 있고 클릭 시 입력 Form*/}
-        {sampleData.map((award, index) => (
-          <AwardCard key={index} award={award} isEditable={isEditable} />
+        {awards.map((award, idx) => (
+          <AwardCard key={idx} award={award} index={idx} dispatch={dispatch} />
         ))}
 
-        {/**자신의 포트폴리오인 경우에만 +(추가) button이 있다*/}
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
             <Col sm="20">
-              <Button variant="primary" onClick={() => setIsAdding(true)}>
+              <Button variant="primary" onClick={handleForm}>
                 +
               </Button>
             </Col>
           </Row>
         )}
 
-        {/** 추가 버튼을 클릭하면 입력 Form이 나타나며, 제출 시 목록에 추가된다 */}
-        {isAdding && (
-          <AwardAddForm
-            portfolioOwnerId={portfolioOwnerId}
-            setAwards
-            setIsAdding={setIsAdding}
+        {isForm && (
+          <AwardForm
+            dispatch={dispatch}
+            type="add"
+            handleForm={handleForm}
+            index={awards.length}
           />
         )}
       </Card.Body>

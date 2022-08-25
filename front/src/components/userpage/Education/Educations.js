@@ -31,6 +31,7 @@ function Educations({ isEditable }) {
             key={`edu-card-${data.school}`}
             data={data}
             degree={degree}
+            isEditable={isEditable}
           />
         ))}
         {isEditable && (
