@@ -15,9 +15,12 @@ const ProjectSchema = new Schema(
       required: true,
     },
     startDate: {
-      type: Date,
-      min: "1990-01-01",
-      max: "2100-01-01",
+      type: String,
+      required: true,
+    },
+    endDate: {
+      type: String,
+      required: true,
     },
     endDate: {
       type: Date,
