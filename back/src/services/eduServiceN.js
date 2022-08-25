@@ -6,6 +6,8 @@ class eduService1 {
 
   static async setEdu(inputdata) {
     const { id } = inputdata;
+    const { school, major, position } = inputdata;
+    const setinputdata = { school, major, position };
     console.log("id가 존재하는가?:", id);
 
     /*-- for testing existence  --*/
@@ -18,23 +20,32 @@ class eduService1 {
       console.log(!edu, ":Educational Background is not exist, create new one");
       const creatednewEdu = await Education.create(inputdata);
       return creatednewEdu;
-    } else if (inputdata.school) {
-      /* checking what part is updated */
-      const fieldToUpdate = "school";
-      const newValue = inputdata.school;
-      edu = await Education.update({ user_Id, fieldToUpdate, newValue });
-    } else if (inputdata.major) {
-      const fieldToUpdate = "major";
-      const newValue = inputdata.major;
-
-      edu = await Education.update({ user_Id, fieldToUpdate, newValue });
-    } else if (inputdata.position) {
-      const fieldToUpdate = "position";
-      const newValue = inputdata.position;
-
-      edu = await Education.update({ user_Id, fieldToUpdate, newValue });
     }
-    console.log("이미 있습니다!");
+    /* checking which part is updated*/
+    /*then, if the key is not null(=have value), update */
+    //check school
+    console.log("else로 들어갈 id는?:", id);
+    if (setinputdata.school) {
+      const fieldToUpdate = "school";
+      const newValue = setinputdata.school;
+      console.log("inputdata.school은?", newValue);
+      edu = await Education.update({ id, fieldToUpdate, newValue });
+    }
+    //check major
+    if (setinputdata.major) {
+      const fieldToUpdate = "major";
+      const newValue = setinputdata.major;
+      console.log("inputdata.major은?", newValue);
+      edu = await Education.update({ id, fieldToUpdate, newValue });
+    }
+    //check position
+    if (setinputdata.position) {
+      const fieldToUpdate = "position";
+      const newValue = setinputdata.position;
+      console.log("inputdata.position은?", newValue);
+      edu = await Education.update({ id, fieldToUpdate, newValue });
+    }
+    return edu;
   }
 
   /*--- GET ---*/

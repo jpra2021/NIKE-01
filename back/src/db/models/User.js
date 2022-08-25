@@ -23,8 +23,11 @@ class User {
 
   static async update({ user_id, fieldToUpdate, newValue }) {
     const filter = { id: user_id };
+    console.log("모델, filter성공:", filter);
     const update = { [fieldToUpdate]: newValue };
+    console.log("모델, update성공:", update);
     const option = { returnOriginal: false };
+    console.log("모델, opition성공", option);
 
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,

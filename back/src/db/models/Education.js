@@ -23,12 +23,16 @@ class Education {
     return users;
   }
 
-  static async update(user_id, fieldToUpdate, newValue) {
-    const filter = { id: user_id };
+  static async update({ id, fieldToUpdate, newValue }) {
+    console.log("모델의 user_id가 받는 것은:", id);
+    const filter = id;
+    console.log("모델, filter성공:", filter);
     const update = { [fieldToUpdate]: newValue };
+    console.log("모델, update성공:", update);
     const option = { returnOriginal: false };
+    console.log("모델, opition성공", option);
 
-    const updatedEdu = await EducationModel.findByIdAndUpdate(
+    const updatedEdu = await EducationModel.findOneAndUpdate(
       filter,
       update,
       option
@@ -38,3 +42,6 @@ class Education {
 }
 
 export { Education };
+
+/* userSertvie is using 'findById', the _id*/
+/* However, Education(model) and eduSerivce is using 'findOne'*/
