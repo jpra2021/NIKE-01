@@ -9,6 +9,7 @@ class projectService {
     //const setinputData = { subject, description, startDate, endDate };
 
     let pro = await Project.findById(id);
+    console.log("이미 있는 유저인가?:", pro);
 
     if (!pro) {
       const createdNewPro = await Project.create(newInput);

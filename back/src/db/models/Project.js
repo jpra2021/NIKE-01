@@ -19,15 +19,16 @@ class Project {
   static async update({ id, fieldToUpdate, newValue }) {
     const filter = id;
     //console.log("모델/filter상태는?:", id);
+    //console.log("newValue는 무엇?:", newValue);
     const update = { [fieldToUpdate]: newValue };
-    //console.log("모델/update상태는?:", update);
+    console.log("모델/update상태는?:", update);
     const option = { returnOriginal: false };
-    const updatedNewPro = await ProjectModel.findOneAndUpdate({
+    const updatedNewPro = await ProjectModel.findOneAndUpdate(
       filter,
       update,
-      option,
-    });
-    console.log("모델/업데이트 되는 데이터는?", updatedNewPro);
+      option
+    );
+    //console.log("모델/업데이트 되는 데이터는?", updatedNewPro);
     return updatedNewPro;
   }
 }

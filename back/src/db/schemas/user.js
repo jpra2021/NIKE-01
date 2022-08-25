@@ -31,6 +31,10 @@ const UserSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
     },
+    introduction: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
