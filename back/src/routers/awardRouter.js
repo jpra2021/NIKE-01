@@ -35,11 +35,27 @@ const createAndUpdate = async (req, res, next) =>{
 
 }   
 
+const getData= async (req, res, next) =>{
+    try{
+        const id = req.currentUserId;
+
+        const getAward = await awardService.getAward(id)
+
+        if(getAward.errorMessage){
+            throw new Error(getAward.errorMessage)
+        }
+        res.status(201).json(getAward)
+    }catch(err){
+        next(err)
+    }
+}
+
 awardRouter
     .route("/user/award")
     .all(login_required)
     .post(createAndUpdate)
     .put(createAndUpdate)
+    .get(getData)
 
 
 export {awardRouter}
