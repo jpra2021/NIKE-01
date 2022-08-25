@@ -24,6 +24,7 @@ const projectsReducer = (dispatch) => {
                 }
                 
                 setNotices({type: "success", payload: {title: "프로젝트", message: "추가되었습니다."}});
+                
                 return [ ...state, {title, detail, date} ];
             }
             
