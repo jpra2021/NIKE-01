@@ -1,20 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-
-const formatDateStr = (date) => {
-    const year = date.getFullYear();
-    const month =('0' + (date.getMonth() + 1));
-    let day = date.getDate();
-
-    if (day <= 9) {
-        day = "0" + day;
-    }
-
-    const period = year + '-' + month + '-' + day;
-
-    return period;
-}
+import { formatDateStr } from "../../util/util";
 
 const CertificateForm = ({ dispatch, type, handleForm, index }) => {
     const [ title, setTitle ] = useState("");
