@@ -1,26 +1,20 @@
-import mongoose from "mongoose";
 import { EducationModel } from "../schemas/education";
-import { UserModel } from "../schemas/user";
-import { User } from "./User";
 
 class Education {
-  //Create
+  /*--- CREATE ---*/
   static async create(newEdu) {
     const createdNewEdu = await EducationModel.create(newEdu);
-    console.log("createdNewedu 결과물:", createdNewEdu);
-    console.log("EducationModel있니없니", EducationModel);
+    //console.log("createdNewedu result", createdNewEdu);
     return createdNewEdu;
   }
 
-  /*user_id <- req.currentId */
+  /* ---FIND ---*/
+  /*-- for testing existence  --*/
+  /*--user_id <= req.currentUserId from login-requires--*/
   static async findById(user_Id) {
-    console.log("1 userId 가져옴:", user_Id);
-
+    console.log("1 userId is pulled:", user_Id);
     const user = await EducationModel.findOne({ id: user_Id });
-
-    console.log("2--- findeone작동했니안했네user체킹:", user);
-
-    //console.log("usertest체킹:", usertest);
+    console.log("2--- user checking:", user);
     return user;
   }
 

@@ -26,6 +26,4 @@ const EducationSchema = new Schema(
 );
 
 const EducationModel = model("Education", EducationSchema);
-console.log("모델 있니?", EducationModel);
-
 export { EducationModel };

@@ -3,18 +3,20 @@ import { Education } from "../db/models/Education";
 class eduService1 {
   /* --- CREATE & UPDATE -----*/
   /* user_id <= req.currentUserId from login-requires */
-  static async setEdu(inputdata) {
-    const { user_Id, school } = inputdata;
 
-    let edu = await Education.findById(user_Id);
-    console.log("edu 체킹 서비스에서:", edu);
-    console.log("!edu결과는?", !edu);
-    console.log("inputdata는?", inputdata);
+  static async setEdu(inputdata) {
+    const { id } = inputdata;
+    console.log("id가 존재하는가?:", id);
+
+    /*-- for testing existence  --*/
+    let edu = await Education.findById(id);
+    console.log("edu(in eduService):", edu);
+    console.log("!edu result?", !edu);
+    //console.log("inputdata?", inputdata);
 
     if (!edu) {
-      console.log("(!!) Educational Background is not exist, create new one");
+      console.log(!edu, ":Educational Background is not exist, create new one");
       const creatednewEdu = await Education.create(inputdata);
-
       return creatednewEdu;
     } else if (inputdata.school) {
       /* checking what part is updated */
@@ -32,6 +34,7 @@ class eduService1 {
 
       edu = await Education.update({ user_Id, fieldToUpdate, newValue });
     }
+    console.log("이미 있습니다!");
   }
 
   /*--- GET ---*/

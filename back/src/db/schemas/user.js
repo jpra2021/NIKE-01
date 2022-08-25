@@ -36,6 +36,3 @@ const UserSchema = new Schema(
 const UserModel = model("User", UserSchema);
 
 export { UserModel };
-
-/*const user_id = jwtDecoded.user_id; 가 userid인경우 --시도중*/
-/*const user_id = jwtDecoded.user_id; 가 Obj id인경우 */
