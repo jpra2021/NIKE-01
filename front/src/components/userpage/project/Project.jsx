@@ -1,6 +1,5 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useContext } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
-import context from "react-bootstrap/esm/AccordionContext";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
 
@@ -8,22 +7,21 @@ const overlapCheck = (state, title) => {
     const filtered = state.filter((project) => project.title === title);
 
     if (filtered.length === 1) {
-        
         return true;
     }
-    
+
     return false;
 }
 
 const reducer = (state, action) => {
-    const { title, detail, date, handleForm, index } = action.payload;
+    const { title, detail, date, handleForm, index, setNotices } = action.payload;
 
     switch (action.type) {
         case "add": {
             handleForm();
 
             if (overlapCheck(state, title)) {
-                alert("이미 있는 프로젝트입니다.");
+                setNotices({type: "create", payload: {title: "프로젝트", message: "이미 있는 내용입니다."}});
                 return state;
             }
 
@@ -43,7 +41,7 @@ const reducer = (state, action) => {
             newState[index] = { ...newState[index], title, detail, date };
             
             if (overlapCheck(state, title)) {
-                alert("이미 있는 프로젝트입니다.");
+                setNotices({type: "create", payload: {title: "프로젝트", message: "이미 있는 내용입니다."}});
                 return state;
             }
 
@@ -72,7 +70,7 @@ const Project = ({ isEditable }) => {
     const [ isForm, setIsForm ] = useState(false);
     const [ projects, dispatch ] = useReducer(reducer, initialState);
 
-    const handleForm = () => {        
+    const handleForm = () => {   
         setIsForm(() => !isForm);
     }
 
@@ -88,7 +86,7 @@ const Project = ({ isEditable }) => {
                         </Col>
                     </Row>
                 }
-                {isForm && <ProjectForm dispatch={dispatch} type="add" handleForm={handleForm} index={projects.length}/>}
+                {isForm && <ProjectForm dispatch={dispatch} type="add" handleForm={handleForm} index={projects.length} />}
             </Card.Body>
         </Card>
     );

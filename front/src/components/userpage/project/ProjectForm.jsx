@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useContext } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
+import { NoticeContext } from "../../../App";
 
 const formatDateStr = (date) => {
     const year = date.getFullYear();
@@ -22,10 +23,11 @@ const ProjectForm = ({ dispatch, type, handleForm, index }) => {
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
     const period = useRef("");
-    
+    const { setNotices } = useContext(NoticeContext);
+
     useEffect (() => {
         if (type === "edit") {
-            dispatch({type: "load", payload: {index, setTitle, setDetail, setStartDate, setEndDate}});
+            dispatch({type: "load", payload: {index, setTitle, setDetail, setStartDate, setEndDate, setNotices}});
         }
     }, []);
 
@@ -59,7 +61,7 @@ const ProjectForm = ({ dispatch, type, handleForm, index }) => {
 
         const date = period.current
 
-        dispatch({type, payload: {title, detail, date, handleForm, index}});
+        dispatch({type, payload: {title, detail, date, handleForm, index, setNotices}});
     }
 
     return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
-import ProjectForm from "./ProjectForm";
+import ProjectForm from "./ProjectForm"
 
 const ProjectInfo = ({ project, index, dispatch }) => {
     const [ isEditing, setIsEditing ] = useState(false);

@@ -9,6 +9,7 @@ const eduRouter = Router();
 
 /*------Controller------- */
 const createAndUpdate = async (req, res, next) => {
+  console.log("=====================")
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -22,7 +23,7 @@ const createAndUpdate = async (req, res, next) => {
 
     /* req.currentUserId from login-requires */
     /*upper I */
-    const user_Isd = req.currentUserId;
+    const user_Id = req.currentUserId;
 
     //console.log("userId:", user_id);
     const newInput = { user_Id, school, major, position };
@@ -34,7 +35,9 @@ const createAndUpdate = async (req, res, next) => {
       throw new Error(newEdu.errorMessage);
     }
 
-    res.status(201).json(newEdu);
+    // res.status(201).json(newEdu);
+    res.header("Access-Control-Allow-Origin", "*")
+    res.json({"hi": "hi"})
   } catch (error) {
     next(error);
   }
