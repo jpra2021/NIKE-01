@@ -21,7 +21,6 @@ class eduService1 {
       const creatednewEdu = await Education.create(inputdata);
       return creatednewEdu;
     }
-    /* checking which part is updated*/
     /*then, if the key is not null(=have value), update */
     //check school
     console.log("else로 들어갈 id는?:", id);
@@ -49,8 +48,10 @@ class eduService1 {
   }
 
   /*--- GET ---*/
-  static async getEdu({ user_Id }) {
-    const edu = await Education.findById({ user_Id });
+  static async getEdu(id) {
+    console.log("get의 아이디:", id);
+    const edu = await Education.findById(id);
+    return edu;
   }
 }
 

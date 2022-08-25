@@ -36,7 +36,9 @@ const createAndUpdate = async (req, res, next) => {
 
 const getData = async (req, res, next) => {
   try {
-    const edus = await eduService1.getEdu();
+    const id = req.currentUserId;
+    console.log("req.currentUserId:", id);
+    const edus = await eduService1.getEdu(id);
     res.status(201).send(edus);
   } catch (error) {
     next(error);
