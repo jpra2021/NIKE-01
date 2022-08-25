@@ -10,9 +10,8 @@ class Education {
   /* ---FIND ---*/
   /*-- for testing existence  --*/
   /*--user_id <= req.currentUserId from login-requires--*/
-  static async findById(user_Id) {
-    console.log("1 userId is pulled:", user_Id);
-    const user = await EducationModel.findOne({ id: user_Id });
+  static async findById(id) {
+    const user = await EducationModel.findOne({ id: id });
     return user;
   }
 

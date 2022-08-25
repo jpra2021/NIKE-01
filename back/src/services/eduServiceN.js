@@ -12,36 +12,29 @@ class eduService1 {
 
     /*-- for testing existence  --*/
     let edu = await Education.findById(id);
-    console.log("edu(in eduService):", edu);
-    console.log("!edu result?", !edu);
-    //console.log("inputdata?", inputdata);
 
     if (!edu) {
-      console.log(!edu, ":Educational Background is not exist, create new one");
       const creatednewEdu = await Education.create(inputdata);
       return creatednewEdu;
     }
     /*then, if the key is not null(=have value), update */
     //check school
-    //console.log("else로 들어갈 id는?:", id);
+
     if (setinputdata.school) {
       const fieldToUpdate = "school";
       const newValue = setinputdata.school;
-      //console.log("inputdata.school은?", newValue);
       edu = await Education.update({ id, fieldToUpdate, newValue });
     }
     //check major
     if (setinputdata.major) {
       const fieldToUpdate = "major";
       const newValue = setinputdata.major;
-      //console.log("inputdata.major은?", newValue);
       edu = await Education.update({ id, fieldToUpdate, newValue });
     }
     //check position
     if (setinputdata.position) {
       const fieldToUpdate = "position";
       const newValue = setinputdata.position;
-      //console.log("inputdata.position은?", newValue);
       edu = await Education.update({ id, fieldToUpdate, newValue });
     }
     return edu;
@@ -49,7 +42,6 @@ class eduService1 {
 
   /*--- GET ---*/
   static async getEdu(id) {
-    //console.log("get의 아이디:", id);
     const edu = await Education.findById(id);
     return edu;
   }
