@@ -21,7 +21,7 @@ const Notice = ({ title, message, type }) => {
             className="rounded"
             onClose={() => setShow(false)}
             show={show}
-            delay={5000}
+            delay={3000}
             autohide
         >
             <Toast.Header
