@@ -18,7 +18,7 @@ const createAndUpdate = async (req, res, next) => {
     /* must be same with schema!*/
     const school = req.body.school;
     const major = req.body.major;
-    const position = req.body.degree;
+    const degree = req.body.degree;
     /* -req.currentUserId from login-requires -*/
     const id = req.currentUserId;
     const newInput = { id, school, major, degree };
