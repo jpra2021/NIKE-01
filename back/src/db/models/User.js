@@ -12,7 +12,6 @@ class User {
   }
 
   static async findById(user_id) {
-    console.log("이놈이문제냐??", typeof user_id);
     const user = await UserModel.findOne({ user_id: user_id });
     return user;
   }
