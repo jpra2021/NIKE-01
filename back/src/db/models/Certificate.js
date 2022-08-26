@@ -1,31 +1,46 @@
 import { CertificateModel } from "../schemas/certificate";
 
 class Certificate {
-  static async create(newAward) {
-    const createCertificate = await CertificateModel.create(newAward);
-    return createCertificate;
+
+  /*--- CREATE ---*/
+  static async create(newCerti) {
+    const createNewCertis = await CertificateModel.create(newCerti);
+
+    console.log("모데=>", createNewCertis)
+    return createNewCertis;
   }
 
-  static async findById(id) {
-    const findCertificate = await CertificateModel.findOne({ id });
-    return findCertificate;
-  }
-
-  static async update(updateData) {
-    const { id, fieldToUpdate, newValue } = updateData;
-
-    const filter = id;
+  /* --UPDATE -- */
+  static async update({ user_id, fieldToUpdate, newValue }) {
+    const filter = { _id: user_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
-    const updateCertificate = await CertificateModel.findOneAndUpdate(
+    const updateCerti = await CertificateModel.findOneAndUpdate(
       filter,
       update,
       option
     );
 
-    return updateCertificate;
+    return updateCerti;
   }
+
+  /* ---FIND ---*/
+  //to get all docs of the user
+  static async find(id) {
+    const users = await CertificateModel.find({ id: id });
+    return users;
+  }
+
+  /* -- Delete -- */
+  static async delete(user_id) {
+    const filter = { _id: user_id };
+    const deleteCerti = await CertificateModel.findOneAndDelete(filter);
+
+    return deleteCerti;
+  }
+
+  
 }
 
 export { Certificate };

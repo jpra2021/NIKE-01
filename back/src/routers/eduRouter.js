@@ -1,7 +1,7 @@
 import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
-import { eduService1 } from "../services/eduServiceN";
+import { eduService } from "../services/eduService";
 
 const eduRouter = Router();
 
@@ -25,7 +25,7 @@ const createNewEdus = async (req, res, next) => {
     const id = req.currentUserId;
     const newInput = { id, school, major, degree };
 
-    const newEdu = await eduService1.createEdus(newInput);
+    const newEdu = await eduService.createEdus(newInput);
 
     if (newEdu.errorMessage) {
       throw new Error(newEdu.errorMessage);
@@ -45,20 +45,20 @@ const updateNewEdu = async (req, res, next) => {
     const degree = req.body.degree;
     //changed Input
     const newInput = { school, major, degree };
-    const edus = await eduService1.updateEdu(user_id, newInput);
+    const edu = await eduService.updateEdu(user_id, newInput);
 
-    res.status(201).send(edus);
+    res.status(201).send(edu);
   } catch (error) {
     next(error);
   }
 };
 
 /* -- GET --*/
-const getNewEdus = async (req, res, next) => {
+const getEdus = async (req, res, next) => {
   try {
     //to get all docs of the user by user's id
     const id = req.currentUserId;
-    const edus = await eduService1.getEdus(id);
+    const edus = await eduService.getEdus(id);
     res.status(201).send(edus);
   } catch (error) {
     next(error);
@@ -68,6 +68,6 @@ const getNewEdus = async (req, res, next) => {
 /*-------Router-------*/
 eduRouter.post("/user/edu", login_required, createNewEdus);
 eduRouter.put("/user/edu", login_required, updateNewEdu);
-eduRouter.get("/user/edu", login_required, getNewEdus);
+eduRouter.get("/user/edu", login_required, getEdus);
 
 export { eduRouter };

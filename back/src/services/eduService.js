@@ -1,6 +1,6 @@
 import { Education } from "../db/models/Education";
 
-class eduService1 {
+class eduService {
   /* --- CREATE -----*/
   /* user_id <= req.currentUserId from login-requires */
 
@@ -41,4 +41,4 @@ class eduService1 {
   }
 }
 
-export { eduService1 };
+export { eduService };
