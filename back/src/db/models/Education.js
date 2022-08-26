@@ -29,7 +29,7 @@ class Education {
   }
 
   /* ---DELETE ---*/
-  static async delete(user_id) {
+  static async delete(obj_id) {
     const deletedEdu = await EducationModel.findOneAndDelete({ _id: obj_id });
     return deletedEdu;
   }
