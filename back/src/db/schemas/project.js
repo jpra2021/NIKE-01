@@ -6,19 +6,15 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
-    subject: {
+    title: {
       type: String,
       required: true,
     },
-    description: {
+    detail: {
       type: String,
       required: true,
     },
-    startDate: {
-      type: String,
-      required: true,
-    },
-    endDate: {
+    date: {
       type: String,
       required: true,
     },

@@ -36,6 +36,12 @@ class awardService {
     const getAward = await Award.findById(id);
     return getAward;
   }
+
+  static async deleteAward(inputdata){
+    const deleteAward = await Award.delete(inputdata);
+
+    return deleteAward;
+  }
 }
 
 export { awardService };

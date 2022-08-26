@@ -13,27 +13,21 @@ class projectService {
       return createdNewPro;
     }
     //subject
-    if (newInput.subject) {
+    if (newInput.title) {
       const fieldToUpdate = "subject";
       const newValue = newInput.subject;
       pro = await Project.update({ id, fieldToUpdate, newValue });
     }
-    //description
-    if (newInput.description) {
-      const fieldToUpdate = "description";
-      const newValue = newInput.description;
+    //detail
+    if (newInput.detail) {
+      const fieldToUpdate = "detail";
+      const newValue = newInput.detail;
       pro = await Project.update({ id, fieldToUpdate, newValue });
     }
-    //subject
-    if (newInput.startDate) {
-      const fieldToUpdate = "startDate";
-      const newValue = newInput.startDate;
-      pro = await Project.update({ id, fieldToUpdate, newValue });
-    }
-    //subject
-    if (newInput.endDate) {
-      const fieldToUpdate = "endDate";
-      const newValue = newInput.endDate;
+    //date
+    if (newInput.date) {
+      const fieldToUpdate = "date";
+      const newValue = newInput.date;
       pro = await Project.update({ id, fieldToUpdate, newValue });
     }
     return pro;

@@ -6,8 +6,7 @@ class eduService1 {
 
   static async setEdu(inputdata) {
     const { id } = inputdata;
-    const { school, major, position } = inputdata;
-    const setinputdata = { school, major, position };
+    const { school, major, degree } = inputdata;
     //console.log("id가 존재하는가?:", id);
 
     /*-- for testing existence  --*/
@@ -20,21 +19,21 @@ class eduService1 {
     /*then, if the key is not null(=have value), update */
     //check school
 
-    if (setinputdata.school) {
+    if (school) {
       const fieldToUpdate = "school";
-      const newValue = setinputdata.school;
+      const newValue = school;
       edu = await Education.update({ id, fieldToUpdate, newValue });
     }
     //check major
-    if (setinputdata.major) {
+    if (major) {
       const fieldToUpdate = "major";
-      const newValue = setinputdata.major;
+      const newValue = major;
       edu = await Education.update({ id, fieldToUpdate, newValue });
     }
     //check position
-    if (setinputdata.position) {
-      const fieldToUpdate = "position";
-      const newValue = setinputdata.position;
+    if (degree) {
+      const fieldToUpdate = "degree";
+      const newValue = degree;
       edu = await Education.update({ id, fieldToUpdate, newValue });
     }
     return edu;

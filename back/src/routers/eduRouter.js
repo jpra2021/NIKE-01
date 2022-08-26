@@ -7,7 +7,6 @@ const eduRouter = Router();
 
 /*------Controller------- */
 const createAndUpdate = async (req, res, next) => {
-  console.log("=====================")
   try {
     /* --checking: is the req.body acceptable data?--*/
     if (is.emptyObject(req.body)) {
@@ -19,10 +18,10 @@ const createAndUpdate = async (req, res, next) => {
     /* must be same with schema!*/
     const school = req.body.school;
     const major = req.body.major;
-    const position = req.body.position;
+    const degree = req.body.degree;
     /* -req.currentUserId from login-requires -*/
     const id = req.currentUserId;
-    const newInput = { id, school, major, position };
+    const newInput = { id, school, major, degree };
     /* --create or update ---*/
     const newEdu = await eduService1.setEdu(newInput);
 

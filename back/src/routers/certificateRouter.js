@@ -13,9 +13,9 @@ const createAndUpdate = async (req, res, next) => {
       );
     }
 
-    const { title, description, getDate } = req.body;
+    const { title, detail, date } = req.body;
     const id = req.currentUserId;
-    const newInput = { id, title, description, getDate };
+    const newInput = { id, title, detail, date };
 
     const newCertificate = await certificateService.setCertificate(newInput);
 
