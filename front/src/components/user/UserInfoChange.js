@@ -7,6 +7,7 @@ function UserInfoChange() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { setNotices } = useContext(NoticeContext);
 
   const validateEmail = (email) => {
@@ -19,14 +20,19 @@ function UserInfoChange() {
 
   const isEmailValid = validateEmail(email);
   const isPasswordValid = password.length >= 4;
-  const isFormValid = isEmailValid && isPasswordValid;
+  const isPasswordSame = password === confirmPassword;
+  const isFormValid = isEmailValid && isPasswordValid && isPasswordSame;
 
-  const onChangeAuthEmail = (e) => {
+  const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
 
-  const onChangeAuthPassword = (e) => {
+  const onChangePassword = (e) => {
     setPassword(e.target.value);
+  };
+
+  const onChangeConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -57,14 +63,14 @@ function UserInfoChange() {
 
         <Col xs={5}>
           <Form>
-            <Form.Group controlId="checkEmail">
+            <Form.Group controlId="changeEmail">
               <Form.Label>이메일 주소</Form.Label>
               <Form.Control
                 type="email"
                 autoComplete="on"
                 placeholder="email"
                 value={email}
-                onChange={onChangeAuthEmail}
+                onChange={onChangeEmail}
               />
               {!isEmailValid && (
                 <Form.Text className="text-success">
@@ -73,18 +79,32 @@ function UserInfoChange() {
               )}
             </Form.Group>
 
-            <Form.Group controlId="checkPassword" className="mt-3">
+            <Form.Group controlId="changePassword" className="mt-3">
               <Form.Label>비밀번호</Form.Label>
               <Form.Control
                 type="password"
-                autoComplete="on"
-                placeholder="password"
+                autoComplete="off"
                 value={password}
-                onChange={onChangeAuthPassword}
+                onChange={onChangePassword}
               />
               {!isPasswordValid && (
                 <Form.Text className="text-success">
-                  비밀번호는 4글자 이상입니다.
+                  비밀번호는 4글자 이상으로 설정해 주세요.
+                </Form.Text>
+              )}
+            </Form.Group>
+
+            <Form.Group controlId="confirmChangePassword" className="mt-3">
+              <Form.Label>비밀번호 재확인</Form.Label>
+              <Form.Control
+                type="password"
+                autoComplete="off"
+                value={confirmPassword}
+                onChange={onChangeConfirmPassword}
+              />
+              {!isPasswordSame && (
+                <Form.Text className="text-success">
+                  비밀번호가 일치하지 않습니다.
                 </Form.Text>
               )}
             </Form.Group>
