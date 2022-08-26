@@ -41,6 +41,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="useEditName" className="mb-3">
+            <Form.Text>이름</Form.Text>
             <Form.Control
               type="text"
               placeholder="이름"
@@ -59,6 +60,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
           </Form.Group> */}
 
           <Form.Group controlId="userEditDescription">
+            <Form.Text>인사말</Form.Text>
             <Form.Control
               type="text"
               placeholder="정보, 인사말"

@@ -99,7 +99,7 @@ function UserInfoAuth() {
               />
               {!isPasswordValid && (
                 <Form.Text className="text-success">
-                  비밀번호는 4글자 이상입니다.
+                  비밀번호는 4글자 이상으로 설정해 주세요.
                 </Form.Text>
               )}
             </Form.Group>
