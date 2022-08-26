@@ -1,4 +1,5 @@
 import { overlapCheck } from "../../util/util";
+import * as api from "../../../api";
 
 const certificateReducer = (dispatch) => {
     const setNotices = dispatch;
@@ -16,9 +17,16 @@ const certificateReducer = (dispatch) => {
                     return state;
                 }
     
+                const newCertificate =  {title, detail, date};
+
+                api.post("user/certificate", newCertificate)
+                    .catch((err) => {
+                        console.log(err);
+                    });
+
                 setNotices({type: "success", payload: {title: "자격증", message: "추가되었습니다."}});
                 
-                return [ ...state, {title, detail, date} ];
+                return [ ...state, newCertificate ];
             }
                     
             case "remove": {
@@ -31,16 +39,21 @@ const certificateReducer = (dispatch) => {
             case "edit": {
                 handleForm();
                 const newState = [ ...state ];
-    
-                newState[index] = { ...newState[index], title, detail, date };
                 
                 if(overlapCheck(state, title)) {
                     setNotices({type: "warn", payload: {title: "자격증", message: "이미 있는 자격증입니다."}});
                     return state;
                 }
-                
-                setNotices({type: "success", payload: {title: "자격증", message: "수정되었습니다."}});
 
+                const editedCertificate = { ...newState[index], title, detail, date }
+                newState[index] = editedCertificate;
+
+                api.put("user/certificate", editedCertificate)
+                    .catch((err) => {
+                        console.log(err);
+                    });
+
+                setNotices({type: "success", payload: {title: "자격증", message: "수정되었습니다."}});
                 return newState;
             }
     

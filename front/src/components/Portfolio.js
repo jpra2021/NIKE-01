@@ -7,7 +7,7 @@ import * as Api from "../api";
 import User from "./user/User";
 import Project from "./userpage/project/Project";
 import Certificate from "./userpage/certificate/Certificate";
-import Educations from "./userpage/Education/Educations";
+import Education from "./userpage/Education/Education";
 import Awards from "./userpage/Award/Awards";
 import Loading from "./Loading";
 import Introduction from "./userpage/introduction/Introduction";
@@ -69,7 +69,7 @@ function Portfolio() {
         <Col>
           <Introduction isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />
-          <Educations isEditable={portfolioOwner.id === userState.user?.id} />
+          <Education isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />
           <Awards isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />

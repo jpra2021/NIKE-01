@@ -1,4 +1,5 @@
 import { overlapCheck } from "../../util/util";
+import * as api from "../../../api";
 
 const projectsReducer = (dispatch) => {
     const setNotices = dispatch;
@@ -15,9 +16,24 @@ const projectsReducer = (dispatch) => {
                     return state;
                 }
                 
+                const newProject = {title, detail, date};
+
+                const splitedDate = date.split(" ~ ");
+                const data = {
+                    title,
+                    detail,
+                    startDate: splitedDate[0],
+                    endDate: splitedDate[1]
+                }
+
+                api.post("user/project", data)
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+
                 setNotices({type: "success", payload: {title: "프로젝트", message: "추가되었습니다."}});
 
-                return [ ...state, {title, detail, date} ];
+                return [ ...state, newProject ];
             }
             
             case "remove": {
@@ -29,14 +45,29 @@ const projectsReducer = (dispatch) => {
     
             case "edit": {
                 handleForm();
-                const newState = [ ...state ];
-    
-                newState[index] = { ...newState[index], title, detail, date };
                 
                 if (overlapCheck(state, title)) {
                     setNotices({type: "warn", payload: {title: "프로젝트", message: "이미 있는 내용입니다."}});
                     return state;
                 }
+                
+                const newState = [ ...state ];
+                
+                const editedProject = { ...newState[index], title, detail, date };
+                newState[index] = editedProject;
+
+                const splitedDate = date.split(" ~ ");
+                const data = {
+                    title,
+                    detail,
+                    startDate: splitedDate[0],
+                    endDate: splitedDate[1]
+                }
+
+                api.put("user/project", data)
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
     
                 setNotices({type: "success", payload: {title: "프로젝트", message: "수정되었습니다."}});
                 return newState;
