@@ -48,12 +48,14 @@ function UserInfoChange({ correctUserInfo, setCorrectUserInfo }) {
 
     // 이메일, 비밀번호 변경하기
     try {
-      changeComplete();
+      alertChangeComplete();
       setCorrectUserInfo(false);
-    } catch (error) {}
+    } catch (err) {
+      console.log("이메일, 비밀번호 변경에 실패하였습니다.\n", err);
+    }
   };
 
-  const changeComplete = () => {
+  const alertChangeComplete = () => {
     setNotices({
       type: "success",
       payload: {

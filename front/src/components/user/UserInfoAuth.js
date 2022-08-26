@@ -42,17 +42,17 @@ function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
 
     // 동일한 아이디와 패스워드인지 검사...
     // if (올바른 이메일, 비번이 아니면)
-    // return incorrectInfo();
+    // return alertIncorrectInfo();
     try {
       setCorrectUserInfo(true);
-      correctInfo();
+      alertCorrectInfo();
       navigate("/infochange");
     } catch (err) {
-      console.log(err);
+      console.log("인증에 실패하였습니다.\n", err);
     }
   };
 
-  const incorrectInfo = () => {
+  const alertIncorrectInfo = () => {
     setNotices({
       type: "warn",
       payload: {
@@ -62,7 +62,7 @@ function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
     });
   };
 
-  const correctInfo = () => {
+  const alertCorrectInfo = () => {
     setNotices({
       type: "success",
       payload: {
