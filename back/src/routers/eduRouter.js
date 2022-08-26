@@ -65,9 +65,23 @@ const getEdus = async (req, res, next) => {
   }
 };
 
+/*--DELETE--*/
+const deleteEdu = async (req, res, next) => {
+  try {
+    const user_id = req.body._id;
+
+    await eduService.deleteEdu(user_id);
+
+    return res.status(201).json({ message: "Education Deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 /*-------Router-------*/
 eduRouter.post("/user/edu", login_required, createNewEdus);
 eduRouter.put("/user/edu", login_required, updateNewEdu);
 eduRouter.get("/user/edu", login_required, getEdus);
+eduRouter.delete("/user/edu", login_required, deleteEdu);
 
 export { eduRouter };

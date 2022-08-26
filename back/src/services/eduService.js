@@ -39,6 +39,11 @@ class eduService {
     const edu = await Education.find(id);
     return edu;
   }
+  /*-- DELETE --*/
+  static async deleteEdu(user_id) {
+    const edu = await Education.delete(user_id);
+    return edu;
+  }
 }
 
 export { eduService };

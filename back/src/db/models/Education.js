@@ -27,6 +27,12 @@ class Education {
     const users = await EducationModel.find({ id: id });
     return users;
   }
+
+  /* ---DELETE ---*/
+  static async delete(user_id) {
+    const deletedEdu = await EducationModel.findOneAndDelete({ _id: user_id });
+    return deletedEdu;
+  }
 }
 
 export { Education };
