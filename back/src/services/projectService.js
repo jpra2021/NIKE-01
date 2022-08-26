@@ -13,7 +13,7 @@ class projectService {
       return createdNewPro;
     }
     //subject
-    if (newInput.subject) {
+    if (newInput.title) {
       const fieldToUpdate = "subject";
       const newValue = newInput.subject;
       pro = await Project.update({ id, fieldToUpdate, newValue });
