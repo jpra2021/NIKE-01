@@ -30,6 +30,14 @@ const UserSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
     },
+    award: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Award",
+    },
+    certificate: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Certificate",
+    },
     introduction: {
       type: String,
       required: false,

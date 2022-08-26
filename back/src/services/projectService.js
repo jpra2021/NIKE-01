@@ -8,7 +8,7 @@ class projectService {
   }
 
   /* -- UPDATE --*/
-  static async updatePro(user_id, newInput) {
+  static async updatePro(obj_id, newInput) {
     let pro;
     const { title, detail, date } = newInput;
 
@@ -16,31 +16,31 @@ class projectService {
     if (title) {
       const fieldToUpdate = "title";
       const newValue = title;
-      pro = await Project.update({ user_id, fieldToUpdate, newValue });
+      pro = await Project.update({ obj_id, fieldToUpdate, newValue });
     }
     //check detail
     if (detail) {
       const fieldToUpdate = "detail";
       const newValue = detail;
-      pro = await Project.update({ user_id, fieldToUpdate, newValue });
+      pro = await Project.update({ obj_id, fieldToUpdate, newValue });
     }
     //check date
     if (date) {
       const fieldToUpdate = "date";
       const newValue = date;
-      pro = await Project.update({ user_id, fieldToUpdate, newValue });
+      pro = await Project.update({ obj_id, fieldToUpdate, newValue });
     }
     return pro;
   }
 
   /* -- GET -- */
-  static async getPros(id) {
-    const pro = await Project.find(id);
+  static async getPros(user_id) {
+    const pro = await Project.find(user_id);
     return pro;
   }
   /*-- DELETE --*/
-  static async deletePro(user_id) {
-    const pro = await Project.delete(user_id);
+  static async deletePro(obj_id) {
+    const pro = await Project.delete(obj_id);
     return pro;
   }
 }
