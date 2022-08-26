@@ -13,6 +13,8 @@ import Notification from "./components/notice/NoticeList";
 import noticeReducer from "./components/notice/noticeReducer";
 import Redirect from "./components/Redirect";
 import Loading from "./components/Loading";
+import UserInfoAuth from "./components/user/UserInfoAuth";
+import UserInfoChange from "./components/user/UserInfoChange";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -70,6 +72,8 @@ function App() {
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/users/:userId" element={<Portfolio />} />
+              <Route path="/infoauth" element={<UserInfoAuth />} />
+              <Route path="/infochange" element={<UserInfoChange />} />
               <Route path="/network" element={<Network />} />
               <Route path="*" element={<Redirect />} />
             </Routes>

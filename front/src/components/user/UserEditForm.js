@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import { useNavigate } from "react-router-dom";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
   //useState로 email 상태를 생성함.
-  const [email, setEmail] = useState(user.email);
+  // const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +19,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     // "users/유저id" 엔드포인트로 PUT 요청함.
     const res = await Api.put(`users/${user.id}`, {
       name,
-      email,
+      // email,
       description,
     });
     // 유저 정보는 response의 data임.
@@ -26,6 +29,11 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
     // isEditing을 false로 세팅함.
     setIsEditing(false);
+  };
+
+  const redirectToUserInfo = () => {
+    setIsEditing(false);
+    navigate("/infoauth");
   };
 
   return (
@@ -41,14 +49,14 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             />
           </Form.Group>
 
-          <Form.Group controlId="userEditEmail" className="mb-3">
+          {/* <Form.Group controlId="userEditEmail" className="mb-3">
             <Form.Control
               type="email"
               placeholder="이메일"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </Form.Group>
+          </Form.Group> */}
 
           <Form.Group controlId="userEditDescription">
             <Form.Control
@@ -68,6 +76,21 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 취소
               </Button>
             </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mt-3 justify-content-center">
+            <Button
+              variant="putline-secondary"
+              class
+              style={{
+                width: "180px",
+                height: "30px",
+                fontSize: "12px",
+              }}
+              onClick={redirectToUserInfo}
+            >
+              이메일과 비밀번호 변경하기
+            </Button>
           </Form.Group>
         </Form>
       </Card.Body>
