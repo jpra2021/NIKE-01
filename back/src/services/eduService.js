@@ -1,6 +1,6 @@
 import { Education } from "../db/models/Education";
 
-class eduService1 {
+class eduService {
   /* --- CREATE -----*/
   /* user_id <= req.currentUserId from login-requires */
 
@@ -39,6 +39,11 @@ class eduService1 {
     const edu = await Education.find(id);
     return edu;
   }
+  /*-- DELETE --*/
+  static async deleteEdu(user_id) {
+    const edu = await Education.delete(user_id);
+    return edu;
+  }
 }
 
-export { eduService1 };
+export { eduService };

@@ -45,30 +45,27 @@ const getData = async (req, res, next) => {
   }
 };
 
-const deleteData = async(req, res, next) =>{
-
-  try{
+const deleteData = async (req, res, next) => {
+  try {
     const id = req.currentUserId;
 
     const { title, description } = req.body;
 
-    const dataToDelete = {id, title, description}
+    const dataToDelete = { id, title, description };
 
-    const deleteAward = await awardService.deleteAward(dataToDelete)
+    const deleteAward = await awardService.deleteAward(dataToDelete);
 
-    console.log("id", id)
-    console.log("deleteAward", deleteAward)
+    console.log("id", id);
+    console.log("deleteAward", deleteAward);
 
     // if(deleteAward.errorMessage){
     //   throw new Error(deleteAward.errorMessage)
     // }
-    return res.status(201).json(deleteAward)
-  }catch(err){
-    next(err)
+    return res.status(201).json(deleteAward);
+  } catch (err) {
+    next(err);
   }
-
-
-}
+};
 
 awardRouter
   .route("/user/award")
