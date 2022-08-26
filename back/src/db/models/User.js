@@ -11,8 +11,9 @@ class User {
     return user;
   }
 
-  static async findById({ user_id }) {
-    const user = await UserModel.findOne({ id: user_id });
+  static async findById(user_id) {
+    console.log("이놈이문제냐??", typeof user_id);
+    const user = await UserModel.findOne({ user_id: user_id });
     return user;
   }
 
@@ -22,7 +23,7 @@ class User {
   }
 
   static async update({ user_id, fieldToUpdate, newValue }) {
-    const filter = { id: user_id };
+    const filter = { user_id: user_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
     const updatedUser = await UserModel.findOneAndUpdate(

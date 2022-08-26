@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
   {
-    id: {
+    user_id: {
       type: String,
       required: true,
     },
@@ -29,6 +29,14 @@ const UserSchema = new Schema(
     project: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
+    },
+    award: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Award",
+    },
+    certificate: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Certificate",
     },
     introduction: {
       type: String,

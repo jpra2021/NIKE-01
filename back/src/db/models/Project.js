@@ -9,8 +9,8 @@ class Project {
   }
 
   /* UPDATE */
-  static async update({ user_id, fieldToUpdate, newValue }) {
-    const filter = { _id: user_id };
+  static async update({ obj_id, fieldToUpdate, newValue }) {
+    const filter = { _id: obj_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
     const updatedNewPro = await ProjectModel.findOneAndUpdate(
@@ -22,14 +22,14 @@ class Project {
   }
 
   /* -- FIND --- */
-  static async find(id) {
-    const user = await ProjectModel.find({ id: id });
+  static async find(user_id) {
+    const user = await ProjectModel.find({ user_id: user_id });
     return user;
   }
 
   /*-- DELETE --*/
-  static async delete(user_id) {
-    const deletedPro = await ProjectModel.findOneAndDelete({ _id: user_id });
+  static async delete(obj_id) {
+    const deletedPro = await ProjectModel.findOneAndDelete({ _id: obj_id });
     return deletedPro;
   }
 }

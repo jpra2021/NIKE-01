@@ -13,7 +13,7 @@ const createUser = async (req, res, next) => {
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-    console.log("createUser가잘됨");
+
     // req (request) 에서 데이터 가져오기
     const name = req.body.name;
     const email = req.body.email;
@@ -25,10 +25,8 @@ const createUser = async (req, res, next) => {
       email,
       password,
     });
-    console.log("adduser라우터실행됨");
 
     if (newUser.errorMessage) {
-      console.log("adduser에러뱉음");
       throw new Error(newUser.errorMessage);
     }
 
@@ -41,16 +39,12 @@ const createUser = async (req, res, next) => {
 /* -- POST (AUTH) Router /user/login --*/
 const loginfunction = async (req, res, next) => {
   try {
-    console.log("로그인펑션되니?");
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
     const password = req.body.password;
 
-    console.log("의심하는놈", email, password);
-
     // 위 데이터를 이용하여 유저 db에서 유저 찾기
     const user = await userAuthService.getUser({ email, password });
-    console.log("너나오니", user);
 
     if (user.errorMessage) {
       throw new Error(user.errorMessage);
@@ -67,9 +61,7 @@ const loginfunction = async (req, res, next) => {
 const getUserList = async (req, res, next) => {
   try {
     // 전체 사용자 목록을 얻음
-    console.log("제발좀되라");
     const users = await userAuthService.getUsers();
-    console.log(users);
     res.status(200).send(users);
   } catch (error) {
     next(error);
@@ -81,10 +73,10 @@ const getUserList = async (req, res, next) => {
 const getUserInfo = async (req, res, next) => {
   try {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
-    console.log("겟유저인포시작했니?");
     const user_id = req.currentUserId;
-    console.log("getUserInfo에서 userid", user_id);
-    const currentUserInfo = await userAuthService.getUserInfo(user_id);
+    const currentUserInfo = await userAuthService.getUserInfo({
+      user_id,
+    });
 
     if (currentUserInfo.errorMessage) {
       throw new Error(currentUserInfo.errorMessage);
@@ -101,7 +93,7 @@ const getUserInfo = async (req, res, next) => {
 const setUser = async (req, res, next) => {
   try {
     // URI로부터 사용자 id를 추출함.
-    const user_id = req.params.user_id;
+    const user_id = req.params.id;
     // body data 로부터 업데이트할 사용자 정보를 추출함.
     const name = req.body.name ?? null;
     const email = req.body.email ?? null;
@@ -127,7 +119,7 @@ const setUser = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const user_id = req.params.id;
-    const currentUserInfo = await userAuthService.getUserInfo(user_id);
+    const currentUserInfo = await userAuthService.getUserInfo({ user_id });
 
     if (currentUserInfo.errorMessage) {
       throw new Error(currentUserInfo.errorMessage);

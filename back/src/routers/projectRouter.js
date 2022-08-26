@@ -18,9 +18,9 @@ const createNewPros = async (req, res, next) => {
     }
     /*-distributing data from req-*/
     /* must be same with schema!*/
-    const id = req.currentUserId;
+    const user_id = req.currentUserId;
     const { title, detail, date } = req.body;
-    const reqData = { id, title, detail, date };
+    const reqData = { user_id, title, detail, date };
 
     const newPro = await projectService.createPros(reqData);
 
@@ -36,10 +36,10 @@ const createNewPros = async (req, res, next) => {
 /*-- UPDATE --*/
 const updateNewPro = async (req, res, next) => {
   try {
-    const user_id = req.body._id;
+    const obj_id = req.body._id;
     const { title, detail, date } = req.body;
     const newInput = { title, detail, date };
-    const pro = await projectService.updatePro(user_id, newInput);
+    const pro = await projectService.updatePro(obj_id, newInput);
 
     res.status(201).send(pro);
   } catch (error) {
@@ -49,8 +49,8 @@ const updateNewPro = async (req, res, next) => {
 /* GET */
 const getNewPros = async (req, res, next) => {
   try {
-    const id = req.currentUserId;
-    const pros = await projectService.getPros(id);
+    const user_id = req.currentUserId;
+    const pros = await projectService.getPros(user_id);
     res.status(201).send(pros);
   } catch (error) {
     next(error);
@@ -59,9 +59,9 @@ const getNewPros = async (req, res, next) => {
 /*--DELETE--*/
 const deleteTargetPro = async (req, res, next) => {
   try {
-    const user_id = req.body._id;
+    const obj_id = req.body._id;
 
-    await projectService.deletePro(user_id);
+    await projectService.deletePro(obj_id);
 
     return res.status(201).json({ message: "Project Deleted" });
   } catch (error) {
