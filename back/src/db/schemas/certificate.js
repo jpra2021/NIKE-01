@@ -10,11 +10,11 @@ const certificateSchema = new Schema(
       type: String,
       required: true,
     },
-    description: {
+    detail: {
       type: String,
       required: true,
     },
-    getDate:{
+    date:{
       type:String,
       required:true
     }

@@ -4,7 +4,7 @@ import {Certificate} from "../db/models/Certificate"
 class certificateService{
     static async setCertificate(inputdata){
         const {id} = inputdata;
-        const {title, description, getDate} = inputdata
+        const {title, detail, date} = inputdata
 
         let isCertificate = await Certificate.findById(id)
 
@@ -23,16 +23,16 @@ class certificateService{
             updateCertificate = await Certificate.update({id, fieldToUpdate, newValue})
         }
 
-        if(description){
-            const fieldToUpdate = "description";
-            const newValue = description;
+        if(detail){
+            const fieldToUpdate = "detail";
+            const newValue = detail;
 
             updateCertificate = await Certificate.update({id, fieldToUpdate, newValue})
         }
 
-        if(getDate){
-            const fieldToUpdate = "getDate";
-            const newValue = getDate;
+        if(date){
+            const fieldToUpdate = "date";
+            const newValue = date;
 
             updateCertificate = await Certificate.update({id, fieldToUpdate, newValue})
         }

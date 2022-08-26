@@ -17,8 +17,8 @@ const createAndUpdate = async (req, res, next) => {
       );
     }
     const id = req.currentUserId;
-    const { subject, description, startDate, endDate } = req.body;
-    const reqData = { id, subject, description, startDate, endDate };
+    const { subject, detail, date } = req.body;
+    const reqData = { id, subject, detail, date };
 
     const newPro = await projectService.setPro(reqData);
 

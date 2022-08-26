@@ -14,7 +14,7 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
-    position: {
+    degree: {
       type: String,
       required: true,
       enum: ["재학중", "학사졸업", "석사졸업", "박사졸업"],

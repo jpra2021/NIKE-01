@@ -26,6 +26,20 @@ class Award {
 
     return updateAward;
   }
+
+  static async delete(deleteData){
+    const { id, fieldToUpdate, newValue } = deleteData;
+
+    const filter = id;
+    const update = { [fieldToUpdate]: newValue };
+
+    const deleteAward = await AwardModel.findOneAndDelete(
+      filter,
+      update
+    );
+
+    return deleteAward;
+  }
 }
 
 export { Award };
