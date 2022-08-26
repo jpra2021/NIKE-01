@@ -22,13 +22,11 @@ const createNewCertis = async (req, res, next) => {
     const date = req.body.date;
 
     /* -req.currentUserId from login-requires -*/
-    const id = req.currentUserId;
+    const user_id = req.currentUserId;
 
-    const newInput = { id, title, detail, date };
+    const newInput = { user_id, title, detail, date };
 
     const newCerti = await certiService.createCertis(newInput);
-
-    console.log("라우타ㅓ=>", newCerti)
 
     if (newCerti.errorMessage) {
       throw new Error(newCerti.errorMessage);
@@ -43,16 +41,16 @@ const createNewCertis = async (req, res, next) => {
 /*-- UPDATE --*/
 const updateNewCerti = async (req, res, next) => {
   try {
-    const user_id = req.body._id;
+    const obj_id = req.body._id;
     const title = req.body.title;
     const detail = req.body.detail;
     const date = req.body.date;
 
     //changed Input
-    const newInput = { title, detail, date};
-    const certi = await certiService.updateCerti(user_id, newInput);
+    const newInput = { title, detail, date };
+    const certi = await certiService.updateCerti(obj_id, newInput);
 
-    console.log("라우=>", certi)
+    console.log("라우=>", certi);
 
     res.status(201).send(certi);
   } catch (error) {
@@ -63,8 +61,8 @@ const updateNewCerti = async (req, res, next) => {
 /* -- GET --*/
 const getCertis = async (req, res, next) => {
   try {
-    const id = req.currentUserId;
-    const certis = await certiService.getCertis(id);
+    const user_id = req.currentUserId;
+    const certis = await certiService.getCertis(user_id);
     res.status(201).json(certis);
   } catch (err) {
     next(err);
@@ -74,22 +72,20 @@ const getCertis = async (req, res, next) => {
 /*-- DELETE --*/
 const deleteCerti = async (req, res, next) => {
   try {
-    const user_id = req.body._id;
+    const obj_id = req.body._id;
 
     //changed Input
-    await certiService.deleteCerti(user_id);
+    await certiService.deleteCerti(obj_id);
 
-    res.status(201).json({"message":"deleted!"});
+    res.status(201).json({ message: "deleted!" });
   } catch (error) {
     next(error);
   }
 };
 
-
-certiRouter.post("/user/certificate", login_required, createNewCertis)
-certiRouter.put("/user/certificate", login_required, updateNewCerti)
-certiRouter.get("/user/certificate", login_required, getCertis)
-certiRouter.delete("/user/certificate", login_required, deleteCerti)
-
+certiRouter.post("/user/certificate", login_required, createNewCertis);
+certiRouter.put("/user/certificate", login_required, updateNewCerti);
+certiRouter.get("/user/certificate", login_required, getCertis);
+certiRouter.delete("/user/certificate", login_required, deleteCerti);
 
 export { certiRouter };
