@@ -18,19 +18,19 @@ function Loading() {
           style={{
             width: "10vh",
             height: "10vh",
-            marginTop: "10vh",
+            marginTop: "15vh",
           }}
         />
 
         <div
           style={{
-            margin: "10vh",
+            margin: "5vh",
             justifyContent: "center",
             fontSize: "3.5vh",
             color: "#6c757d",
           }}
         >
-          Loading...
+          Loading
         </div>
       </div>
     </>
