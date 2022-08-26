@@ -57,6 +57,7 @@ function App() {
   if (!isFetchCompleted) {
     return <Loading />;
   }
+  console.log("프론트 유저", userState);
 
   return (
     <DispatchContext.Provider value={dispatch}>
