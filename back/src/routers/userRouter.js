@@ -83,7 +83,7 @@ const getUserInfo = async (req, res, next) => {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
     console.log("겟유저인포시작했니?");
     const user_id = req.currentUserId;
-    console.log("getUserInfo에서 userid", user_id);
+    console.log("👀getUserInfo에서 userid=>", user_id);
     const currentUserInfo = await userAuthService.getUserInfo(user_id);
 
     if (currentUserInfo.errorMessage) {
@@ -126,7 +126,9 @@ const setUser = async (req, res, next) => {
 /* -- GET(Auth), /users/:id--*/
 const getUser = async (req, res, next) => {
   try {
-    const user_id = req.params.id;
+    const user_id = req.params.user_id;
+
+    console.log("👀getUser에서 user_id=>", user_id);
     const currentUserInfo = await userAuthService.getUserInfo(user_id);
 
     if (currentUserInfo.errorMessage) {

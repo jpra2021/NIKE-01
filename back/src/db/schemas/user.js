@@ -20,7 +20,7 @@ const UserSchema = new Schema(
     },
     description: {
       type: String,
-      required: false,
+      default: "details",
     },
     edu: {
       type: mongoose.Schema.Types.ObjectId,
@@ -40,7 +40,7 @@ const UserSchema = new Schema(
     },
     introduction: {
       type: String,
-      required: false,
+      default: "intro",
     },
   },
   {
