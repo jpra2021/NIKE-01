@@ -1,23 +1,26 @@
 import { Schema, model } from "mongoose";
 
-const EducationSchema = new Schema(
+const ProjectSchema = new Schema(
   {
     id: {
       type: String,
       required: true,
     },
-    school: {
+    subject: {
       type: String,
       required: true,
     },
-    major: {
+    description: {
       type: String,
       required: true,
     },
-    position: {
+    startDate: {
       type: String,
       required: true,
-      enum: ["재학중", "학사졸업", "석사졸업", "박사졸업"],
+    },
+    endDate: {
+      type: String,
+      required: true,
     },
   },
   {
@@ -26,5 +29,5 @@ const EducationSchema = new Schema(
   }
 );
 
-const EducationModel = model("Education", EducationSchema);
-export { EducationModel };
+const ProjectModel = model("Project", ProjectSchema);
+export { ProjectModel };
