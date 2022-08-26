@@ -18,9 +18,7 @@ class userAuthService {
 
     // id 는 유니크 값 부여
     const user_id = uuidv4();
-    console.log("userService/user_id:", user_id);
     const newUser = { user_id, name, email, password: hashedPassword };
-    console.log("userService/newUser:", newUser);
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });
@@ -53,11 +51,9 @@ class userAuthService {
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
     const token = jwt.sign({ user_id: user.user_id }, secretKey);
-    console.log("유저서비스/getUser/token:", token);
 
     // 반환할 loginuser 객체를 위한 변수 설정
     const user_id = user.user_id;
-    console.log("유저서비스/getUser/user_id:", user_id);
     const name = user.name;
     const description = user.description;
 
@@ -75,13 +71,12 @@ class userAuthService {
 
   static async getUsers() {
     const users = await User.findAll();
-    console.log("유저서비스/유저스", users);
     return users;
   }
 
   static async setUser({ user_id, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
-    let user = await User.findById({ user_id });
+    let user = await User.findById(user_id);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -93,21 +88,18 @@ class userAuthService {
     if (toUpdate.name) {
       const fieldToUpdate = "name";
       const newValue = toUpdate.name;
-      console.log("toupdate.name은?", newValue);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.email) {
       const fieldToUpdate = "email";
       const newValue = toUpdate.email;
-      console.log("toupdate.email은?", newValue);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.password) {
       const fieldToUpdate = "password";
       const newValue = bcrypt.hash(toUpdate.password, 10);
-      console.log("toupdate.password은?", newValue);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
@@ -121,7 +113,6 @@ class userAuthService {
   }
 
   static async getUserInfo(user_id) {
-    console.log("이놈이문제냐?두번쨰?", typeof user_id);
     const user = await User.findById(user_id);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
