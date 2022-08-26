@@ -100,8 +100,10 @@ const getUserInfo = async (req, res, next) => {
 
 const setUser = async (req, res, next) => {
   try {
+    console.log("이리 오너랴ㅏ",req.params.id)
     // URI로부터 사용자 id를 추출함.
-    const user_id = req.params.user_id;
+    const user_id = req.params.id;
+    console.log(user_id)
     // body data 로부터 업데이트할 사용자 정보를 추출함.
     const name = req.body.name ?? null;
     const email = req.body.email ?? null;
@@ -109,10 +111,10 @@ const setUser = async (req, res, next) => {
     const description = req.body.description ?? null;
 
     const toUpdate = { name, email, password, description };
-
+    console.log(toUpdate);
     // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
     const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
-
+    console.log("aaaa", updatedUser)
     if (updatedUser.errorMessage) {
       throw new Error(updatedUser.errorMessage);
     }
@@ -152,10 +154,8 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
 //
 userAuthRouter.post("/user/register", createUser);
 userAuthRouter.post("/user/login", loginfunction);
-
 userAuthRouter.get("/userlist", login_required, getUserList);
 userAuthRouter.get("/user/current", login_required, getUserInfo);
-
 userAuthRouter.put("/users/:id", login_required, setUser);
 userAuthRouter.get("/users/:id", login_required, getUser);
 

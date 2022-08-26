@@ -12,13 +12,18 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("====================", typeof user.user_id)
     // "users/유저id" 엔드포인트로 PUT 요청함.
-    const res = await Api.put(`users/${user.id}`, {
-      name,
-      email,
-      description,
-    });
+    let res = null
+    try {
+      res = await Api.put(`users/${user.user_id}`, {
+        name,
+        email,
+        description,
+      });
+    } catch (err) {
+      console.log(err)
+    }
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
     // 해당 유저 정보로 user을 세팅함.

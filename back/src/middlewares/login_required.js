@@ -16,13 +16,11 @@ function login_required(req, res, next) {
   // 해당 token 이 정상적인 token인지 확인 -> 토큰에 담긴 user_id 정보 추출
   try {
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
-    console.log("범인은시크릿키?", secretKey);
+    
     const jwtDecoded = jwt.verify(userToken, secretKey);
-    console.log("jwt디코드가 어떻게생긴놈이냐", jwtDecoded);
     const user_id = jwtDecoded.user_id;
     console.log(user_id);
     req.currentUserId = user_id;
-    console.log("로그인R되니?");
     next();
   } catch (error) {
     res.status(400).send("정상적인 토큰이 아닙니다. 다시 한 번 확인해 주세요.");
