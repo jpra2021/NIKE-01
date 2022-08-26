@@ -1,14 +1,22 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext } from "../../App";
+import { NoticeContext, UserStateContext } from "../../App";
 
-function UserInfoChange() {
+function UserInfoChange({ correctUserInfo, setCorrectUserInfo }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { setNotices } = useContext(NoticeContext);
+  const userState = useContext(UserStateContext);
+
+  useEffect(() => {
+    if (!userState.user || !correctUserInfo) {
+      navigate("/", { replace: true });
+      return;
+    }
+  });
 
   const validateEmail = (email) => {
     return email
@@ -39,7 +47,13 @@ function UserInfoChange() {
     e.preventDefault();
 
     // 이메일, 비밀번호 변경하기
+    try {
+      changeComplete();
+      setCorrectUserInfo(false);
+    } catch (error) {}
+  };
 
+  const changeComplete = () => {
     setNotices({
       type: "success",
       payload: {
@@ -47,8 +61,6 @@ function UserInfoChange() {
         message: "이메일과 비밀번호가 변경되었습니다.",
       },
     });
-
-    navigate("/");
   };
 
   return (
@@ -84,6 +96,7 @@ function UserInfoChange() {
               <Form.Control
                 type="password"
                 autoComplete="off"
+                placeholder="password"
                 value={password}
                 onChange={onChangePassword}
               />
@@ -99,6 +112,7 @@ function UserInfoChange() {
               <Form.Control
                 type="password"
                 autoComplete="off"
+                placeholder="confirm password"
                 value={confirmPassword}
                 onChange={onChangeConfirmPassword}
               />

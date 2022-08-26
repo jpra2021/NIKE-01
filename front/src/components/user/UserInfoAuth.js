@@ -1,13 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext } from "../../App";
+import { NoticeContext, UserStateContext } from "../../App";
 
-function UserInfoAuth() {
+function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setNotices } = useContext(NoticeContext);
+  const userState = useContext(UserStateContext);
+
+  useEffect(() => {
+    if (!userState.user) {
+      navigate("/login", { replace: true });
+      return;
+    }
+  });
 
   const validateEmail = (email) => {
     return email
@@ -35,9 +43,13 @@ function UserInfoAuth() {
     // 동일한 아이디와 패스워드인지 검사...
     // if (올바른 이메일, 비번이 아니면)
     // return incorrectInfo();
-
-    correctInfo();
-    navigate("/infochange");
+    try {
+      setCorrectUserInfo(true);
+      correctInfo();
+      navigate("/infochange");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const incorrectInfo = () => {
@@ -92,7 +104,7 @@ function UserInfoAuth() {
               <Form.Label>비밀번호</Form.Label>
               <Form.Control
                 type="password"
-                autoComplete="on"
+                autoComplete="off"
                 placeholder="password"
                 value={password}
                 onChange={onChangeAuthPassword}
