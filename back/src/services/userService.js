@@ -88,18 +88,21 @@ class userAuthService {
     if (toUpdate.name) {
       const fieldToUpdate = "name";
       const newValue = toUpdate.name;
+      console.log("toupdate.name은?", newValue);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.email) {
       const fieldToUpdate = "email";
       const newValue = toUpdate.email;
+      console.log("toupdate.email은?", newValue);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.password) {
       const fieldToUpdate = "password";
       const newValue = bcrypt.hash(toUpdate.password, 10);
+      console.log("toupdate.password은?", newValue);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 

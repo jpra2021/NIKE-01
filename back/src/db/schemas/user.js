@@ -21,21 +21,26 @@ const UserSchema = new Schema(
     description: {
       type: String,
       required: false,
-      default: "설명이 아직 없습니다. 추가해 주세요.",
     },
     edu: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Education",
     },
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
+    },
+    introduction: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 
 const UserModel = model("User", UserSchema);
 
 export { UserModel };
-
-/*const user_id = jwtDecoded.user_id; 가 userid인경우 --시도중*/
-/*const user_id = jwtDecoded.user_id; 가 Obj id인경우 */
