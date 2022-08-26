@@ -17,8 +17,8 @@ class userAuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // id 는 유니크 값 부여
-    const id = uuidv4();
-    const newUser = { id, name, email, password: hashedPassword };
+    const user_id = uuidv4();
+    const newUser = { user_id, name, email, password: hashedPassword };
 
     // db에 저장
     const createdNewUser = await User.create({ newUser });
@@ -50,16 +50,16 @@ class userAuthService {
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-    const token = jwt.sign({ user_id: user.id }, secretKey);
+    const token = jwt.sign({ user_id: user.user_id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
-    const id = user.id;
+    const user_id = user.user_id;
     const name = user.name;
     const description = user.description;
 
     const loginUser = {
       token,
-      id,
+      user_id,
       email,
       name,
       description,

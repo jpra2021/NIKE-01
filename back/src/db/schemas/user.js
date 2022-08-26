@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
   {
-    id: {
+    user_id: {
       type: String,
       required: true,
     },

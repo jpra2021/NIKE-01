@@ -148,7 +148,7 @@ userAuthRouter.post("/user/login", loginfunction);
 userAuthRouter.get("/userlist", login_required, getUserList);
 userAuthRouter.get("/user/current", login_required, getUserInfo);
 
-userAuthRouter.put("/users/:id", login_required, setUser);
-userAuthRouter.get("/users/:id", login_required, getUser);
+userAuthRouter.put("/users/:user_id", login_required, setUser);
+userAuthRouter.get("/users/:user_id", login_required, getUser);
 
 export { userAuthRouter };
