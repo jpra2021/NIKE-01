@@ -14,7 +14,7 @@ const Project = ({ isEditable }) => {
     const [ isForm, setIsForm ] = useState(false);
 
     const handleForm = () => {   
-        setIsForm(() => !isForm);
+        setIsForm((current) => !current);
     }
 
     return (
@@ -29,7 +29,7 @@ const Project = ({ isEditable }) => {
                         </Col>
                     </Row>
                 }
-                {isForm && <ProjectForm dispatch={dispatch} type="add" handleForm={handleForm} index={projects.length} />}
+                {isForm && <ProjectForm dispatch={dispatch} type="add" handleForm={handleForm} />}
             </Card.Body>
         </Card>
     );

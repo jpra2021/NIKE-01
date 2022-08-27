@@ -1,4 +1,4 @@
-import { overlapCheck } from "../../util/util";
+import { overlapCheck } from "../../util/util"
 
 const AwardReducer = (dispatch) => {
   const setNotices = dispatch;

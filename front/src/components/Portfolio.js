@@ -7,7 +7,7 @@ import * as Api from "../api";
 import User from "./user/User";
 import Project from "./userpage/project/Project";
 import Certificate from "./userpage/certificate/Certificate";
-import Educations from "./userpage/Education/Educations";
+import Education from "./userpage/Education/Education";
 import Awards from "./userpage/Award/Awards";
 import Loading from "./Loading";
 import Introduction from "./userpage/introduction/Introduction";
@@ -27,6 +27,7 @@ function Portfolio() {
     const res = await Api.get("users", ownerId);
     // 사용자 정보는 response의 data임.
     const ownerData = res.data;
+
     // portfolioOwner을 해당 사용자 정보로 세팅함.
     setPortfolioOwner(ownerData);
     // fetchPorfolioOwner 과정이 끝났으므로, isFetchCompleted를 true로 바꿈.
@@ -69,7 +70,7 @@ function Portfolio() {
         <Col>
           <Introduction isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />
-          <Educations isEditable={portfolioOwner.id === userState.user?.id} />
+          <Education isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />
           <Awards isEditable={portfolioOwner.id === userState.user?.id} />
           <div className="mb-2" />
