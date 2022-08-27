@@ -36,20 +36,3 @@ class Education {
 }
 
 export { Education };
-
-/* userSertvie is using 'findById', the _id*/
-/* However, Education(model) and eduSerivce is using 'findOne'*/
-
-/* storage */
-/* 
- //--user_id <= req.currentUserId from login-requires--
- static async findById(user_id) {
-  const user = await EducationModel.findById({ _id: user_id });
-  return user;
-}
-
-static async findAll() {
-  const users = await EducationModel.findAll({});
-  return users;
-}
-*/

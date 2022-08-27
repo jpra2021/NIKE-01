@@ -9,7 +9,7 @@ class projectService {
 
   /* -- UPDATE --*/
   static async updatePro(obj_id, newInput) {
-    let pro;
+    let pro; //to assigned result and return
     const { title, detail, date } = newInput;
 
     //check title

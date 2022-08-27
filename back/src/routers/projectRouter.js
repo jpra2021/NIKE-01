@@ -36,8 +36,11 @@ const createNewPros = async (req, res, next) => {
 /*-- UPDATE --*/
 const updateNewPro = async (req, res, next) => {
   try {
+    //obj_id(comes from req.body._id) means objectID, which assigned automatically and can be used as primary key(RDBMS) in MongoDB. A req.body will possess it to distinct which data is updated.
     const obj_id = req.body._id;
-    const { title, detail, date } = req.body;
+    const title = req.body.title ?? null;
+    const detail = req.body.detail ?? null;
+    const date = req.body.date ?? null;
     const newInput = { title, detail, date };
     const pro = await projectService.updatePro(obj_id, newInput);
 
@@ -59,8 +62,8 @@ const getNewPros = async (req, res, next) => {
 /*--DELETE--*/
 const deleteTargetPro = async (req, res, next) => {
   try {
+    //obj_id(comes from req.body._id) means objectID, which assigned automatically and can be used as primary key(RDBMS) in MongoDB. A req.body will possess it to distinct which data is deleted.
     const obj_id = req.body._id;
-
     await projectService.deletePro(obj_id);
 
     return res.status(201).json({ message: "Project Deleted" });
