@@ -1,36 +1,53 @@
-import { useState, useReducer, useContext, useMemo } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
+import React, { useReducer, useState, useContext, useMemo } from "react";
 import EducationForm from "./EducationForm";
 import EducationInfo from "./EducationInfo";
 import { NoticeContext } from "../../../App";
-import educationReducer from "./reducerEducation";
+import EducationReducer from "./reducerEducation";
 
 const initialState = [];
 
 function Education({ isEditable }) {
   const { setNotices } = useContext(NoticeContext);
-  const reducer = useMemo(() => (educationReducer(setNotices)), [])
-  const [ educationList, dispatch ] = useReducer(reducer, initialState);
+  const reducer = useMemo(() => EducationReducer(setNotices), []);
   const [isForm, setIsForm] = useState(false);
+  const [educations, dispatch] = useReducer(reducer, initialState);
 
-  const handleForm = () => {   
-    setIsForm((current) => !current);
-  }
-  
+  const handleForm = () => {
+    setIsForm(() => !isForm);
+  };
+
   return (
     <Card>
       <Card.Body>
         <Card.Title>학력</Card.Title>
-        {educationList.map((education, idx) => (<EducationInfo key={idx} education={education} index={idx} dispatch={dispatch} />))}
+        {educations.map((education, idx) => (
+          <EducationInfo
+            key={idx}
+            education={education}
+            index={idx}
+            dispatch={dispatch}
+          />
+        ))}
+
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
             <Col sm="20">
-              <Button variant="primary" onClick={handleForm}>+</Button>
+              <Button variant="primary" onClick={handleForm}>
+                +
+              </Button>
             </Col>
           </Row>
-        )
-        }
-        {isForm && <EducationForm dispatch={dispatch} type="add" handleForm={handleForm} />}
+        )}
+
+        {isForm && (
+          <EducationForm
+            dispatch={dispatch}
+            type="add"
+            handleForm={handleForm}
+            index={educations.length}
+          />
+        )}
       </Card.Body>
     </Card>
   );
