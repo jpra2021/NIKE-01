@@ -17,16 +17,16 @@ const createNewCertis = async (req, res, next) => {
     }
 
     /* must be same with schema!*/
-    const title = req.body.title;
-    const detail = req.body.detail;
-    const date = req.body.date;
-
+    const { title, detail, date } = req.body;
     /* -req.currentUserId from login-requires -*/
     const user_id = req.currentUserId;
 
-    const newInput = { user_id, title, detail, date };
-
-    const newCerti = await certiService.createCertis(newInput);
+    const newCerti = await certiService.createCertis({
+      user_id,
+      title,
+      detail,
+      date,
+    });
 
     if (newCerti.errorMessage) {
       throw new Error(newCerti.errorMessage);
@@ -42,15 +42,11 @@ const createNewCertis = async (req, res, next) => {
 const updateNewCerti = async (req, res, next) => {
   try {
     const obj_id = req.body._id;
-    const title = req.body.title;
-    const detail = req.body.detail;
-    const date = req.body.date;
+    const { title, detail, date } = req.body;
 
     //changed Input
     const newInput = { title, detail, date };
     const certi = await certiService.updateCerti(obj_id, newInput);
-
-    console.log("라우=>", certi);
 
     res.status(201).send(certi);
   } catch (error) {

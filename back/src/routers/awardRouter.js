@@ -17,15 +17,16 @@ const createNewAwards = async (req, res, next) => {
     }
 
     /* must be same with schema!*/
-    const title = req.body.title;
-    const description = req.body.description;
+    const { title, description } = req.body;
 
     /* -req.currentUserId from login-requires -*/
     const user_id = req.currentUserId;
 
-    const newInput = { user_id, title, description };
-
-    const newAward = await awardService.createAwards(newInput);
+    const newAward = await awardService.createAwards({
+      user_id,
+      title,
+      description,
+    });
 
     if (newAward.errorMessage) {
       throw new Error(newAward.errorMessage);
@@ -40,8 +41,7 @@ const createNewAwards = async (req, res, next) => {
 const updateNewAward = async (req, res, next) => {
   try {
     const obj_id = req.body._id;
-    const title = req.body.title;
-    const description = req.body.description;
+    const { title, description } = req.body;
 
     //changed Input
     const newInput = { title, description };
