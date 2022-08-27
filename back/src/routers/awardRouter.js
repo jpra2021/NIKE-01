@@ -21,9 +21,9 @@ const createNewAwards = async (req, res, next) => {
     const description = req.body.description;
 
     /* -req.currentUserId from login-requires -*/
-    const id = req.currentUserId;
+    const user_id = req.currentUserId;
 
-    const newInput = { id, title, description };
+    const newInput = { user_id, title, description };
 
     const newAward = await awardService.createAwards(newInput);
 
@@ -39,13 +39,13 @@ const createNewAwards = async (req, res, next) => {
 /*-- UPDATE --*/
 const updateNewAward = async (req, res, next) => {
   try {
-    const user_id = req.body._id;
+    const obj_id = req.body._id;
     const title = req.body.title;
     const description = req.body.description;
 
     //changed Input
-    const newInput = { title, description};
-    const award = await awardService.updateAward(user_id, newInput);
+    const newInput = { title, description };
+    const award = await awardService.updateAward(obj_id, newInput);
 
     res.status(201).send(award);
   } catch (error) {
@@ -56,8 +56,8 @@ const updateNewAward = async (req, res, next) => {
 /* -- GET --*/
 const getAwards = async (req, res, next) => {
   try {
-    const id = req.currentUserId;
-    const awards = await awardService.getAwards(id);
+    const user_id = req.currentUserId;
+    const awards = await awardService.getAwards(user_id);
     res.status(201).json(awards);
   } catch (error) {
     next(error);
@@ -67,21 +67,21 @@ const getAwards = async (req, res, next) => {
 /*-- DELETE --*/
 const deleteAward = async (req, res, next) => {
   try {
-    const user_id = req.body._id;
+    const obj_id = req.body._id;
 
     //changed Input
-    await awardService.deleteAward(user_id);
+    await awardService.deleteAward(obj_id);
 
-    res.status(201).json({"message":"deleted!"});
+    res.status(201).json({ message: "deleted!" });
   } catch (error) {
     next(error);
   }
 };
 
 /*-------Router-------*/
-awardRouter.post("/user/award", login_required,  createNewAwards)
-awardRouter.put("/user/award",login_required,  updateNewAward)
-awardRouter.get("/user/award",login_required, getAwards)
-awardRouter.delete("/user/award",login_required, deleteAward)
+awardRouter.post("/user/award", login_required, createNewAwards);
+awardRouter.put("/user/award", login_required, updateNewAward);
+awardRouter.get("/user/award", login_required, getAwards);
+awardRouter.delete("/user/award", login_required, deleteAward);
 
 export { awardRouter };

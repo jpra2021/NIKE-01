@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const AwardSchema = new Schema(
   {
-    id: {
+    user_id: {
       type: String,
       required: true,
     },
@@ -13,7 +13,7 @@ const AwardSchema = new Schema(
     description: {
       type: String,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,
