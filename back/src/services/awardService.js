@@ -41,37 +41,3 @@ class awardService {
 }
 
 export { awardService };
-
-/* previous code */
-/*
-  static async setAward(inputdata) {
-    const { id } = inputdata;
-    const { title, description } = inputdata;
-
-    let isAward = await Award.findById(id);
-
-    if (!isAward) {
-      const createAward = await Award.create(inputdata);
-
-      return createAward;
-    }
-
-    let updateAward;
-
-    if (title) {
-      const fieldToUpdate = "title";
-      const newValue = title;
-
-      updateAward = await Award.update({ id, fieldToUpdate, newValue });
-    }
-
-    if (description) {
-      const fieldToUpdate = "description";
-      const newValue = description;
-
-      updateAward = await Award.update({ id, fieldToUpdate, newValue });
-    }
-
-    return updateAward;
-  }
-*/
