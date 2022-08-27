@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import Notice from './Notice';
 import { NoticeContext } from '../../App';

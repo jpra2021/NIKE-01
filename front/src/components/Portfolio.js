@@ -41,9 +41,9 @@ function Portfolio() {
       return;
     }
 
-    if (params.user_id) {
+    if (params.userId) {
       // 만약 현재 URL이 "/users/:userId" 라면, 이 userId를 유저 id로 설정함.
-      const ownerId = params.user_id;
+      const ownerId = params.userId;
       // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
       fetchPorfolioOwner(ownerId);
     } else {
@@ -57,26 +57,26 @@ function Portfolio() {
   if (!isFetchCompleted) {
     return <Loading />;
   }
-
+  
   return (
     <Container fluid>
       <Row>
         <Col md="3" lg="3">
           <User
             portfolioOwnerId={portfolioOwner.user_id}
-            isEditable={portfolioOwner.id === userState.user?.id}
+            isEditable={portfolioOwner.user_id === userState.user?.user_id}
           />
         </Col>
         <Col>
-          <Introduction isEditable={portfolioOwner.id === userState.user?.id} />
+          <Introduction isEditable={portfolioOwner.user_id === userState.user?.user_id} />
           <div className="mb-2" />
-          <Education isEditable={portfolioOwner.id === userState.user?.id} />
+          <Education isEditable={portfolioOwner.user_id === userState.user?.user_id} />
           <div className="mb-2" />
-          <Awards isEditable={portfolioOwner.id === userState.user?.id} />
+          <Awards isEditable={portfolioOwner.user_id === userState.user?.user_id} />
           <div className="mb-2" />
-          <Project isEditable={portfolioOwner.id === userState.user?.id} />
+          <Project isEditable={portfolioOwner.user_id === userState.user?.user_id} />
           <div className="mb-2" />
-          <Certificate isEditable={portfolioOwner.id === userState.user?.id} />
+          <Certificate isEditable={portfolioOwner.user_id === userState.user?.user_id} />
         </Col>
       </Row>
     </Container>

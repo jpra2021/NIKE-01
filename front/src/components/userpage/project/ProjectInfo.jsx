@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm"
+import { TYPES } from "./projectsReducer";
 
-const ProjectInfo = ({ project, index, dispatch }) => {
+const ProjectInfo = ({ project, index, handler }) => {
     const [ isEditing, setIsEditing ] = useState(false);
-    const { title, detail, date } = project;
+    const { project_id, title, detail, date } = project;
 
     const handleForm = () => {
         setIsEditing(() => !isEditing);
@@ -12,7 +13,7 @@ const ProjectInfo = ({ project, index, dispatch }) => {
 
     if (isEditing) {
         return (
-            <ProjectForm dispatch={dispatch} type="edit" handleForm={handleForm} index={index} />
+            <ProjectForm project_id={project_id} handler={handler} type={TYPES.edit} handleForm={handleForm} index={index} />
         );
     }
 
@@ -29,7 +30,7 @@ const ProjectInfo = ({ project, index, dispatch }) => {
                 <Col className="col-lg-1">
                     <Button size="sm" variant="outline-info" onClick={(e) => setIsEditing(() => !isEditing)}>편집</Button>
                     <div className="mb-2"/>
-                    <Button size="sm" variant="outline-danger" onClick={(e) =>  dispatch({type: "remove", payload: {title}})}>삭제</Button>
+                    <Button size="sm" variant="outline-danger" onClick={() => handler.remove(project_id, title)}>삭제</Button>
                 </Col>
             </Row>
         </Card.Text>

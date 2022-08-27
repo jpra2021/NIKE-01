@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect, useContext } from "react"
+import { useState, useRef, useEffect, useContext, useCallback } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { NoticeContext } from "../../../App";
 import { formatDateStr } from "../../util/util";
+import { TYPES } from "./projectsReducer";
 
-const ProjectForm = ({ dispatch, type, handleForm, index }) => {
+const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
     const [ title, setTitle ] = useState("");
     const [ detail, setDetail ] = useState("");
     const [ startDate, setStartDate ] = useState(new Date());
@@ -13,8 +14,8 @@ const ProjectForm = ({ dispatch, type, handleForm, index }) => {
     const period = useRef("");
 
     useEffect (() => {
-        if (type === "edit") {
-            dispatch({type: "load", payload: {index, setTitle, setDetail, setStartDate, setEndDate}});
+        if (type === TYPES.edit) {
+            handler.load(index, setTitle, setDetail, setStartDate, setEndDate);
         }
     }, []);
 
@@ -48,7 +49,11 @@ const ProjectForm = ({ dispatch, type, handleForm, index }) => {
 
         const date = period.current
 
-        dispatch({type, payload: {title, detail, date, handleForm, index}});
+        if (type === TYPES.edit) {
+            handler.edit(project_id, title, detail, date, handleForm, index)
+        } else {
+            handler.add(title, detail, date, handleForm, index);
+        }
     }
 
     return (
