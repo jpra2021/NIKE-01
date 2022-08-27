@@ -1,41 +1,46 @@
 import { Project } from "../db/models/Project";
 
 class projectService {
-  /* CREATE or UPDATE after checking  */
-  static async setPro(newInput) {
-    /* GET to check */
-    const { id } = newInput;
+  /* ---CREATE----  */
+  static async createPros(newInput) {
+    const creatednewPro = await Project.create(newInput);
+    return creatednewPro;
+  }
 
-    let pro = await Project.findById(id);
+  /* -- UPDATE --*/
+  static async updatePro(obj_id, newInput) {
+    let pro;
+    const { title, detail, date } = newInput;
 
-    if (!pro) {
-      const createdNewPro = await Project.create(newInput);
-      return createdNewPro;
+    //check title
+    if (title) {
+      const fieldToUpdate = "title";
+      const newValue = title;
+      pro = await Project.update({ obj_id, fieldToUpdate, newValue });
     }
-    //subject
-    if (newInput.title) {
-      const fieldToUpdate = "subject";
-      const newValue = newInput.subject;
-      pro = await Project.update({ id, fieldToUpdate, newValue });
-    }
-    //detail
-    if (newInput.detail) {
+    //check detail
+    if (detail) {
       const fieldToUpdate = "detail";
-      const newValue = newInput.detail;
-      pro = await Project.update({ id, fieldToUpdate, newValue });
+      const newValue = detail;
+      pro = await Project.update({ obj_id, fieldToUpdate, newValue });
     }
-    //date
-    if (newInput.date) {
+    //check date
+    if (date) {
       const fieldToUpdate = "date";
-      const newValue = newInput.date;
-      pro = await Project.update({ id, fieldToUpdate, newValue });
+      const newValue = date;
+      pro = await Project.update({ obj_id, fieldToUpdate, newValue });
     }
     return pro;
   }
 
-  /*  GET  */
-  static async getPro(id) {
-    const pro = await Project.findById(id);
+  /* -- GET -- */
+  static async getPros(user_id) {
+    const pro = await Project.find(user_id);
+    return pro;
+  }
+  /*-- DELETE --*/
+  static async deletePro(obj_id) {
+    const pro = await Project.delete(obj_id);
     return pro;
   }
 }

@@ -1,12 +1,14 @@
 import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
-import { eduService1 } from "../services/eduServiceN";
+import { eduService } from "../services/eduService";
 
 const eduRouter = Router();
 
 /*------Controller------- */
-const createAndUpdate = async (req, res, next) => {
+
+/*-- CREATE --*/
+const createNewEdus = async (req, res, next) => {
   try {
     /* --checking: is the req.body acceptable data?--*/
     if (is.emptyObject(req.body)) {
@@ -20,10 +22,10 @@ const createAndUpdate = async (req, res, next) => {
     const major = req.body.major;
     const degree = req.body.degree;
     /* -req.currentUserId from login-requires -*/
-    const id = req.currentUserId;
-    const newInput = { id, school, major, degree };
-    /* --create or update ---*/
-    const newEdu = await eduService1.setEdu(newInput);
+    const user_id = req.currentUserId;
+    const newInput = { user_id, school, major, degree };
+
+    const newEdu = await eduService.createEdus(newInput);
 
     if (newEdu.errorMessage) {
       throw new Error(newEdu.errorMessage);
@@ -34,20 +36,52 @@ const createAndUpdate = async (req, res, next) => {
   }
 };
 
-const getData = async (req, res, next) => {
+/*-- UPDATE --*/
+const updateNewEdu = async (req, res, next) => {
   try {
-    const id = req.currentUserId;
-    const edus = await eduService1.getEdu(id);
+    const obj_id = req.body._id;
+    const school = req.body.school;
+    const major = req.body.major;
+    const degree = req.body.degree;
+    //changed Input
+    const newInput = { school, major, degree };
+    const edu = await eduService.updateEdu(obj_id, newInput);
+
+    res.status(201).send(edu);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/* -- GET --*/
+const getEdus = async (req, res, next) => {
+  try {
+    //to get all docs of the user by user's id
+    const user_id = req.currentUserId;
+    const edus = await eduService.getEdus(user_id);
     res.status(201).send(edus);
   } catch (error) {
     next(error);
   }
 };
 
-/*-------Router-------*/
+/*--DELETE--*/
+const deleteEdu = async (req, res, next) => {
+  try {
+    const obj_id = req.body._id;
 
-eduRouter.put("/user/edu", login_required, createAndUpdate);
-eduRouter.post("/user/edu", login_required, createAndUpdate);
-eduRouter.get("/user/edu", login_required, getData);
+    await eduService.deleteEdu(obj_id);
+
+    return res.status(201).json({ message: "Education Deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/*-------Router-------*/
+eduRouter.post("/user/edu", login_required, createNewEdus);
+eduRouter.put("/user/edu", login_required, updateNewEdu);
+eduRouter.get("/user/edu", login_required, getEdus);
+eduRouter.delete("/user/edu", login_required, deleteEdu);
 
 export { eduRouter };

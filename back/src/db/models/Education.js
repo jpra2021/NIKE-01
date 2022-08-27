@@ -7,21 +7,9 @@ class Education {
     return createdNewEdu;
   }
 
-  /* ---FIND ---*/
-  /*-- for testing existence  --*/
-  /*--user_id <= req.currentUserId from login-requires--*/
-  static async findById(id) {
-    const user = await EducationModel.findOne({ id: id });
-    return user;
-  }
-
-  static async findAll() {
-    const users = await EducationModel.findAll({});
-    return users;
-  }
-
-  static async update({ id, fieldToUpdate, newValue }) {
-    const filter = id;
+  /* --UPDATE -- */
+  static async update({ obj_id, fieldToUpdate, newValue }) {
+    const filter = { _id: obj_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
@@ -32,9 +20,36 @@ class Education {
     );
     return updatedEdu;
   }
+
+  /* ---FIND ---*/
+  //to get all docs of the user
+  static async find(id) {
+    const users = await EducationModel.find({ user_id: id });
+    return users;
+  }
+
+  /* ---DELETE ---*/
+  static async delete(obj_id) {
+    const deletedEdu = await EducationModel.findOneAndDelete({ _id: obj_id });
+    return deletedEdu;
+  }
 }
 
 export { Education };
 
 /* userSertvie is using 'findById', the _id*/
 /* However, Education(model) and eduSerivce is using 'findOne'*/
+
+/* storage */
+/* 
+ //--user_id <= req.currentUserId from login-requires--
+ static async findById(user_id) {
+  const user = await EducationModel.findById({ _id: user_id });
+  return user;
+}
+
+static async findAll() {
+  const users = await EducationModel.findAll({});
+  return users;
+}
+*/

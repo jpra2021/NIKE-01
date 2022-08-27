@@ -2,22 +2,15 @@ import { ProjectModel } from "../schemas/project";
 
 /* setting class with Mongoose Query */
 class Project {
-  /* GET = find in Mongoose */
-  static async findById(id) {
-    const user = await ProjectModel.findOne({ id });
-    return user;
-  }
-
-  //checking : is findAll needed?
-
   /* CREATE */
   static async create(newPro) {
     const createdNewPro = await ProjectModel.create(newPro);
     return createdNewPro;
   }
+
   /* UPDATE */
-  static async update({ id, fieldToUpdate, newValue }) {
-    const filter = id;
+  static async update({ obj_id, fieldToUpdate, newValue }) {
+    const filter = { _id: obj_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
     const updatedNewPro = await ProjectModel.findOneAndUpdate(
@@ -26,6 +19,18 @@ class Project {
       option
     );
     return updatedNewPro;
+  }
+
+  /* -- FIND --- */
+  static async find(user_id) {
+    const user = await ProjectModel.find({ user_id: user_id });
+    return user;
+  }
+
+  /*-- DELETE --*/
+  static async delete(obj_id) {
+    const deletedPro = await ProjectModel.findOneAndDelete({ _id: obj_id });
+    return deletedPro;
   }
 }
 

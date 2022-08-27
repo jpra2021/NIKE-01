@@ -5,7 +5,10 @@ import { awardService } from "../services/awardService";
 
 const awardRouter = Router();
 
-const createAndUpdate = async (req, res, next) => {
+/*------Controller------- */
+
+/*-- CREATE --*/
+const createNewAwards = async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -13,69 +16,72 @@ const createAndUpdate = async (req, res, next) => {
       );
     }
 
-    const { title, description } = req.body;
-    const id = req.currentUserId;
+    /* must be same with schema!*/
+    const title = req.body.title;
+    const description = req.body.description;
 
-    const newInput = { id, title, description };
+    /* -req.currentUserId from login-requires -*/
+    const user_id = req.currentUserId;
 
-    const newAward = await awardService.setAward(newInput);
+    const newInput = { user_id, title, description };
+
+    const newAward = await awardService.createAwards(newInput);
 
     if (newAward.errorMessage) {
       throw new Error(newAward.errorMessage);
     }
-
     res.status(201).json(newAward);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
-const getData = async (req, res, next) => {
+/*-- UPDATE --*/
+const updateNewAward = async (req, res, next) => {
   try {
-    const id = req.currentUserId;
+    const obj_id = req.body._id;
+    const title = req.body.title;
+    const description = req.body.description;
 
-    const getAward = await awardService.getAward(id);
+    //changed Input
+    const newInput = { title, description };
+    const award = await awardService.updateAward(obj_id, newInput);
 
-    if (getAward.errorMessage) {
-      throw new Error(getAward.errorMessage);
-    }
-    res.status(201).json(getAward);
-  } catch (err) {
-    next(err);
+    res.status(201).send(award);
+  } catch (error) {
+    next(error);
   }
 };
 
-const deleteData = async(req, res, next) =>{
-
-  try{
-    const id = req.currentUserId;
-
-    const { title, description } = req.body;
-
-    const dataToDelete = {id, title, description}
-
-    const deleteAward = await awardService.deleteAward(dataToDelete)
-
-    console.log("id", id)
-    console.log("deleteAward", deleteAward)
-
-    // if(deleteAward.errorMessage){
-    //   throw new Error(deleteAward.errorMessage)
-    // }
-    return res.status(201).json(deleteAward)
-  }catch(err){
-    next(err)
+/* -- GET --*/
+const getAwards = async (req, res, next) => {
+  try {
+    const user_id = req.currentUserId;
+    const awards = await awardService.getAwards(user_id);
+    res.status(201).json(awards);
+  } catch (error) {
+    next(error);
   }
+};
 
+/*-- DELETE --*/
+const deleteAward = async (req, res, next) => {
+  try {
+    const obj_id = req.body._id;
 
-}
+    //changed Input
+    await awardService.deleteAward(obj_id);
 
-awardRouter
-  .route("/user/award")
-  .all(login_required)
-  .post(createAndUpdate)
-  .put(createAndUpdate)
-  .get(getData)
-  .delete(deleteData);
+    res.status(201).json({ message: "deleted!" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/*-------Router-------*/
+awardRouter.post("/user/award", login_required, createNewAwards);
+awardRouter.put("/user/award", login_required, updateNewAward);
+awardRouter.get("/user/award", login_required, getAwards);
+awardRouter.delete("/user/award", login_required, deleteAward);
 
 export { awardRouter };
