@@ -25,8 +25,6 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     // 해당 유저 정보로 user을 세팅함.
     setUser(updatedUser);
 
-    console.log("넌 뭔데??", updatedUser);
-
     // isEditing을 false로 세팅함.
     setIsEditing(false);
   };
