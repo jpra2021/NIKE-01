@@ -93,10 +93,7 @@ class userAuthService {
     }
 
     if (user.email !== toUpdate.email) {
-      console.log("유저 이메일:", user.email);
-      console.log("투업데이트:", toUpdate.email);
       let email = await User.findByEmail({ email: toUpdate.email });
-      console.log("이메일 체킹 결과:", email);
       if (email) {
         const errorMessage =
           "이미 가입한 이메일입니다. 다른 이메일을 사용해주세요.";
