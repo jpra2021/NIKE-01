@@ -20,8 +20,7 @@ const Project = ({ isEditable }) => {
     const handleForm = () => {   
         setIsForm((current) => !current);
     }
-    
-    console.log(projects)
+
     return (
         <Card>
             <Card.Body>
