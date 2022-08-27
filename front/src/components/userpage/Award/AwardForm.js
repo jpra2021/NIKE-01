@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
+import { NoticeContext } from "../../../App";
 
 function AwardForm({ dispatch, type, handleForm, index }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const { setNotices } = useContext(NoticeContext);
 
   useEffect(() => {
     if (type === "edit") {
@@ -15,13 +17,19 @@ function AwardForm({ dispatch, type, handleForm, index }) {
     e.preventDefault();
 
     if (title === "") {
-      alert("수상내역 제목이 비어있습니다!");
+      setNotices({
+        type: "warn",
+        payload: { title: "수상이력", message: "수상내역이 비어있습니다." },
+      });
 
       return;
     }
 
     if (description === "") {
-      alert("내용이 비어있습니다!");
+      setNotices({
+        type: "warn",
+        payload: { title: "수상이력", message: "상세내역이 비어있습니다." },
+      });
 
       return;
     }
