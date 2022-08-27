@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function Redirect() {
+function Redirect({ setHeaderVisible }) {
   const navigate = useNavigate();
   const [count, setCount] = useState(3);
 
   setTimeout(function () {
+    setHeaderVisible(true);
     navigate("/", { replace: true });
   }, 3000);
 
@@ -19,6 +20,7 @@ function Redirect() {
   };
 
   useEffect(() => {
+    setHeaderVisible(false);
     const timerId = setInterval(() => tick(), 1000);
     return () => clearInterval(timerId);
   });
@@ -30,7 +32,7 @@ function Redirect() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: "15vh",
+          marginTop: "25vh",
         }}
       >
         <div style={{ fontWeight: 700, color: "#ffc107", fontSize: "3vh" }}>
