@@ -2,6 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { awardService } from "../services/awardService";
+import { awardMsg } from "../db/constant/errorMessage";
 
 const awardRouter = Router();
 
@@ -19,6 +20,13 @@ const createNewAwards = async (req, res, next) => {
     /* must be same with schema!*/
     const { title, description } = req.body;
 
+    //ERROR THROW
+    if (!title) {
+      throw new Error(awardMsg.NO_TITLE_ERROR);
+    } else if (!description) {
+      throw new Error(awardMsg.NO_DESC_ERROR);
+    }
+
     /* -req.currentUserId from login-requires -*/
     const user_id = req.currentUserId;
 
@@ -31,6 +39,7 @@ const createNewAwards = async (req, res, next) => {
     if (newAward.errorMessage) {
       throw new Error(newAward.errorMessage);
     }
+
     res.status(201).json(newAward);
   } catch (error) {
     next(error);
@@ -42,6 +51,15 @@ const updateNewAward = async (req, res, next) => {
   try {
     const obj_id = req.body._id;
     const { title, description } = req.body;
+
+    //ERROR THROW
+    if (!title) {
+      throw new Error(awardMsg.NO_TITLE_ERROR);
+    } else if (!description) {
+      throw new Error(awardMsg.NO_DESC_ERROR);
+    } else if (!obj_id) {
+      throw new Error(awardMsg.NO_OBJ_ERROR);
+    }
 
     //changed Input
     const newInput = { title, description };
@@ -57,6 +75,11 @@ const updateNewAward = async (req, res, next) => {
 const getAwards = async (req, res, next) => {
   try {
     const user_id = req.currentUserId;
+    //ERROR THROW
+    if (!user_id) {
+      throw new Error(awardMsg.NO_USERID_ERROR);
+    }
+
     const awards = await awardService.getAwards(user_id);
     res.status(201).json(awards);
   } catch (error) {
@@ -68,6 +91,10 @@ const getAwards = async (req, res, next) => {
 const deleteAward = async (req, res, next) => {
   try {
     const obj_id = req.body._id;
+
+    if (!obj_id) {
+      throw new Error(awardMsg.NO_OBJ_ERROR);
+    }
 
     //changed Input
     await awardService.deleteAward(obj_id);
