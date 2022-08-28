@@ -26,8 +26,10 @@ function App() {
     user: null,
   });
   const [notices, setNotices] = useReducer(noticeReducer, []);
+
   // '/infoauth'에서 인증을 하지않은 유저의 '/infochange'접근을 막기 위한 state
   const [correctUserInfo, setCorrectUserInfo] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
 
   // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
@@ -68,7 +70,7 @@ function App() {
         <NoticeContext.Provider value={{ notices, setNotices }}>
           <Router>
             <Notification />
-            <Header />
+            <Header headerVisible={headerVisible} />
             <Routes>
               <Route path="/" exact element={<Portfolio />} />
               <Route path="/login" element={<LoginForm />} />
@@ -93,7 +95,10 @@ function App() {
                 }
               />
               <Route path="/network" element={<Network />} />
-              <Route path="*" element={<Redirect />} />
+              <Route
+                path="*"
+                element={<Redirect setHeaderVisible={setHeaderVisible} />}
+              />
             </Routes>
           </Router>
         </NoticeContext.Provider>
