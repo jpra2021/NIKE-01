@@ -1,43 +1,48 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useContext } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { formatDateStr } from "../../util/util";
+import { NoticeContext } from "../../../App";
+import { TYPES, formatDateStr } from "../../util/util";
 
-const CertificateForm = ({ dispatch, type, handleForm, index }) => {
+const CertificateForm = ({ certificate_id, handler, type, handleForm, index }) => {
     const [ title, setTitle ] = useState("");
     const [ detail, setDetail ] = useState("");
     const [ date, setDate ] = useState(new Date());
+    const { setNotices } = useContext(NoticeContext);
     const period = useRef("");
     
     useEffect (() => {
-        if (type === "edit") {
-            dispatch({type: "load", payload: {index, setTitle, setDetail, setDate}});
+        if (type === TYPES.edit) {
+            handler.load(index, setTitle, setDetail, setDate);
         }
     }, []);
 
     useEffect (() => {
         period.current = formatDateStr(date);
-
     }, [date]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (title === "") {
-            alert("자격증 제목이 비어있습니다!");
+            setNotices({type: "warn", payload: {title: "자격증", message: "제목이 비어있습니다."}});
 
             return;
         }
 
         if (detail === "") {
-            alert("내용이 비어있습니다!");
+            setNotices({type: "warn", payload: {title: "자격증", message: "내용이 비어있습니다."}});
 
             return;
         }
 
         const periodValue = period.current
         
-        dispatch({type, payload: {title, detail, date: periodValue, handleForm, index}});
+        if (type === TYPES.edit) {
+            handler.edit(certificate_id, title, detail, periodValue, handleForm, index)
+        } else {
+            handler.add(title, detail, periodValue, handleForm, index);
+        }
     }
 
     return (

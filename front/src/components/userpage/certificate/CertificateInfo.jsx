@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import CertificateForm from "./CertificateForm";
+import { TYPES } from "../../util/util";
 
-const CertificateInfo = ({ certificate, index, dispatch }) => {
+const CertificateInfo = ({ certificate, index, handler }) => {
     const [ isEditing, setIsEditing ] = useState(false);
-    const { title, detail, date } = certificate;
+    const { certificate_id, title, detail, date } = certificate;
 
     const handleForm = () => {
         setIsEditing(() => !isEditing);
@@ -12,7 +13,7 @@ const CertificateInfo = ({ certificate, index, dispatch }) => {
 
     if (isEditing) {
         return (
-            <CertificateForm dispatch={dispatch} type="edit" handleForm={handleForm} index={index} />
+            <CertificateForm certificate_id={certificate_id} handler={handler} type={TYPES.edit} handleForm={handleForm} index={index} />
         );
     }
 
@@ -29,7 +30,7 @@ const CertificateInfo = ({ certificate, index, dispatch }) => {
                 <Col className="col-lg-1">
                     <Button size="sm" variant="outline-info" onClick={(e) => setIsEditing(() => !isEditing)}>편집</Button>
                     <div className="mb-2"/>
-                    <Button size="sm" variant="outline-danger" onClick={(e) =>  dispatch({type: "remove", payload: {title}})}>삭제</Button>
+                    <Button size="sm" variant="outline-danger" onClick={(e) =>  handler.remove(certificate_id, title)}>삭제</Button>
                 </Col>
             </Row>
         </Card.Text>

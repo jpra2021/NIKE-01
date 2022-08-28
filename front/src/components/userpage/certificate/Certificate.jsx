@@ -3,7 +3,8 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import CertificateForm from "./CertificateForm";
 import CertificateInfo from "./CertificateInfo";
 import { NoticeContext } from "../../../App";
-import certificateReducer from "./certificateReducer";
+import certificateReducer from "./certificatesReducer";
+import certificatesHandler from "./certificatesHandler";
 
 const initialState = [];
 
@@ -11,6 +12,8 @@ const Certificate = ({ isEditable }) => {
     const { setNotices } = useContext(NoticeContext);
     const reducer = useMemo(() => (certificateReducer(setNotices)), [])
     const [ certificates, dispatch ] = useReducer(reducer, initialState);
+    const handler = useMemo(() => certificatesHandler(dispatch));
+
     const [ isForm, setIsForm ] = useState(false);
 
     const handleForm = () => {        
@@ -21,7 +24,7 @@ const Certificate = ({ isEditable }) => {
         <Card>
             <Card.Body>
                 <Card.Title>자격증</Card.Title>
-                {certificates.map((certificate, idx) => (<CertificateInfo key={idx} certificate={certificate} index={idx} dispatch={dispatch} />))}
+                {certificates.map((certificate, idx) => (<CertificateInfo key={idx} certificate={certificate} index={idx} handler={handler} />))}
                 {isEditable &&
                     <Row className="mt-3 mb-4 text-center">
                         <Col sm="20">
@@ -29,7 +32,7 @@ const Certificate = ({ isEditable }) => {
                         </Col>
                     </Row>
                 }
-                {isForm && <CertificateForm dispatch={dispatch} type="add" handleForm={handleForm} index={certificates.length}/>}
+                {isForm && <CertificateForm handler={handler} type="add" handleForm={handleForm} index={certificates.length}/>}
             </Card.Body>
         </Card>
     );
