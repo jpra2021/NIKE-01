@@ -1,4 +1,4 @@
-import { useState, useReducer, useContext, useMemo } from "react";
+import { useState, useReducer, useContext, useMemo, useEffect } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import CertificateForm from "./CertificateForm";
 import CertificateInfo from "./CertificateInfo";
@@ -8,7 +8,7 @@ import certificatesHandler from "./certificatesHandler";
 
 const initialState = [];
 
-const Certificate = ({ isEditable }) => {
+const Certificate = ({ initialData, isEditable }) => {
     const { setNotices } = useContext(NoticeContext);
     const reducer = useMemo(() => (certificateReducer(setNotices)), [])
     const [ certificates, dispatch ] = useReducer(reducer, initialState);
@@ -19,6 +19,10 @@ const Certificate = ({ isEditable }) => {
     const handleForm = () => {        
         setIsForm(() => !isForm);
     }
+
+    useEffect(() => {
+        handler.init(initialData);
+    }, []);
 
     return (
         <Card>

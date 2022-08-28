@@ -63,6 +63,10 @@ const certificateReducer = (dispatch) => {
                 return newState;
             }
             
+            case TYPES.init: {
+                return [ ...state, {certificate_id, title, detail, date} ];
+            }
+            
             default:
                 return state;
         }

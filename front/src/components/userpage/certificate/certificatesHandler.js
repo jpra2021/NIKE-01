@@ -52,7 +52,15 @@ const certificatesHandler = (dispatcher) => {
         dispatch({type: TYPES.load, payload: {index, setTitle, setDetail, setDate}});
     }
 
-    return {add, remove, edit, load};
+    const init = (initialData) => {
+        initialData.data.map((data) =>{
+            const {_id, title, detail, date} = data;
+
+            dispatch({type: TYPES.init, payload: {certificate_id: _id, title, detail, date}});
+        });
+    }
+
+    return {add, remove, edit, load, init};
 }
 
 export default certificatesHandler;
