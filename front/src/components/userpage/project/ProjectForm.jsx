@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect, useContext, useCallback } from "react"
+import { useState, useRef, useEffect, useContext } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { NoticeContext } from "../../../App";
-import { formatDateStr } from "../../util/util";
-import { TYPES } from "./projectsReducer";
+import { TYPES, formatDateStr } from "../../util/util";
 
 const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
     const [ title, setTitle ] = useState("");

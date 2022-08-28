@@ -1,27 +1,21 @@
-import { overlapCheck } from "../../util/util";
-
-export const TYPES = {
-    add: "ADD",
-    remove: "REMOVE",
-    edit: "EDIT",
-    load: "LOAD",
-    setID: "SETID"
-}
+import { TYPES, overlapCheck } from "../../util/util";
 
 const projectsReducer = (dispatch) => {
     const setNotices = dispatch;
+
     const reducer = (state, action) => {
-        console.log("reducer 실행됨")
         const { project_id, title, detail, date, index } = action.payload;
 
         switch (action.type) {
             case TYPES.add: {
                 if (overlapCheck(state, title)) {
                     setNotices({type: "warn", payload: {title: "프로젝트", message: "이미 있는 내용입니다."}});
+
                     return state;
                 }
+
                 setNotices({type: "success", payload: {title: "프로젝트", message: "추가되었습니다."}});
-                console.log("Add", "실행됨")
+
                 return [ ...state, {project_id, title, detail, date} ];
             }
             
@@ -45,6 +39,7 @@ const projectsReducer = (dispatch) => {
                 newState[index] = editedProject;
                 
                 setNotices({type: "success", payload: {title: "프로젝트", message: "수정되었습니다."}});
+
                 return newState;
             }
     
@@ -69,6 +64,11 @@ const projectsReducer = (dispatch) => {
 
                 return newState;
             }
+            
+            case TYPES.init: {
+                return [ ...state, {project_id, title, detail, date} ];
+            }
+
             default:
                 return state;
         }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm"
-import { TYPES } from "./projectsReducer";
+import { TYPES } from "../../util/util";
 
 const ProjectInfo = ({ project, index, handler }) => {
     const [ isEditing, setIsEditing ] = useState(false);

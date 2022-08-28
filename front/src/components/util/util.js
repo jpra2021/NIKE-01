@@ -1,3 +1,12 @@
+export const TYPES = {
+    add: "ADD",
+    remove: "REMOVE",
+    edit: "EDIT",
+    load: "LOAD",
+    setID: "SETID",
+    init: "INIT"
+}
+
 export const overlapCheck = (state, title) => {
     const filtered = state.filter((project) => project.title === title);
 
