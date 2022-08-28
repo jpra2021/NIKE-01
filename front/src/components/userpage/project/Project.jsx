@@ -1,15 +1,14 @@
-import { useState, useReducer, useContext, useMemo } from "react";
+import { useState, useReducer, useContext, useMemo, useEffect } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
 import { NoticeContext } from "../../../App";
 import projectsReducer from "./projectsReducer";
 import projectsHandler from "./projectsHandler";
-import { useCallback } from "react";
 
 const initialState = [];
 
-const Project = ({ isEditable }) => {
+const Project = ({ initialData, isEditable }) => {
     const { setNotices } = useContext(NoticeContext);
     const reducer = useMemo(() => (projectsReducer(setNotices)), [])
     const [ projects, dispatch ] = useReducer(reducer, initialState);
@@ -20,6 +19,11 @@ const Project = ({ isEditable }) => {
     const handleForm = () => {   
         setIsForm((current) => !current);
     }
+
+    useEffect(() => {
+        console.log("aaa",initialData);
+        handler.init(initialData);
+    }, []);
 
     return (
         <Card>
