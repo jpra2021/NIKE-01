@@ -1,22 +1,29 @@
 import { Card, Row, Col, Button } from "react-bootstrap";
-import React, { useReducer, useState, useContext, useMemo } from "react";
+import React, { useReducer, useState, useContext, useMemo, useEffect } from "react";
 import EducationForm from "./EducationForm";
 import EducationInfo from "./EducationInfo";
 import { NoticeContext } from "../../../App";
-import EducationReducer from "./reducerEducation";
+import educationReducer from "./educationReducer";
+import educationHandler from "./educationHandler";
+import { TYPES } from "../../util/util";
 
 const initialState = [];
 
-function Education({ isEditable }) {
+function Education({ initialData, isEditable }) {
   const { setNotices } = useContext(NoticeContext);
-  const reducer = useMemo(() => EducationReducer(setNotices), []);
-  const [isForm, setIsForm] = useState(false);
+  const reducer = useMemo(() => educationReducer(setNotices), []);
   const [educations, dispatch] = useReducer(reducer, initialState);
+  const handler = useMemo(() => educationHandler(dispatch));
+  
+  const [isForm, setIsForm] = useState(false);
+
+  useEffect(() => {
+    handler.init(initialData);
+  }, []);
 
   const handleForm = () => {
-    setIsForm(() => !isForm);
+    setIsForm((current) => !current);
   };
-
   return (
     <Card>
       <Card.Body>
@@ -26,7 +33,7 @@ function Education({ isEditable }) {
             key={idx}
             education={education}
             index={idx}
-            dispatch={dispatch}
+            handler={handler}
           />
         ))}
 
@@ -42,8 +49,8 @@ function Education({ isEditable }) {
 
         {isForm && (
           <EducationForm
-            dispatch={dispatch}
-            type="add"
+            handler={handler}
+            type={TYPES.add}
             handleForm={handleForm}
             index={educations.length}
           />

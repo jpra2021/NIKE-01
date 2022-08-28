@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import EducationForm from "./EducationForm";
+import { TYPES } from "../../util/util";
 
-function EducationInfo({ education, index, dispatch }) {
+function EducationInfo({ education, index, handler }) {
   const [isEditing, setIsEditing] = useState(false);
-  const { school, major, degree } = education;
+  const { education_id, school, major, degree } = education;
 
   const handleForm = () => {
-    setIsEditing(() => !isEditing);
+    setIsEditing((current) => !current);
   };
 
   if (isEditing) {
     return (
       <EducationForm
-        dispatch={dispatch}
-        type="edit"
+        education_id={education_id}
+        handler={handler}
+        type={TYPES.edit}
         handleForm={handleForm}
         index={index}
       />
@@ -25,7 +27,7 @@ function EducationInfo({ education, index, dispatch }) {
     <Card.Text as="div">
       <Row className="justify-content-between align-items-center mb-2">
         <Col>
-          <span>{school}</span>
+          {school}
           <br />
           <span className="text-muted">
             {major} ({degree})
@@ -35,7 +37,7 @@ function EducationInfo({ education, index, dispatch }) {
           <Button
             size="sm"
             variant="outline-info"
-            onClick={(e) => setIsEditing(() => !isEditing)}
+            onClick={handleForm}
           >
             편집
           </Button>
@@ -43,7 +45,7 @@ function EducationInfo({ education, index, dispatch }) {
           <Button
             size="sm"
             variant="outline-danger"
-            onClick={(e) => dispatch({ type: "remove", payload: { school } })}
+            onClick={() => handler.remove(education_id, school)}
           >
             삭제
           </Button>
