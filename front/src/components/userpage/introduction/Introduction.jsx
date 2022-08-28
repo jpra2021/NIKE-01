@@ -1,52 +1,73 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Card, Row, Form, Button } from "react-bootstrap";
+import { useState, useEffect, useContext, useMemo, useReducer, useRef } from "react";
+import { Card, Row, Col, Form, FloatingLabel, Button } from "react-bootstrap";
+import introductionReducer from "./introductionReducer";
+import { NoticeContext } from "../../../App";
+import introductionHandler from "./introductionHandler";
+import { TYPES } from "../../util/util";
+// 리네이밍
+const Introduction = ({ initialData, isEditable }) => {
+    const { setNotices } = useContext(NoticeContext);
+    const reducer = useMemo(() => introductionReducer(setNotices), []);
+    const [intro, dispatch] = useReducer(reducer, { text: ""});
+    const handler = useMemo(() => introductionHandler(dispatch));
+    const [ editMode, setEditMode ] = useState(true);
+    const [ isEdit, setIsEdit ] = useState(false);
 
-const Introduction = () => {
-    const [ value, setValue ] = useState("");
-    const textarea = useRef();
-
-    const handleResizeHeight = () => {
-        console.log(textarea.current.style.height);
-        textarea.current.style.height = textarea.current.scrollHeight + "px";
-        // if(textarea.current.style.height) {
-        //     textarea.current.sytle.height = "inherit";
-        // } else {
-        //     console.log("hi")
-        // }
-    };
-
-    // useEffect(() => {
-    //     if(value === "") {
-    //         textarea.current.style.height = "44px";
-    //     }
-    // }, [value]);
-
-    const handleChange = (e) => {
-        setValue(e.target.value);
+    const handleEditMode = () => {
+        setEditMode((current) => !current);
     }
+
+    const handleChange =(e) => {
+        const { value } = e.target;
+
+        handler.edit(value);
+    }
+
+    const handleClick = () => {
+        // handler.add(handleEditMode);
+        handleEditMode()
+    };
 
     return (
         <Card>
             <Card.Body>
                 <Card.Title>소개</Card.Title>
-                <Row className="mt-3 text-center">
-                    <Form>
-                        <Form.Control
-                            value={value}
-                            onChange={handleChange}
-                            ref={textarea}
-                            maxLength="500"
-                            style={{"resize": "none", "height": "44px"}}
-                            className="mb-4"
-                            // size="sm"
-                            as="textarea"
-                        />
-                        <Button size="sm" variant="primary">편집</Button>
-                    </Form>
-                </Row>
+                {isEditable &&
+                    <Row className="mt-3 text-center">
+                        <Form>
+                            <FloatingLabel
+                                controlId="floatingTextarea2"
+                                label={intro.text.length + " / 300"}
+                            >
+                                <Form.Control
+                                    as="textarea"
+                                    value={intro.text}
+                                    onChange={handleChange}
+                                    maxLength={300}
+                                    style={{resize: "none", height: "300px", overflow: "hidden"}}
+                                    className="mb-4"
+                                />
+                            </FloatingLabel >
+                            {!isEditable && 
+                                (<Row className="justify-content-between align-items-center mb-2" style={{resize: "none", height: "fit-content", overflow: "hidden"}}>
+                                    <Col>
+                                        {intro.text}
+                                    </Col>
+                                </Row>)
+                            }
+                            {isEditable && (
+                                editMode ? 
+                                    <Button size="sm" variant="outline-info" onClick={handleClick}>편집</Button>
+                                    :
+                                    <Button size="sm" variant="outline-info" onClick={handleEditMode}>확인</Button>
+                            )  
+                            }
+                        </Form>
+                    </Row>
+                }
             </Card.Body>
         </Card>
     );
-}
+};
 
 export default Introduction;
