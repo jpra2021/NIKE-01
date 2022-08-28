@@ -2,8 +2,6 @@ import { Education } from "../db/models/Education";
 
 class eduService {
   /* --- CREATE -----*/
-  /* user_id <= req.currentUserId from login-requires */
-
   static async createEdus(newInput) {
     const creatednewEdu = await Education.create(newInput);
     return creatednewEdu;

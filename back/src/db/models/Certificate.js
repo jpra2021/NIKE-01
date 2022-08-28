@@ -4,8 +4,6 @@ class Certificate {
   /*--- CREATE ---*/
   static async create(newCerti) {
     const createNewCertis = await CertificateModel.create(newCerti);
-
-    console.log("모데=>", createNewCertis);
     return createNewCertis;
   }
 
