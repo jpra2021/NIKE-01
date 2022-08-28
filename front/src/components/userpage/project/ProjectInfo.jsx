@@ -8,7 +8,7 @@ const ProjectInfo = ({ project, index, handler }) => {
     const { project_id, title, detail, date } = project;
 
     const handleForm = () => {
-        setIsEditing(() => !isEditing);
+        setIsEditing((current) => !current);
     }
 
     if (isEditing) {
@@ -28,7 +28,7 @@ const ProjectInfo = ({ project, index, handler }) => {
                     <span className="text-muted">{date}</span>
                 </Col>
                 <Col className="col-lg-1">
-                    <Button size="sm" variant="outline-info" onClick={(e) => setIsEditing(() => !isEditing)}>편집</Button>
+                    <Button size="sm" variant="outline-info" onClick={handleForm}>편집</Button>
                     <div className="mb-2"/>
                     <Button size="sm" variant="outline-danger" onClick={() => handler.remove(project_id, title)}>삭제</Button>
                 </Col>

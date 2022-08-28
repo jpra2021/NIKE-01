@@ -26,7 +26,7 @@ const projectsHandler = (dispatcher) => {
     }
 
     const remove = async (project_id, title) => {
-        dispatch({type: TYPES.remove, payload: {project_id, title}});
+        dispatch({type: TYPES.remove, payload: {title}});
         console.log("delete는 바디가 없음")
         // await API.delete("/user/project", {"_id": project_id});
     }

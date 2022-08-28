@@ -49,7 +49,7 @@ const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
         const date = period.current
 
         if (type === TYPES.edit) {
-            handler.edit(project_id, title, detail, date, handleForm, index)
+            handler.edit(project_id, title, detail, date, handleForm, index);
         } else {
             handler.add(title, detail, date, handleForm, index);
         }

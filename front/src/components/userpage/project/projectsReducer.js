@@ -16,7 +16,7 @@ const projectsReducer = (dispatch) => {
 
                 setNotices({type: "success", payload: {title: "프로젝트", message: "추가되었습니다."}});
 
-                return [ ...state, {project_id, title, detail, date} ];
+                return [ ...state, {title, detail, date} ];
             }
             
             case TYPES.remove: {
@@ -45,13 +45,13 @@ const projectsReducer = (dispatch) => {
     
             case TYPES.load: {
                 const { setTitle, setDetail, setStartDate, setEndDate } = action.payload;
-                    const project = state[index];
-                    const dates = project.date.split(" ~ ");
-    
-                    setTitle(project.title);
-                    setDetail(project.detail);
-                    setStartDate(new Date(dates[0]));
-                    setEndDate(new Date(dates[1]));
+                const project = state[index];
+                const dates = project.date.split(" ~ ");
+
+                setTitle(project.title);
+                setDetail(project.detail);
+                setStartDate(new Date(dates[0]));
+                setEndDate(new Date(dates[1]));
 
                 return state;         
             }

@@ -5,6 +5,7 @@ import ProjectInfo from "./ProjectInfo";
 import { NoticeContext } from "../../../App";
 import projectsReducer from "./projectsReducer";
 import projectsHandler from "./projectsHandler";
+import { TYPES } from "../../util/util";
 
 const initialState = [];
 
@@ -21,7 +22,6 @@ const Project = ({ initialData, isEditable }) => {
     }
 
     useEffect(() => {
-        console.log("aaa",initialData);
         handler.init(initialData);
     }, []);
 
@@ -37,7 +37,7 @@ const Project = ({ initialData, isEditable }) => {
                         </Col>
                     </Row>
                 }
-                {isForm && <ProjectForm handler={handler} type="add" handleForm={handleForm} index={projects.length} />}
+                {isForm && <ProjectForm handler={handler} type={TYPES.add} handleForm={handleForm} index={projects.length} />}
             </Card.Body>
         </Card>
     );
