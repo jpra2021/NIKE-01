@@ -1,6 +1,5 @@
 import { ProjectModel } from "../schemas/project";
 
-/* setting class with Mongoose Query */
 class Project {
   /* CREATE */
   static async create(newPro) {

@@ -85,29 +85,41 @@ class userAuthService {
     }
 
     // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
-    if (toUpdate.name) {
+    if (user.name !== toUpdate.name) {
+      console.log("name is updated");
       const fieldToUpdate = "name";
       const newValue = toUpdate.name;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
-    if (toUpdate.email) {
+    if (user.email !== toUpdate.email) {
+      let email = await User.findByEmail({ email: toUpdate.email });
+      if (email) {
+        const errorMessage =
+          "이미 가입한 이메일입니다. 다른 이메일을 사용해주세요.";
+        return { errorMessage };
+      }
+      console.log("email is updated");
       const fieldToUpdate = "email";
       const newValue = toUpdate.email;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
-
-    if (toUpdate.password) {
+    //Didn't make edit password section yet
+    if (user.password !== toUpdate.password && toUpdate.password !== null) {
+      console.log("password is updated", toUpdate.password);
       const fieldToUpdate = "password";
       const newValue = bcrypt.hash(toUpdate.password, 10);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
-    if (toUpdate.description) {
+    if (user.description !== toUpdate.description) {
+      console.log("description is updated");
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
+
+    console.log("nothing to update");
 
     return user;
   }

@@ -17,12 +17,10 @@ const createNewEdus = async (req, res, next) => {
       );
     }
     /*-distributing data from req-*/
-    /* must be same with schema!*/
-    const school = req.body.school;
-    const major = req.body.major;
-    const degree = req.body.degree;
     /* -req.currentUserId from login-requires -*/
     const user_id = req.currentUserId;
+    /* must be same with schema!*/
+    const { school, major, degree } = req.body;
     const newInput = { user_id, school, major, degree };
 
     const newEdu = await eduService.createEdus(newInput);
@@ -39,10 +37,11 @@ const createNewEdus = async (req, res, next) => {
 /*-- UPDATE --*/
 const updateNewEdu = async (req, res, next) => {
   try {
+    //obj_id(comes from req.body._id) means objectID, which assigned automatically and can be used as primary key(RDBMS) in MongoDB. A req.body will possess it to distinct which data is updated.
     const obj_id = req.body._id;
-    const school = req.body.school;
-    const major = req.body.major;
-    const degree = req.body.degree;
+    const school = req.body.school ?? null;
+    const major = req.body.major ?? null;
+    const degree = req.body.degree ?? null;
     //changed Input
     const newInput = { school, major, degree };
     const edu = await eduService.updateEdu(obj_id, newInput);
@@ -68,10 +67,9 @@ const getEdus = async (req, res, next) => {
 /*--DELETE--*/
 const deleteEdu = async (req, res, next) => {
   try {
+    //obj_id(comes from req.body._id) means objectID, which assigned automatically and can be used as primary key(RDBMS) in MongoDB. A req.body will possess it to distinct which data is deleted.
     const obj_id = req.body._id;
-
     await eduService.deleteEdu(obj_id);
-
     return res.status(201).json({ message: "Education Deleted" });
   } catch (error) {
     next(error);
