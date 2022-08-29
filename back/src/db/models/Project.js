@@ -27,8 +27,11 @@ class Project {
   }
 
   /*-- DELETE --*/
-  static async delete(obj_id) {
-    const deletedPro = await ProjectModel.findOneAndDelete({ _id: obj_id });
+  static async delete(obj_id, user_id) {
+    const deletedPro = await ProjectModel.findOneAndDelete({
+      _id: obj_id,
+      user_id: user_id,
+    });
     return deletedPro;
   }
 }

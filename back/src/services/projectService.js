@@ -39,8 +39,8 @@ class projectService {
     return pro;
   }
   /*-- DELETE --*/
-  static async deletePro(obj_id) {
-    const pro = await Project.delete(obj_id);
+  static async deletePro(obj_id, user_id) {
+    const pro = await Project.delete(obj_id, user_id);
     return pro;
   }
 }
