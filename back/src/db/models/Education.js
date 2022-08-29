@@ -23,8 +23,8 @@ class Education {
 
   /* ---FIND ---*/
   //to get all docs of the user
-  static async find(id) {
-    const users = await EducationModel.find({ user_id: id });
+  static async find(user_id) {
+    const users = await EducationModel.find({ user_id: user_id });
     return users;
   }
 

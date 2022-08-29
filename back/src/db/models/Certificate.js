@@ -25,7 +25,7 @@ class Certificate {
   /* ---FIND ---*/
   //to get all docs of the user
   static async find(user_id) {
-    const users = await CertificateModel.find({ id: user_id });
+    const users = await CertificateModel.find({ user_id: user_id });
     return users;
   }
 

@@ -25,7 +25,7 @@ class Award {
   /* ---FIND ---*/
   //to get all docs of the user
   static async find(user_id) {
-    const users = await AwardModel.find({ id: user_id });
+    const users = await AwardModel.find({ user_id: user_id });
     return users;
   }
 
