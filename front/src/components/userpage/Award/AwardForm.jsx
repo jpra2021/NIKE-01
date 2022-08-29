@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { NoticeContext } from "../../../App";
+import { TYPES } from "../../util/util";
 
-function AwardForm({ dispatch, type, handleForm, index }) {
+function AwardForm({ award_id, handler, type, handleForm, index }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { setNotices } = useContext(NoticeContext);
 
   useEffect(() => {
-    if (type === "edit") {
-      dispatch({ type: "load", payload: { index, setTitle, setDescription } });
+    if (type === TYPES.edit) {
+      handler.load(index, setTitle, setDescription);
     }
   }, []);
 
@@ -34,10 +35,11 @@ function AwardForm({ dispatch, type, handleForm, index }) {
       return;
     }
 
-    dispatch({
-      type,
-      payload: { title, description, handleForm, index },
-    });
+    if (type === TYPES.edit) {
+      handler.edit(award_id, title, description, handleForm, index);
+    } else {
+      handler.add(title, description, handleForm, index);
+    }
   };
 
   return (

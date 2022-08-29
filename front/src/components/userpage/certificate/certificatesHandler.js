@@ -10,7 +10,7 @@ const certificatesHandler = (dispatcher) => {
         handleForm();
 
         try {
-            const res = await API.post("user/certificate", 
+            const res = await API.post("users/certificate", 
                 {
                     title,
                     detail,
@@ -37,7 +37,7 @@ const certificatesHandler = (dispatcher) => {
         handleForm();
 
         try {
-            await API.put("user/certificate", {
+            await API.put("users/certificate", {
                 _id: certificate_id,
                 title,
                 detail,

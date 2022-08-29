@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import AwardForm from "./AwardForm";
+import { TYPES } from "../../util/util";
 
-function AwardCard({ award, index, dispatch }) {
+function AwardInfo({ award, index, handler }) {
   const [isEditing, setIsEditing] = useState(false);
-  const { title, description } = award;
+  const { award_id, title, description } = award;
 
   const handleForm = () => {
     setIsEditing(() => !isEditing);
@@ -13,8 +14,9 @@ function AwardCard({ award, index, dispatch }) {
   if (isEditing) {
     return (
       <AwardForm
-        dispatch={dispatch}
-        type="edit"
+        award_id={award_id}
+        handler={handler}
+        type={TYPES.edit}
         handleForm={handleForm}
         index={index}
       />
@@ -41,7 +43,7 @@ function AwardCard({ award, index, dispatch }) {
           <Button
             size="sm"
             variant="outline-danger"
-            onClick={(e) => dispatch({ type: "remove", payload: { title } })}
+            onClick={(e) => handler.remove(award_id, title)}
           >
             삭제
           </Button>
@@ -51,4 +53,4 @@ function AwardCard({ award, index, dispatch }) {
   );
 }
 
-export default AwardCard;
+export default AwardInfo;

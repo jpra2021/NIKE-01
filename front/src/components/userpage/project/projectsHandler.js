@@ -10,7 +10,7 @@ const projectsHandler = (dispatcher) => {
         handleForm();
 
         try {
-            const res = await API.post("user/project", 
+            const res = await API.post("users/project", 
                 {
                     title,
                     detail,
@@ -37,7 +37,7 @@ const projectsHandler = (dispatcher) => {
         handleForm();
         
         try {
-            await API.put("user/project", {
+            await API.put("users/project", {
                 _id: project_id,
                 title,
                 detail,

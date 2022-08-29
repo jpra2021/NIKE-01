@@ -10,7 +10,7 @@ const educationHandler = (dispatcher) => {
         handleForm();
 
         try {
-            const res = await API.post("user/edu", 
+            const res = await API.post("users/education", 
                 {
                     school,
                     major,
@@ -37,7 +37,7 @@ const educationHandler = (dispatcher) => {
         handleForm();
         
         try {
-            await API.put("user/edu", {
+            await API.put("users/education", {
                 _id: education_id,
                 school,
                 major,
