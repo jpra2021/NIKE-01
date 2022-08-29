@@ -10,7 +10,7 @@ const projectsHandler = (dispatcher) => {
         handleForm();
 
         try {
-            const res = await API.post("user/project", 
+            const res = await API.post("users/project", 
                 {
                     title,
                     detail,
@@ -27,8 +27,8 @@ const projectsHandler = (dispatcher) => {
 
     const remove = async (project_id, title) => {
         dispatch({type: TYPES.remove, payload: {title}});
-        console.log("delete는 바디가 없음")
-        // await API.delete("/user/project", {"_id": project_id});
+
+        await API.delete("users/project", project_id);
     }
 
     const edit = async (project_id, title, detail, date, handleForm, index) => {
@@ -37,7 +37,7 @@ const projectsHandler = (dispatcher) => {
         handleForm();
         
         try {
-            await API.put("user/project", {
+            await API.put("users/project", {
                 _id: project_id,
                 title,
                 detail,

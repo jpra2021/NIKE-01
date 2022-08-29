@@ -1,28 +1,42 @@
 import { Card, Row, Col, Button } from "react-bootstrap";
-import React, { useReducer, useState, useContext, useMemo } from "react";
+import React, {
+  useReducer,
+  useState,
+  useContext,
+  useMemo,
+  useEffect,
+} from "react";
 import AwardForm from "./AwardForm";
-import AwardCard from "./AwardCard";
+import AwardInfo from "./AwardInfo";
 import { NoticeContext } from "../../../App";
 import AwardReducer from "./AwardReducer";
+import awardHandler from "./awardHandler";
+import { TYPES } from "../../util/util";
 
 const initialState = [];
 
-function Awards({ isEditable }) {
+function Award({ initialData, isEditable }) {
   const { setNotices } = useContext(NoticeContext);
   const reducer = useMemo(() => AwardReducer(setNotices), []);
-  const [isForm, setIsForm] = useState(false);
   const [awards, dispatch] = useReducer(reducer, initialState);
+  const handler = useMemo(() => awardHandler(dispatch));
+
+  const [isForm, setIsForm] = useState(false);
 
   const handleForm = () => {
     setIsForm(() => !isForm);
   };
+
+  useEffect(() => {
+    handler.init(initialData);
+  }, []);
 
   return (
     <Card>
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
         {awards.map((award, idx) => (
-          <AwardCard key={idx} award={award} index={idx} dispatch={dispatch} />
+          <AwardInfo key={idx} award={award} index={idx} handler={handler} />
         ))}
 
         {isEditable && (
@@ -37,8 +51,8 @@ function Awards({ isEditable }) {
 
         {isForm && (
           <AwardForm
-            dispatch={dispatch}
-            type="add"
+            handler={handler}
+            type={TYPES.add}
             handleForm={handleForm}
             index={awards.length}
           />
@@ -48,4 +62,4 @@ function Awards({ isEditable }) {
   );
 }
 
-export default Awards;
+export default Award;

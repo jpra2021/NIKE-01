@@ -10,7 +10,7 @@ const educationHandler = (dispatcher) => {
         handleForm();
 
         try {
-            const res = await API.post("user/edu", 
+            const res = await API.post("users/education", 
                 {
                     school,
                     major,
@@ -27,8 +27,8 @@ const educationHandler = (dispatcher) => {
 
     const remove = async (education_id, school) => {
         dispatch({type: TYPES.remove, payload: {school}});
-        console.log("delete는 바디가 없음")
-        // await API.delete("/user/project", {"_id": education_id});
+
+        await API.delete("users/education", education_id);
     }
 
     const edit = async (education_id, school, major, degree, handleForm, index) => {
@@ -37,7 +37,7 @@ const educationHandler = (dispatcher) => {
         handleForm();
         
         try {
-            await API.put("user/edu", {
+            await API.put("users/education", {
                 _id: education_id,
                 school,
                 major,

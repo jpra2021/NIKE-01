@@ -87,12 +87,12 @@ userAuthRouter.get(
 );
 /* -- UPDATE --*/
 userAuthRouter.put(
-  "/users/:id",
+  "/users/edit",
   login_required,
   async function (req, res, next) {
     try {
-      // URI로부터 사용자 id를 추출함.
-      const user_id = req.params.id;
+      //로그인 한 사람과 PUT을 요청한 사람이 같은지 req.currentUserId로 체크
+      const user_id = req.currentUserId;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
@@ -101,9 +101,11 @@ userAuthRouter.put(
       const introduction = req.body.introduction ?? null;
 
       const toUpdate = { name, email, password, description, introduction };
+      console.log("라우터에서 toUpdate", toUpdate);
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+      console.log("라우터에서 updatedUser", updatedUser);
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
@@ -143,5 +145,27 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
+
+/* -- Verification --*/
+//Before Edit Email Password
+userAuthRouter.post(
+  "/user/verify",
+  login_required,
+  async function (req, res, next) {
+    const user_id = req.currentUserId;
+    const toCheckPassword = req.body.password;
+
+    const user = await userAuthService.getCheckPassword(
+      user_id,
+      toCheckPassword
+    );
+
+    if (user.errorMessage) {
+      res.json({ ok: false });
+      return;
+    }
+    res.json({ ok: true });
+  }
+);
 
 export { userAuthRouter };

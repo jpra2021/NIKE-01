@@ -10,7 +10,7 @@ const certificatesHandler = (dispatcher) => {
         handleForm();
 
         try {
-            const res = await API.post("user/certificate", 
+            const res = await API.post("users/certificate", 
                 {
                     title,
                     detail,
@@ -28,7 +28,7 @@ const certificatesHandler = (dispatcher) => {
     const remove = async (certificate_id, title) => {
         dispatch({type: TYPES.remove, payload: {certificate_id, title}});
         console.log("delete는 바디가 없음")
-        // await API.delete("/user/project", {"_id": certificate_id});
+        await API.delete("users/certificate", certificate_id);
     }
 
     const edit = async (certificate_id, title, detail, date, handleForm, index) => {
@@ -37,7 +37,7 @@ const certificatesHandler = (dispatcher) => {
         handleForm();
 
         try {
-            await API.put("user/certificate", {
+            await API.put("users/certificate", {
                 _id: certificate_id,
                 title,
                 detail,

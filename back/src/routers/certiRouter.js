@@ -78,7 +78,7 @@ const updateNewCerti = async (req, res, next) => {
 /* -- GET --*/
 const getCertis = async (req, res, next) => {
   try {
-    const user_id = req.currentUserId;
+    const user_id = req.params.id;
 
     if (!user_id) {
       throw new Error(certiMsg.NO_USERID_ERROR);
@@ -94,7 +94,9 @@ const getCertis = async (req, res, next) => {
 /*-- DELETE --*/
 const deleteCerti = async (req, res, next) => {
   try {
-    const obj_id = req.body._id;
+    const obj_id = req.params.id;
+    //obj_id 를 parameter 로 받아오겠다
+    //front에서 params 로 보내주는 값을 체크
 
     if (!obj_id) {
       throw new Error(certiMsg.NO_OBJ_ERROR);
@@ -109,9 +111,9 @@ const deleteCerti = async (req, res, next) => {
   }
 };
 
-certiRouter.post("/user/certificate", login_required, createNewCertis);
-certiRouter.put("/user/certificate", login_required, updateNewCerti);
-certiRouter.get("/user/certificate", login_required, getCertis);
-certiRouter.delete("/user/certificate", login_required, deleteCerti);
+certiRouter.post("/users/certificate", login_required, createNewCertis);
+certiRouter.put("/users/certificate", login_required, updateNewCerti);
+certiRouter.get("/users/:id/certificate", login_required, getCertis);
+certiRouter.delete("/users/certificate/:id", login_required, deleteCerti);
 
 export { certiRouter };
