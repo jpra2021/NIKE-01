@@ -39,7 +39,7 @@ const CertificateForm = ({ certificate_id, handler, type, handleForm, index }) =
         const periodValue = period.current
         
         if (type === TYPES.edit) {
-            handler.edit(certificate_id, title, detail, periodValue, handleForm, index)
+            handler.edit(certificate_id, title, detail, periodValue, handleForm, index);
         } else {
             handler.add(title, detail, periodValue, handleForm, index);
         }
