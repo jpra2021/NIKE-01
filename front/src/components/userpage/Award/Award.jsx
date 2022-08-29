@@ -11,6 +11,7 @@ import AwardInfo from "./AwardInfo";
 import { NoticeContext } from "../../../App";
 import AwardReducer from "./AwardReducer";
 import awardHandler from "./awardHandler";
+import { TYPES } from "../../util/util";
 
 const initialState = [];
 
@@ -51,7 +52,7 @@ function Award({ initialData, isEditable }) {
         {isForm && (
           <AwardForm
             handler={handler}
-            type="add"
+            type={TYPES.add}
             handleForm={handleForm}
             index={awards.length}
           />
