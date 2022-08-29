@@ -77,6 +77,6 @@ const deleteTargetPro = async (req, res, next) => {
 proRouter.post("/users/project", login_required, createNewPros);
 proRouter.put("/users/project", login_required, updateNewPro);
 proRouter.get("/users/:id/project", login_required, getNewPros);
-proRouter.delete("/users/:id/project", login_required, deleteTargetPro);
+proRouter.delete("/users/project/:id", login_required, deleteTargetPro);
 
 export { proRouter };

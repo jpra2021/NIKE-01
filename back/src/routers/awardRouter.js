@@ -109,6 +109,6 @@ const deleteAward = async (req, res, next) => {
 awardRouter.post("/users/award", login_required, createNewAwards);
 awardRouter.put("/users/award", login_required, updateNewAward);
 awardRouter.get("/users/:id/award", login_required, getAwards);
-awardRouter.delete("/users/:id/award", login_required, deleteAward);
+awardRouter.delete("/users/award/:id", login_required, deleteAward);
 
 export { awardRouter };
