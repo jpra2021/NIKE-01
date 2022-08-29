@@ -9,14 +9,14 @@ import React, {
 import AwardForm from "./AwardForm";
 import AwardInfo from "./AwardInfo";
 import { NoticeContext } from "../../../App";
-import awardReducer from "./awardReducer";
+import AwardReducer from "./AwardReducer";
 import awardHandler from "./awardHandler";
 
 const initialState = [];
 
 function Award({ initialData, isEditable }) {
   const { setNotices } = useContext(NoticeContext);
-  const reducer = useMemo(() => awardReducer(setNotices), []);
+  const reducer = useMemo(() => AwardReducer(setNotices), []);
   const [awards, dispatch] = useReducer(reducer, initialState);
   const handler = useMemo(() => awardHandler(dispatch));
 

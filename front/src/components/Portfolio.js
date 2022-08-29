@@ -8,7 +8,7 @@ import User from "./user/User";
 import Project from "./userpage/project/Project";
 import Certificate from "./userpage/certificate/Certificate";
 import Education from "./userpage/education/Education";
-import Award from "./userpage/award/Award";
+import Award from "./userpage/Award/Award";
 import Loading from "./Loading";
 import Introduction from "./userpage/introduction/Introduction";
 

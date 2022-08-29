@@ -1,6 +1,6 @@
 import { TYPES, overlapCheck } from "../../util/util";
 
-const awardReducer = (dispatch) => {
+const AwardReducer = (dispatch) => {
   const setNotices = dispatch;
 
   const reducer = (state, action) => {
@@ -99,4 +99,4 @@ const awardReducer = (dispatch) => {
   return reducer;
 };
 
-export default awardReducer;
+export default AwardReducer;
