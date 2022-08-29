@@ -50,9 +50,10 @@ const updateNewPro = async (req, res, next) => {
   }
 };
 /* GET */
+///users/:id/project
 const getNewPros = async (req, res, next) => {
   try {
-    const user_id = req.currentUserId;
+    const user_id = req.params.id;
     const pros = await projectService.getPros(user_id);
     res.status(201).send(pros);
   } catch (error) {
@@ -72,9 +73,9 @@ const deleteTargetPro = async (req, res, next) => {
   }
 };
 /* --- Routes ---*/
-proRouter.post("/user/project", login_required, createNewPros);
-proRouter.put("/user/project", login_required, updateNewPro);
-proRouter.get("/user/project", login_required, getNewPros);
-proRouter.delete("/user/project", login_required, deleteTargetPro);
+proRouter.post("/users/project", login_required, createNewPros);
+proRouter.put("/users/project", login_required, updateNewPro);
+proRouter.get("/users/:id/project", login_required, getNewPros);
+proRouter.delete("/users/project", login_required, deleteTargetPro);
 
 export { proRouter };
