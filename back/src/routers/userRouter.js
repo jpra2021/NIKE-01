@@ -144,4 +144,26 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
+/* -- Verification --*/
+//Before Edit Email Password
+userAuthRouter.post(
+  "/user/verify",
+  login_required,
+  async function (req, res, next) {
+    const user_id = req.currentUserId;
+    const toCheckPassword = req.body.password;
+
+    const user = await userAuthService.getCheckPassword(
+      user_id,
+      toCheckPassword
+    );
+
+    if (user.errorMessage) {
+      res.json({ ok: false });
+      return;
+    }
+    res.json({ ok: true });
+  }
+);
+
 export { userAuthRouter };
