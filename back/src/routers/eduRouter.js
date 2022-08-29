@@ -82,6 +82,6 @@ const deleteEdu = async (req, res, next) => {
 eduRouter.post("/users/education", login_required, createNewEdus);
 eduRouter.put("/users/education", login_required, updateNewEdu);
 eduRouter.get("/users/:id/education", login_required, getEdus);
-eduRouter.delete("/users/:id/education", login_required, deleteEdu);
+eduRouter.delete("/users/education/:id", login_required, deleteEdu);
 
 export { eduRouter };

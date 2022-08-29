@@ -114,6 +114,6 @@ const deleteCerti = async (req, res, next) => {
 certiRouter.post("/users/certificate", login_required, createNewCertis);
 certiRouter.put("/users/certificate", login_required, updateNewCerti);
 certiRouter.get("/users/:id/certificate", login_required, getCertis);
-certiRouter.delete("/users/:id/certificate", login_required, deleteCerti);
+certiRouter.delete("/users/certificate/:id", login_required, deleteCerti);
 
 export { certiRouter };
