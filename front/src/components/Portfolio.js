@@ -14,7 +14,7 @@ import Introduction from "./userpage/introduction/Introduction";
 
 function loadData() {
   return Promise.all([
-    Api.get("user/edu"),
+    Api.get("user/education"),
     Api.get("user/award"),
     Api.get("user/project"),
     Api.get("user/certificate"),
