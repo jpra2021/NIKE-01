@@ -74,7 +74,7 @@ const updateNewAward = async (req, res, next) => {
 /* -- GET --*/
 const getAwards = async (req, res, next) => {
   try {
-    const user_id = req.currentUserId;
+    const user_id = req.params.id;
     //ERROR THROW
     if (!user_id) {
       throw new Error(awardMsg.NO_USERID_ERROR);
@@ -90,7 +90,7 @@ const getAwards = async (req, res, next) => {
 /*-- DELETE --*/
 const deleteAward = async (req, res, next) => {
   try {
-    const obj_id = req.body._id;
+    const obj_id = req.params.id;
 
     if (!obj_id) {
       throw new Error(awardMsg.NO_OBJ_ERROR);
@@ -106,9 +106,9 @@ const deleteAward = async (req, res, next) => {
 };
 
 /*-------Router-------*/
-awardRouter.post("/user/award", login_required, createNewAwards);
-awardRouter.put("/user/award", login_required, updateNewAward);
-awardRouter.get("/user/award", login_required, getAwards);
-awardRouter.delete("/user/award", login_required, deleteAward);
+awardRouter.post("/users/award", login_required, createNewAwards);
+awardRouter.put("/users/award", login_required, updateNewAward);
+awardRouter.get("/users/:id/award", login_required, getAwards);
+awardRouter.delete("/users/:id/award", login_required, deleteAward);
 
 export { awardRouter };

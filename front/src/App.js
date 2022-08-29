@@ -63,7 +63,7 @@ function App() {
   if (!isFetchCompleted) {
     return <Loading />;
   }
-
+  console.log(userState);
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>

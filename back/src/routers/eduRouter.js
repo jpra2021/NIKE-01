@@ -53,10 +53,11 @@ const updateNewEdu = async (req, res, next) => {
 };
 
 /* -- GET --*/
+///users/:id/education
 const getEdus = async (req, res, next) => {
   try {
     //to get all docs of the user by user's id
-    const user_id = req.currentUserId;
+    const user_id = req.params.id;
     const edus = await eduService.getEdus(user_id);
     res.status(201).send(edus);
   } catch (error) {
@@ -67,9 +68,10 @@ const getEdus = async (req, res, next) => {
 /*--DELETE--*/
 const deleteEdu = async (req, res, next) => {
   try {
-    //obj_id(comes from req.body._id) means objectID, which assigned automatically and can be used as primary key(RDBMS) in MongoDB. A req.body will possess it to distinct which data is deleted.
-    const obj_id = req.body._id;
-    await eduService.deleteEdu(obj_id);
+    //use params id to delete
+    const obj_id = req.params.id;
+    const user_id = req.currentUserId;
+    await eduService.deleteEdu(obj_id, user_id);
     return res.status(201).json({ message: "Education Deleted" });
   } catch (error) {
     next(error);
@@ -77,9 +79,9 @@ const deleteEdu = async (req, res, next) => {
 };
 
 /*-------Router-------*/
-eduRouter.post("/user/education", login_required, createNewEdus);
-eduRouter.put("/user/education", login_required, updateNewEdu);
-eduRouter.get("/user/education", login_required, getEdus);
-eduRouter.delete("/user/education", login_required, deleteEdu);
+eduRouter.post("/users/education", login_required, createNewEdus);
+eduRouter.put("/users/education", login_required, updateNewEdu);
+eduRouter.get("/users/:id/education", login_required, getEdus);
+eduRouter.delete("/users/:id/education", login_required, deleteEdu);
 
 export { eduRouter };

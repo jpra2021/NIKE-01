@@ -50,9 +50,10 @@ const updateNewPro = async (req, res, next) => {
   }
 };
 /* GET */
+///users/:id/project
 const getNewPros = async (req, res, next) => {
   try {
-    const user_id = req.currentUserId;
+    const user_id = req.params.id;
     const pros = await projectService.getPros(user_id);
     res.status(201).send(pros);
   } catch (error) {
@@ -62,9 +63,10 @@ const getNewPros = async (req, res, next) => {
 /*--DELETE--*/
 const deleteTargetPro = async (req, res, next) => {
   try {
-    //obj_id(comes from req.body._id) means objectID, which assigned automatically and can be used as primary key(RDBMS) in MongoDB. A req.body will possess it to distinct which data is deleted.
-    const obj_id = req.body._id;
-    await projectService.deletePro(obj_id);
+    //use params id to delete
+    const obj_id = req.params.id;
+    const user_id = req.currentUserId;
+    await projectService.deletePro(obj_id, user_id);
 
     return res.status(201).json({ message: "Project Deleted" });
   } catch (error) {
@@ -72,9 +74,9 @@ const deleteTargetPro = async (req, res, next) => {
   }
 };
 /* --- Routes ---*/
-proRouter.post("/user/project", login_required, createNewPros);
-proRouter.put("/user/project", login_required, updateNewPro);
-proRouter.get("/user/project", login_required, getNewPros);
-proRouter.delete("/user/project", login_required, deleteTargetPro);
+proRouter.post("/users/project", login_required, createNewPros);
+proRouter.put("/users/project", login_required, updateNewPro);
+proRouter.get("/users/:id/project", login_required, getNewPros);
+proRouter.delete("/users/:id/project", login_required, deleteTargetPro);
 
 export { proRouter };
