@@ -10,7 +10,7 @@ const awardHandler = (dispatcher) => {
     handleForm();
 
     try {
-      const res = await API.post("user/award", {
+      const res = await API.post("users/award", {
         title,
         description,
       });
@@ -35,7 +35,7 @@ const awardHandler = (dispatcher) => {
     handleForm();
 
     try {
-      await API.put("user/award", {
+      await API.put("users/award", {
         _id: award_id,
         title,
         description,
