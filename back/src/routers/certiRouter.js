@@ -78,7 +78,7 @@ const updateNewCerti = async (req, res, next) => {
 /* -- GET --*/
 const getCertis = async (req, res, next) => {
   try {
-    const user_id = req.currentUserId;
+    const user_id = req.params.id;
 
     if (!user_id) {
       throw new Error(certiMsg.NO_USERID_ERROR);
@@ -109,9 +109,9 @@ const deleteCerti = async (req, res, next) => {
   }
 };
 
-certiRouter.post("/user/certificate", login_required, createNewCertis);
-certiRouter.put("/user/certificate", login_required, updateNewCerti);
-certiRouter.get("/user/certificate", login_required, getCertis);
-certiRouter.delete("/user/certificate", login_required, deleteCerti);
+certiRouter.post("/users/certificate", login_required, createNewCertis);
+certiRouter.put("/users/certificate", login_required, updateNewCerti);
+certiRouter.get("/users/:id/certificate", login_required, getCertis);
+certiRouter.delete("/users/certificate", login_required, deleteCerti);
 
 export { certiRouter };
