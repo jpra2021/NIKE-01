@@ -77,6 +77,7 @@ class userAuthService {
   static async setUser({ user_id, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById(user_id);
+    const { name, email, password, description, introduction } = toUpdate;
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -134,6 +135,28 @@ class userAuthService {
       return { errorMessage };
     }
 
+    return user;
+  }
+
+  /* -- Verification --*/
+  static async getCheckPassword(user_id, toCheckPassword) {
+    let user = await User.findById(user_id);
+    if (!user) {
+      const errorMessage = "잘못된 접근입니다(Error_getCheckPassword).";
+      return { errorMessage };
+    }
+    // Checking Password
+    //user.password means the user's password which is exist in DB.
+    const correctPasswordHash = user.password;
+    const isPasswordCorrect = await bcrypt.compare(
+      toCheckPassword,
+      correctPasswordHash
+    );
+    if (!isPasswordCorrect) {
+      const errorMessage =
+        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
     return user;
   }
 }
