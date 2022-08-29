@@ -84,7 +84,6 @@ function UserEditForm({ user, setIsEditing, setUser }) {
           <Form.Group as={Row} className="mt-3 justify-content-center">
             <Button
               variant="putline-secondary"
-              class
               style={{
                 width: "180px",
                 height: "30px",

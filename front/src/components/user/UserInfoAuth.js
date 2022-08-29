@@ -2,40 +2,34 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { NoticeContext, UserStateContext } from "../../App";
+import * as API from "../../api";
 
 function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setNotices } = useContext(NoticeContext);
   const userState = useContext(UserStateContext);
 
+  /* 유저가 로그인 했는 지 확인하는 로직 */
   useEffect(() => {
     if (!userState.user) {
       navigate("/login", { replace: true });
       return;
     }
-  });
+  }, []);
 
-  const validateEmail = (email) => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
-  const isEmailValid = validateEmail(email);
   const isPasswordValid = password.length >= 4;
-  const isFormValid = isEmailValid && isPasswordValid;
 
-  const onChangeAuthEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const onChangeAuthPassword = (e) => {
+  const handleChange = (e) => {
     setPassword(e.target.value);
   };
+
+  const checkPassword = async (password) => {
+    const res = await API.post("user/verify", {password});
+    const { ok } = res.data;
+
+    console.log(ok);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,13 +37,9 @@ function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
     // 동일한 아이디와 패스워드인지 검사...
     // if (올바른 이메일, 비번이 아니면)
     // return alertIncorrectInfo();
-    try {
-      setCorrectUserInfo(true);
-      alertCorrectInfo();
-      navigate("/infochange");
-    } catch (err) {
-      console.log("인증에 실패하였습니다.\n", err);
-    }
+    
+    console.log(password)
+    checkPassword(password);
   };
 
   const alertIncorrectInfo = () => {
@@ -84,22 +74,6 @@ function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
 
         <Col xs={5}>
           <Form>
-            <Form.Group controlId="checkEmail">
-              <Form.Label>이메일 주소</Form.Label>
-              <Form.Control
-                type="email"
-                autoComplete="on"
-                placeholder="email"
-                value={email}
-                onChange={onChangeAuthEmail}
-              />
-              {!isEmailValid && (
-                <Form.Text className="text-success">
-                  이메일 형식이 올바르지 않습니다.
-                </Form.Text>
-              )}
-            </Form.Group>
-
             <Form.Group controlId="checkPassword" className="mt-3">
               <Form.Label>비밀번호</Form.Label>
               <Form.Control
@@ -107,7 +81,7 @@ function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
                 autoComplete="off"
                 placeholder="password"
                 value={password}
-                onChange={onChangeAuthPassword}
+                onChange={handleChange}
               />
               {!isPasswordValid && (
                 <Form.Text className="text-success">
@@ -120,7 +94,7 @@ function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
               <Col sm={{ span: 20 }}>
                 <Button
                   variant="primary"
-                  disabled={!isFormValid}
+                  disabled={!isPasswordValid}
                   onClick={handleSubmit}
                 >
                   인증하기

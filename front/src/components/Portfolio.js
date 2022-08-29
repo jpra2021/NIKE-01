@@ -12,12 +12,12 @@ import Award from "./userpage/Award/Award";
 import Loading from "./Loading";
 import Introduction from "./userpage/introduction/Introduction";
 
-function loadData() {
+function loadData(ownerId) {
   return Promise.all([
-    Api.get("user/education"),
-    Api.get("user/award"),
-    Api.get("user/project"),
-    Api.get("user/certificate"),
+    Api.get(`users/${ownerId}/education`),
+    Api.get(`users/${ownerId}/award`),
+    Api.get(`users/${ownerId}/project`),
+    Api.get(`users/${ownerId}/certificate`)
   ]);
 }
 
@@ -40,7 +40,7 @@ function Portfolio() {
     // portfolioOwner을 해당 사용자 정보로 세팅함.
     setPortfolioOwner(ownerData);
 
-    const dataList = await loadData();
+    const dataList = await loadData(ownerId);
 
     setPortfolioData({
       education: dataList[0],
