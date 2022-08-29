@@ -1,22 +1,28 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { NoticeContext, UserStateContext } from "../../App";
+import * as API from "../../api";
 
-function UserInfoChange({ correctUserInfo, setCorrectUserInfo }) {
+function UserInfoChange() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const { state } = useLocation();
+  
+  const [ formData, setFormData ] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const { setNotices } = useContext(NoticeContext);
   const userState = useContext(UserStateContext);
 
   useEffect(() => {
-    if (!userState.user || !correctUserInfo) {
-      navigate("/", { replace: true });
-      return;
+    if(!state?.isAuth) {
+      navigate("/");
+      return; 
     }
-  });
+  }, []);
 
   const validateEmail = (email) => {
     return email
@@ -26,43 +32,38 @@ function UserInfoChange({ correctUserInfo, setCorrectUserInfo }) {
       );
   };
 
-  const isEmailValid = validateEmail(email);
-  const isPasswordValid = password.length >= 4;
-  const isPasswordSame = password === confirmPassword;
+  const isEmailValid = validateEmail(formData.email);
+  const isPasswordValid = formData.password.length >= 4;
+  const isPasswordSame = formData.password === formData.confirmPassword;
   const isFormValid = isEmailValid && isPasswordValid && isPasswordSame;
 
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
 
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
+    setFormData((current) => {
+      return { ...current, [name]: value };
+    })
+  }
 
-  const onChangeConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-  };
+  const editUserData = async () => {
+    const res = await API.put("/users/edit", {email: formData.email, password: formData.password});
+  }
 
-  const handleSubmit = (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
 
     // 이메일, 비밀번호 변경하기
     try {
-      alertChangeComplete();
-      setCorrectUserInfo(false);
+      setNotices({ type: "success", payload: {title: "변경 성공!", message: "이메일과 비밀번호가 변경되었습니다."}});
+      const user = userState.user;
+      API.put("users/edit", {email: formData.email, password: formData.password})
+        .then(res => console.log(res));
+
+      navigate("/");
+      return;
     } catch (err) {
       console.log("이메일, 비밀번호 변경에 실패하였습니다.\n", err);
     }
-  };
-
-  const alertChangeComplete = () => {
-    setNotices({
-      type: "success",
-      payload: {
-        title: "변경 성공!",
-        message: "이메일과 비밀번호가 변경되었습니다.",
-      },
-    });
   };
 
   return (
@@ -83,8 +84,9 @@ function UserInfoChange({ correctUserInfo, setCorrectUserInfo }) {
                 type="email"
                 autoComplete="on"
                 placeholder="email"
-                value={email}
-                onChange={onChangeEmail}
+                name="email"
+                value={formData.email}
+                onChange={handleFormChange}
               />
               {!isEmailValid && (
                 <Form.Text className="text-success">
@@ -99,8 +101,9 @@ function UserInfoChange({ correctUserInfo, setCorrectUserInfo }) {
                 type="password"
                 autoComplete="off"
                 placeholder="password"
-                value={password}
-                onChange={onChangePassword}
+                name="password"
+                value={formData.password}
+                onChange={handleFormChange}
               />
               {!isPasswordValid && (
                 <Form.Text className="text-success">
@@ -115,8 +118,9 @@ function UserInfoChange({ correctUserInfo, setCorrectUserInfo }) {
                 type="password"
                 autoComplete="off"
                 placeholder="confirm password"
-                value={confirmPassword}
-                onChange={onChangeConfirmPassword}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleFormChange}
               />
               {!isPasswordSame && (
                 <Form.Text className="text-success">
@@ -130,7 +134,7 @@ function UserInfoChange({ correctUserInfo, setCorrectUserInfo }) {
                 <Button
                   variant="primary"
                   disabled={!isFormValid}
-                  onClick={handleSubmit}
+                  onClick={handleClick}
                 >
                   변경하기
                 </Button>

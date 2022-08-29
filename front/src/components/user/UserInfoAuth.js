@@ -4,7 +4,7 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { NoticeContext, UserStateContext } from "../../App";
 import * as API from "../../api";
 
-function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
+const UserInfoAuth = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const { setNotices } = useContext(NoticeContext);
@@ -28,38 +28,20 @@ function UserInfoAuth({ correctUserInfo, setCorrectUserInfo }) {
     const res = await API.post("user/verify", {password});
     const { ok } = res.data;
 
-    console.log(ok);
+    if(ok) {
+      setNotices({type: "success", payload: {title: "인증 성공!", message: "인증에 성공하였습니다."}});
+      console.log(navigate)
+      navigate("/infochange", {replace: true, state: {isAuth: true}});
+      return;
+    } else {
+      setNotices({type: "warn", payload: {title: "인증 실패!", message: "이메일 또는 비밀번호가 올바르지 않습니다."}});
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // 동일한 아이디와 패스워드인지 검사...
-    // if (올바른 이메일, 비번이 아니면)
-    // return alertIncorrectInfo();
-    
-    console.log(password)
     checkPassword(password);
-  };
-
-  const alertIncorrectInfo = () => {
-    setNotices({
-      type: "warn",
-      payload: {
-        title: "인증 실패!",
-        message: "이메일 또는 비밀번호가 올바르지 않습니다.",
-      },
-    });
-  };
-
-  const alertCorrectInfo = () => {
-    setNotices({
-      type: "success",
-      payload: {
-        title: "인증 성공!",
-        message: "인증에 성공하였습니다.",
-      },
-    });
   };
 
   return (

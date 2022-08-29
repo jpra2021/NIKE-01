@@ -106,10 +106,16 @@ class userAuthService {
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
     //Didn't make edit password section yet
-    if (user.password !== toUpdate.password && toUpdate.password !== null) {
+    if (toUpdate.password !== null) {
+      const correctPasswordHash = user.password;
+      const isPasswordCorrect = await bcrypt.compare(
+        toUpdate.password,
+        correctPasswordHash
+      );
       console.log("password is updated", toUpdate.password);
+      const hashedNewPassword = await bcrypt.hash(toUpdate.password, 10);
       const fieldToUpdate = "password";
-      const newValue = bcrypt.hash(toUpdate.password, 10);
+      const newValue = hashedNewPassword;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
