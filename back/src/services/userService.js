@@ -78,6 +78,7 @@ class userAuthService {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById(user_id);
     const { name, email, password, description, introduction } = toUpdate;
+    console.log("불러온 유저의 정보:", user);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -86,14 +87,14 @@ class userAuthService {
     }
 
     // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
-    if (user.name !== toUpdate.name) {
+    if (toUpdate.name !== null) {
       console.log("name is updated");
       const fieldToUpdate = "name";
       const newValue = toUpdate.name;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
-    if (user.email !== toUpdate.email) {
+    if (toUpdate.email !== null && user.email !== toUpdate.email) {
       let email = await User.findByEmail({ email: toUpdate.email });
       if (email) {
         const errorMessage =
@@ -106,14 +107,19 @@ class userAuthService {
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
     //Didn't make edit password section yet
-    if (user.password !== toUpdate.password && toUpdate.password !== null) {
-      console.log("password is updated", toUpdate.password);
+    if (toUpdate.password !== null) {
+      const currentPassword = user.password;
+      const compareInputandCurrent = await bcrypt.compare(
+        toUpdate.password,
+        currentPassword
+      );
+      console.log("password is updated");
+      const hashedNewPassword = await bcrypt.hash(toUpdate.password, 10);
       const fieldToUpdate = "password";
-      const newValue = bcrypt.hash(toUpdate.password, 10);
+      const newValue = hashedNewPassword;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
-
-    if (user.description !== toUpdate.description) {
+    if (toUpdate.description !== null) {
       console.log("description is updated");
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
@@ -121,6 +127,7 @@ class userAuthService {
     }
 
     console.log("nothing to update");
+    console.log("리턴하는 유저는?", user);
 
     return user;
   }

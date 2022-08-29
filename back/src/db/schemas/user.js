@@ -42,6 +42,7 @@ const UserSchema = new Schema(
     introduction: {
       type: String,
       required: false,
+      ref: "Intro",
       default: "짧은 자기 소개를 추가해 주세요.",
     },
   },
