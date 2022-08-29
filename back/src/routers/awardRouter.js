@@ -90,7 +90,7 @@ const getAwards = async (req, res, next) => {
 /*-- DELETE --*/
 const deleteAward = async (req, res, next) => {
   try {
-    const obj_id = req.body._id;
+    const obj_id = req.params.id;
 
     if (!obj_id) {
       throw new Error(awardMsg.NO_OBJ_ERROR);
@@ -109,6 +109,6 @@ const deleteAward = async (req, res, next) => {
 awardRouter.post("/users/award", login_required, createNewAwards);
 awardRouter.put("/users/award", login_required, updateNewAward);
 awardRouter.get("/users/:id/award", login_required, getAwards);
-awardRouter.delete("/users/award", login_required, deleteAward);
+awardRouter.delete("/users/:id/award", login_required, deleteAward);
 
 export { awardRouter };

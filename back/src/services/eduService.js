@@ -38,8 +38,8 @@ class eduService {
     return edu;
   }
   /*-- DELETE --*/
-  static async deleteEdu(obj_id) {
-    const edu = await Education.delete(obj_id);
+  static async deleteEdu(obj_id, user_id) {
+    const edu = await Education.delete(obj_id, user_id);
     return edu;
   }
 }
