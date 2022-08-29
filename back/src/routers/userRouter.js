@@ -87,12 +87,12 @@ userAuthRouter.get(
 );
 /* -- UPDATE --*/
 userAuthRouter.put(
-  "/users/:id",
+  "/users/edit",
   login_required,
   async function (req, res, next) {
     try {
-      // URI로부터 사용자 id를 추출함.
-      const user_id = req.params.id;
+      //로그인 한 사람과 PUT을 요청한 사람이 같은지 req.currentUserId로 체크
+      const user_id = req.currentUserId;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
