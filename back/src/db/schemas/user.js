@@ -30,9 +30,9 @@ const UserSchema = new Schema(
       default: "짧은 자기 소개를 추가해 주세요.",
     },
     profileImg: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: false,
-      ref: "ImageFile",
+      ref: "File",
     },
     edu: {
       type: mongoose.Schema.Types.ObjectId,
