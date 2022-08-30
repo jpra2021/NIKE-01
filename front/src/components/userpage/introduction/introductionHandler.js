@@ -4,23 +4,21 @@ import { TYPES } from "../../util/util";
 const introductionHandler = (dispatcher) => {
     const dispatch = dispatcher;
 
-    const add = async (handleEditMode) => {
+    const add = async (text) => {
         dispatch({type: TYPES.add, payload: {}});
-        
-        handleEditMode();
 
-        // try {
-        //     const res = await API.post("user/intro", 
-        //         {
-        //             text
-        //         });
+        try {
+            const res = await API.put("users/edit", 
+                {
+                    intro: text
+                });
 
-        //     const introduction_id = await res.data._id;
+            const introduction_id = await res.data._id;
 
-        //     dispatch({type: TYPES.setID, payload: {introduction_id}});
-        // } catch (err) {
-        //     console.log(err);
-        // }
+            dispatch({type: TYPES.setID, payload: {introduction_id}});
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const edit = (text) => {
@@ -28,7 +26,9 @@ const introductionHandler = (dispatcher) => {
     }
 
     const init = (initialData) => {
-        dispatch({type: TYPES.init, payload: { ...initialData }});
+        const { _id, intro } = initialData;
+
+        dispatch({type: TYPES.init, payload: { introduction_id: _id, text: intro }});
     }
 
     return {add, edit, init};

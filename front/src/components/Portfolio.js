@@ -88,7 +88,7 @@ function Portfolio() {
         </Col>
         <Col>
           <Introduction
-            initialData={portfolioData.education} isEditable={portfolioOwner.user_id === userState.user?.user_id}
+            initialData={userState.user} isEditable={portfolioOwner.user_id === userState.user?.user_id}
           />
           <div className="mb-2" />
           <Education

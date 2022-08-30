@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useMemo, useReducer, useRef } from "react";
+import { useState, useEffect, useContext, useMemo, useReducer } from "react";
 import { Card, Row, Col, Form, FloatingLabel, Button } from "react-bootstrap";
 import introductionReducer from "./introductionReducer";
 import { NoticeContext } from "../../../App";
@@ -10,22 +10,33 @@ const Introduction = ({ initialData, isEditable }) => {
     const reducer = useMemo(() => introductionReducer(setNotices), []);
     const [intro, dispatch] = useReducer(reducer, { text: ""});
     const handler = useMemo(() => introductionHandler(dispatch));
-    const [ editMode, setEditMode ] = useState(true);
-    const [ isEdit, setIsEdit ] = useState(false);
+    const [ editMode, setEditMode ] = useState(false);
 
-    const handleEditMode = () => {
+    useEffect(() => {
+        handler.init(initialData);
+    }, []);
+
+    const handleEditMode = (e) => {
         setEditMode((current) => !current);
     }
 
     const handleChange =(e) => {
-        const { value } = e.target;
+        let { value } = e.target;
 
-        handler.edit(value);
+        value = value.slice(0, 300);
+
+        handler.edit(value, handleEditMode);
+
+        if (value?.length === 0) {
+            setEditMode(false);
+        } else {
+            setEditMode(true);
+        }
     }
 
-    const handleClick = () => {
-        // handler.add(handleEditMode);
-        handleEditMode()
+    const handleClick = (e) => {
+        handler.add(intro.text);
+        handleEditMode();
     };
 
     return (
@@ -36,8 +47,9 @@ const Introduction = ({ initialData, isEditable }) => {
                     <Row className="mt-3 text-center">
                         <Form>
                             <FloatingLabel
+                                className="text-center"
                                 controlId="floatingTextarea2"
-                                label={intro.text.length + " / 300"}
+                                label={intro.text?.length + " / 300"}
                             >
                                 <Form.Control
                                     as="textarea"
@@ -55,12 +67,8 @@ const Introduction = ({ initialData, isEditable }) => {
                                     </Col>
                                 </Row>)
                             }
-                            {isEditable && (
-                                editMode ? 
-                                    <Button size="sm" variant="outline-info" onClick={handleClick}>편집</Button>
-                                    :
-                                    <Button size="sm" variant="outline-info" onClick={handleEditMode}>확인</Button>
-                            )  
+                            {editMode &&
+                                <Button size="sm" variant="outline-info" onClick={handleClick}>확인</Button>
                             }
                         </Form>
                     </Row>
