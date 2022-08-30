@@ -26,7 +26,7 @@ const UserSchema = new Schema(
     intro: {
       type: String,
       required: false,
-      ref: "Intro",
+      max: 300,
       default: "짧은 자기 소개를 추가해 주세요.",
     },
     profileImg: {
