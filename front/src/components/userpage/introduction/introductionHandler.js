@@ -5,9 +5,9 @@ const introductionHandler = (dispatcher) => {
     const dispatch = dispatcher;
 
     const add = async (text) => {
-        dispatch({type: TYPES.add, payload: {}});
-
+        console.log("=========")
         try {
+            dispatch({type: TYPES.add, payload: {}});
             const res = await API.put("users/edit", 
                 {
                     intro: text
