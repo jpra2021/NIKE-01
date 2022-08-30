@@ -98,9 +98,9 @@ userAuthRouter.put(
       const email = req.body.email ?? null;
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
-      const introduction = req.body.introduction ?? null;
+      const intro = req.body.intro ?? null;
 
-      const toUpdate = { name, email, password, description, introduction };
+      const toUpdate = { name, email, password, description, intro };
       console.log("라우터에서 toUpdate", toUpdate);
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함

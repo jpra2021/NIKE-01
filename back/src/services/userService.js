@@ -77,7 +77,7 @@ class userAuthService {
   static async setUser({ user_id, toUpdate }) {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById(user_id);
-    const { name, email, password, description, introduction } = toUpdate;
+    // const { name, email, password, description, introduction } = toUpdate;
     console.log("불러온 유저의 정보:", user);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
@@ -123,6 +123,13 @@ class userAuthService {
       console.log("description is updated");
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
+      user = await User.update({ user_id, fieldToUpdate, newValue });
+    }
+
+    if (toUpdate.intro !== null) {
+      console.log("introduction is updated");
+      const fieldToUpdate = "intro";
+      const newValue = toUpdate.intro;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
     return user;
