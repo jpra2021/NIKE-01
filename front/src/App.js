@@ -27,8 +27,7 @@ function App() {
   });
   const [notices, setNotices] = useReducer(noticeReducer, []);
 
-  // '/infoauth'에서 인증을 하지않은 유저의 '/infochange'접근을 막기 위한 state
-  const [correctUserInfo, setCorrectUserInfo] = useState(false);
+  // redirect page에서 header를 안 보이게 하는 용도
   const [headerVisible, setHeaderVisible] = useState(true);
 
   // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
@@ -76,24 +75,8 @@ function App() {
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/users/:userId" element={<Portfolio />} />
-              <Route
-                path="/infoauth"
-                element={
-                  <UserInfoAuth
-                    correctUserInfo={correctUserInfo}
-                    setCorrectUserInfo={setCorrectUserInfo}
-                  />
-                }
-              />
-              <Route
-                path="/infochange"
-                element={
-                  <UserInfoChange
-                    correctUserInfo={correctUserInfo}
-                    setCorrectUserInfo={setCorrectUserInfo}
-                  />
-                }
-              />
+              <Route path="/infoauth" element={<UserInfoAuth />} />
+              <Route path="/infochange" element={<UserInfoChange />} />
               <Route path="/network" element={<Network />} />
               <Route
                 path="*"
