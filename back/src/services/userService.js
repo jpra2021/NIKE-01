@@ -125,10 +125,6 @@ class userAuthService {
       const newValue = toUpdate.description;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
-
-    console.log("nothing to update");
-    console.log("리턴하는 유저는?", user);
-
     return user;
   }
 

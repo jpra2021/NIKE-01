@@ -23,6 +23,17 @@ const UserSchema = new Schema(
       required: false,
       default: "설명이 아직 없습니다. 추가해 주세요.",
     },
+    intro: {
+      type: String,
+      required: false,
+      ref: "Intro",
+      default: "짧은 자기 소개를 추가해 주세요.",
+    },
+    profileImg: {
+      type: String,
+      required: false,
+      ref: "ImageFile",
+    },
     edu: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Education",
@@ -38,12 +49,6 @@ const UserSchema = new Schema(
     certificate: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Certificate",
-    },
-    introduction: {
-      type: String,
-      required: false,
-      ref: "Intro",
-      default: "짧은 자기 소개를 추가해 주세요.",
     },
   },
   {
