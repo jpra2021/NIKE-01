@@ -1,14 +1,14 @@
 import mongoose, { Schema, model } from "mongoose";
 
-const File = new Schema(
+const FileSchema = new Schema(
   {
     user_id: {
       type: String,
       required: true,
     },
-    filename: {
-      type: String,
-      required: true,
+    img: {
+      data: Buffer,
+      contentType: String,
     },
   },
   {
@@ -17,5 +17,5 @@ const File = new Schema(
   }
 );
 
-const FileModel = model("File", UserSchema);
+const FileModel = model("FileList", FileSchema);
 export { FileModel };
