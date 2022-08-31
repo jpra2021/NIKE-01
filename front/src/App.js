@@ -62,7 +62,7 @@ function App() {
   if (!isFetchCompleted) {
     return <Loading />;
   }
-  console.log("이게 왜 리렌더링됨?");
+
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
