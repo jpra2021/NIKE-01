@@ -6,9 +6,21 @@ const FileSchema = new Schema(
       type: String,
       required: true,
     },
-    img: {
-      data: Buffer,
-      contentType: String,
+    fileName: {
+      type: String,
+      required: true,
+    },
+    fileExt: {
+      type: String,
+      required: true,
+    },
+    fileSrc: {
+      type: String,
+      required: true,
+    },
+    fileSize: {
+      type: String,
+      required: true,
     },
   },
   {

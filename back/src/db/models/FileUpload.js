@@ -18,15 +18,8 @@ class File {
     return filename;
   }
 
-  static async FileUpload(newFile_info) {
-    const { user_id, encode_img, mimetype } = newFile_info;
-    const img = {
-      user_id: user_id,
-      data: Buffer.from(encode_img, "base64"),
-      contentType: mimetype,
-    };
-
-    const newFile = await FileModel.create(newInput);
+  static async create(newFileValue) {
+    const newFile = await FileModel.create(newFileValue);
     return newFile;
   }
 }

@@ -2,9 +2,9 @@ import { File } from "../db/models/FileUpload";
 
 class fileService {
   /*--- CREATE ---*/
-  static async uploadFile(newFile_info) {
-    const uploadedNewFile = await File.FileUpload(newFile_info);
-    return uploadedNewFile;
+  static async createFileSrc(newFileValue) {
+    const newFile = await File.create(newFileValue);
+    return newFile;
   }
   /*--GET --*/
   static async getFiles(user_id) {
