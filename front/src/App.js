@@ -75,8 +75,8 @@ function App() {
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/users/:userId" element={<Portfolio />} />
-              <Route path="/infoauth" element={<UserInfoAuth />} />
-              <Route path="/infochange" element={<UserInfoChange />} />
+              <Route path="/user/auth" element={<UserInfoAuth />} />
+              <Route path="/user/edit" element={<UserInfoChange />} />
               <Route path="/network" element={<Network />} />
               <Route
                 path="*"

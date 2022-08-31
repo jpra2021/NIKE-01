@@ -33,7 +33,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
   const redirectToUserInfo = () => {
     setIsEditing(false);
-    navigate("/infoauth");
+    navigate("/user/auth");
   };
 
   return (
