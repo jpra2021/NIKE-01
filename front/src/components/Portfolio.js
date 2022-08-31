@@ -74,8 +74,8 @@ function Portfolio() {
       // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
       fetchPorfolioOwner(ownerId);
     }
-  }, [params, userState, navigate]);
-
+  }, []);
+//params, userState, navigate
   if (!isFetchCompleted) {
     return <Loading />;
   }

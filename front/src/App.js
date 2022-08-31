@@ -15,6 +15,7 @@ import Redirect from "./components/Redirect";
 import Loading from "./components/Loading";
 import UserInfoAuth from "./components/user/UserInfoAuth";
 import UserInfoChange from "./components/user/UserInfoChange";
+import ROUTES_ARR from "./route";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -71,7 +72,7 @@ function App() {
             <Notification />
             <Header headerVisible={headerVisible} />
             <Routes>
-              <Route path="/" exact element={<Portfolio />} />
+              {/* <Route path="/" exact element={<Portfolio />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/users/:userId" element={<Portfolio />} />
@@ -82,7 +83,12 @@ function App() {
                 path="*"
                 element={<Redirect setHeaderVisible={setHeaderVisible} />}
               />
-            </Routes>
+            </Routes> */}
+
+            {/*
+
+              
+            */}
           </Router>
         </NoticeContext.Provider>
       </UserStateContext.Provider>
