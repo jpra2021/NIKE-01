@@ -16,20 +16,25 @@ const Project = ({ initialData, isEditable }) => {
     const handler = useMemo(() => projectsHandler(dispatch), [dispatch]);
 
     const [ isForm, setIsForm ] = useState(false);
-
-    const handleForm = () => {   
-        setIsForm((current) => !current);
-    }
-
+    
     useEffect(() => {
         handler.init(initialData);
     }, []);
+    
+    console.log("project reload!")
+    const projectList = useMemo(() => {
+        return projects.map((project, idx) => (<ProjectInfo key={idx} project={project} index={idx} handler={handler} />));
+    }, [projects]);
+    
+    const handleForm = () => {   
+        setIsForm((current) => !current);
+    }
 
     return (
         <Card>
             <Card.Body>
                 <Card.Title>프로젝트</Card.Title>
-                {projects.map((project, idx) => (<ProjectInfo key={idx} project={project} index={idx} handler={handler} />))}
+                {projectList}
                 {isEditable &&
                     <Row className="mt-3 mb-4 text-center">
                         <Col sm="20">
