@@ -14,7 +14,6 @@ function login_required(req, res, next) {
 
   // 해당 token 이 정상적인 token인지 확인 -> 토큰에 담긴 user_id 정보 추출
   try {
-    console.log("로그인 lq 스타트");
     const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
     const jwtDecoded = jwt.verify(userToken, secretKey);
     const user_id = jwtDecoded.user_id;

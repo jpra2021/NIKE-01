@@ -1,26 +1,35 @@
 import { FileModel } from "../schemas/file";
-import mongoose from "mongoose";
-import { multer } from "multer";
-//import { config } from "../db/config/db";
-import { GridFsStorage } from "multer-gridfs-storage";
 
 class File {
+  /* CREATE */
+  static async create(newFileValue) {
+    const newFile = await FileModel.create(newFileValue);
+    return newFile;
+  }
   /* GET - from user */
-
   static async findbyUserId(user_id) {
     const user = await FileModel.find({ user_id: user_id });
     return user;
   }
-  static async findbyFilename(filename) {
-    const file = await FileModel.find({
-      filename: filename,
-    });
-    return filename;
+
+  /* ---DELETE ---*/
+  static async deleteFile(user_id) {
+    const deleteFile = await FileModel.findOneAndDelete({ user_id: user_id });
+    return deleteFile;
   }
 
-  static async create(newFileValue) {
-    const newFile = await FileModel.create(newFileValue);
-    return newFile;
+  /*--UPDATE--*/
+  static async updateFile(user_id, newValue) {
+    const filter = { user_id: user_id };
+    const update = { [fieldToUpdate]: newValue };
+    const option = { returnOriginal: false };
+
+    const updatedFile = await FileModel.findByIdAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return updatedFile;
   }
 }
 

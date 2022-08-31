@@ -5,7 +5,6 @@ import path from "path";
 /* checking existence of folder */
 try {
   fs.readdirSync("LocalFile");
-  console.log("LocalFile 폴더가 있습니다.");
 } catch (err) {
   console.error("LocalFile 폴더가 없습니다. 폴더를 생성합니다.");
   fs.mkdirSync("LocalFile");
@@ -14,10 +13,10 @@ try {
 
 const file_upload = multer({
   storage: multer.diskStorage({
-    destination(req, file, cb) {
+    destination: function (req, file, cb) {
       cb(null, "LocalFile");
     },
-    filename(req, file, cb) {
+    filename: function (req, file, cb) {
       const user_id = req.currentUserId;
       const ext = path.extname(file.originalname);
       const newFilename = `nike_${user_id}_${Date.now()}${ext}`;
@@ -25,4 +24,6 @@ const file_upload = multer({
     },
   }),
 });
+
+//console.log(multer.diskStorage);
 export { file_upload };
