@@ -58,6 +58,34 @@ async function del(endpoint, params = "") {
   });
 }
 
+// 회원가입 후, 기본 프로필 이미지 create
+async function imgDefault(endpoint, data) {
+  const bodyData = JSON.stringify(data);
+  console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+  console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
+
+  return axios.post(serverUrl + endpoint, bodyData, {
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
+
+// 유저가 업로드 한 이미지로 프로필 이미지 update
+async function imgPut(endpoint, data) {
+  // const bodyData = JSON.stringify(data);
+  console.log(`%cPUT 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+  console.log(`%cPUT 요청 데이터: ${data}`, "color: #296aba;");
+
+  return axios.put(serverUrl + endpoint, data, {
+    headers: {
+      // "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
+
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
-export { get, post, put, del as delete };
+export { get, post, put, del as delete, imgPut, imgDefault };

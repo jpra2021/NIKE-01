@@ -47,6 +47,11 @@ function RegisterForm() {
         email,
         password,
         name,
+      }).then((res) => {
+        const data = {
+          user_id: res.data.user_id,
+        };
+        Api.imgDefault("settingDefaultImg", data);
       });
 
       // 로그인 페이지로 이동함.
