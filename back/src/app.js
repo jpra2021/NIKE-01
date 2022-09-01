@@ -1,11 +1,12 @@
 import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/userRouter";
-import {eduRouter} from "./routers/eduRouter"
-import {awardRouter} from "./routers/awardRouter"
-import {certiRouter} from "./routers/certiRouter"
+import { eduRouter } from "./routers/eduRouter";
+import { awardRouter } from "./routers/awardRouter";
+import { certiRouter } from "./routers/certiRouter";
 import { proRouter } from "./routers/projectRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { fileRouter } from "./routers/fileRouter";
 
 const app = express();
 
@@ -28,7 +29,8 @@ app.use(userAuthRouter);
 app.use(eduRouter);
 app.use(proRouter);
 app.use(awardRouter);
-app.use(certiRouter)
+app.use(certiRouter);
+app.use(fileRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
