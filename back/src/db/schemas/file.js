@@ -1,12 +1,24 @@
 import mongoose, { Schema, model } from "mongoose";
 
-const File = new Schema(
+const FileSchema = new Schema(
   {
     user_id: {
       type: String,
       required: true,
     },
-    filename: {
+    fileName: {
+      type: String,
+      required: true,
+    },
+    fileExt: {
+      type: String,
+      required: true,
+    },
+    fileSrc: {
+      type: String,
+      required: true,
+    },
+    fileSize: {
       type: String,
       required: true,
     },
@@ -17,5 +29,5 @@ const File = new Schema(
   }
 );
 
-const FileModel = model("File", UserSchema);
+const FileModel = model("FileList", FileSchema);
 export { FileModel };
