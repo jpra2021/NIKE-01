@@ -8,24 +8,13 @@ const introductionReducer = (dispatch) => {
 
         switch (action.type) {
             case TYPES.add: {
-                if (state.text === text) {
-                    setNotices({
-                        type: "warn",
-                        payload: {
-                            title: "소개",
-                            message: "이미 존재하는 소개입니다.",
-                        },
-                    });
-
-                    return state;
-                }
-
+                console.log("hi")
                 setNotices({
                     type: "success",
                     payload: { title: "소개", message: "입력되었습니다." },
                 });
 
-                return { ...state, text};
+                return { ...state};
             }
 
             case TYPES.edit: {

@@ -9,8 +9,7 @@ import LoginForm from "./components/user/LoginForm";
 import Network from "./components/user/Network";
 import RegisterForm from "./components/user/RegisterForm";
 import Portfolio from "./components/Portfolio";
-import Notification from "./components/notice/NoticeList";
-import noticeReducer from "./components/notice/noticeReducer";
+
 import Redirect from "./components/Redirect";
 import Loading from "./components/Loading";
 import UserInfoAuth from "./components/user/UserInfoAuth";
@@ -18,17 +17,13 @@ import UserInfoChange from "./components/user/UserInfoChange";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
-export const NoticeContext = createContext(null);
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
   const [userState, dispatch] = useReducer(loginReducer, {
     user: null,
   });
-  const [notices, setNotices] = useReducer(noticeReducer, []);
-
-  // '/infoauth'에서 인증을 하지않은 유저의 '/infochange'접근을 막기 위한 state
-  const [correctUserInfo, setCorrectUserInfo] = useState(false);
+  // redirect page에서 header를 안 보이게 하는 용도
   const [headerVisible, setHeaderVisible] = useState(true);
 
   // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
@@ -63,45 +58,26 @@ function App() {
   if (!isFetchCompleted) {
     return <Loading />;
   }
-  console.log(userState);
+
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
-        <NoticeContext.Provider value={{ notices, setNotices }}>
-          <Router>
-            <Notification />
-            <Header headerVisible={headerVisible} />
-            <Routes>
-              <Route path="/" exact element={<Portfolio />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/users/:userId" element={<Portfolio />} />
-              <Route
-                path="/infoauth"
-                element={
-                  <UserInfoAuth
-                    correctUserInfo={correctUserInfo}
-                    setCorrectUserInfo={setCorrectUserInfo}
-                  />
-                }
-              />
-              <Route
-                path="/infochange"
-                element={
-                  <UserInfoChange
-                    correctUserInfo={correctUserInfo}
-                    setCorrectUserInfo={setCorrectUserInfo}
-                  />
-                }
-              />
-              <Route path="/network" element={<Network />} />
-              <Route
-                path="*"
-                element={<Redirect setHeaderVisible={setHeaderVisible} />}
-              />
-            </Routes>
-          </Router>
-        </NoticeContext.Provider>
+        <Router>
+          <Header headerVisible={headerVisible} />
+          <Routes>
+            <Route path="/" exact element={<Portfolio />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/users/:userId" element={<Portfolio />} />
+            <Route path="/user/auth" element={<UserInfoAuth />} />
+            <Route path="/user/edit" element={<UserInfoChange />} />
+            <Route path="/network" element={<Network />} />
+            <Route
+              path="*"
+              element={<Redirect setHeaderVisible={setHeaderVisible} />}
+            />
+          </Routes>
+        </Router>
       </UserStateContext.Provider>
     </DispatchContext.Provider>
   );

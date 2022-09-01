@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext, UserStateContext } from "../../App";
+import { NoticeContext } from "../Portfolio";
+import { UserStateContext } from "../../App";
+
 import * as API from "../../api";
 
 const UserInfoAuth = () => {
@@ -25,18 +27,26 @@ const UserInfoAuth = () => {
   };
 
   const checkPassword = async (password) => {
-    const res = await API.post("user/verify", {password});
+    const res = await API.post("user/verify", { password });
     const { ok } = res.data;
 
-    if(ok) {
-      setNotices({type: "success", payload: {title: "인증 성공!", message: "인증에 성공하였습니다."}});
-      console.log(navigate)
-      navigate("/infochange", {replace: true, state: {isAuth: true}});
+    if (ok) {
+      setNotices({
+        type: "success",
+        payload: { title: "인증 성공!", message: "인증에 성공하였습니다." },
+      });
+      navigate("/user/edit", { replace: true, state: { isAuth: true } });
       return;
     } else {
-      setNotices({type: "warn", payload: {title: "인증 실패!", message: "이메일 또는 비밀번호가 올바르지 않습니다."}});
+      setNotices({
+        type: "warn",
+        payload: {
+          title: "인증 실패!",
+          message: "이메일 또는 비밀번호가 올바르지 않습니다.",
+        },
+      });
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -96,6 +106,6 @@ const UserInfoAuth = () => {
       </Row>
     </Container>
   );
-}
+};
 
 export default UserInfoAuth;

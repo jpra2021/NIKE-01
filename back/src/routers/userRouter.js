@@ -98,7 +98,7 @@ userAuthRouter.put(
       const email = req.body.email ?? null;
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
-      const intro = req.body.intro ?? null;
+      const intro = req.body.intro ?? "";
 
       const toUpdate = { name, email, password, description, intro };
       console.log("라우터에서 toUpdate", toUpdate);
