@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext } from "../Portfolio";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
@@ -9,7 +10,6 @@ import { DispatchContext } from "../../App";
 function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
-  const { setNotices } = useContext(NoticeContext);
 
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
@@ -54,25 +54,46 @@ function LoginForm() {
         payload: user,
       });
       // 로그인 성공 토스트 메세지
-      setNotices({
-        type: "success",
-        payload: {
-          title: "로그인 성공",
-          message: `${user.name}님, 환영합니다.`,
-        },
-      });
+      // setNotices({
+      //   type: "success",
+      //   payload: {
+      //     title: "로그인 성공",
+      //     message: `${user.name}님, 환영합니다.`,
+      //   },
+      // });
       // 기본 페이지로 이동함.
+
+      toast.success("로그인 성공", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
       navigate("/", { replace: true });
     } catch (err) {
       // 로그인 실패 토스트 메세지
-      setNotices({
-        type: "warn",
-        payload: {
-          title: "로그인 실패",
-          message:
-            "등록되지 않은 아이디이거나 아이디 또는 비밀번호를 잘못 입력했습니다.",
-        },
-      });
+      // setNotices({
+      //   type: "warn",
+      //   payload: {
+      //     title: "로그인 실패",
+      //     message:
+      //       "등록되지 않은 아이디이거나 아이디 또는 비밀번호를 잘못 입력했습니다.",
+      //   },
+      // });
+
+      toast.warn("로그인 실패", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+
       console.log("로그인에 실패하였습니다.\n", err);
     }
   };

@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "package.json": "^2.0.1",
-    "react-toastify": "^9.0.8"
+    "package.json": "^2.0.1"
   }
 }
