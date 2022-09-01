@@ -1,19 +1,14 @@
-import React, { useState, useEffect, useReducer, createContext } from "react";
+import React, { useState, useEffect, useReducer, createContext, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 
 import Header from "./components/Header";
-import LoginForm from "./components/user/LoginForm";
-import Network from "./components/user/Network";
-import RegisterForm from "./components/user/RegisterForm";
-import Portfolio from "./components/Portfolio";
 
 import Redirect from "./components/Redirect";
 import Loading from "./components/Loading";
-import UserInfoAuth from "./components/user/UserInfoAuth";
-import UserInfoChange from "./components/user/UserInfoChange";
+import { RAUTES_VALUES } from "./routes/routes";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -55,6 +50,13 @@ function App() {
     fetchCurrentUser();
   }, []);
 
+  const routes = useMemo(() => {
+    return RAUTES_VALUES.map(({path, component}, idx) => {
+      const Component = component;
+      return <Route key={idx} path={path} element={<Component />}/>
+    });
+  });
+
   if (!isFetchCompleted) {
     return <Loading />;
   }
@@ -65,13 +67,7 @@ function App() {
         <Router>
           <Header headerVisible={headerVisible} />
           <Routes>
-            <Route path="/" exact element={<Portfolio />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/register" element={<RegisterForm />} />
-            <Route path="/users/:userId" element={<Portfolio />} />
-            <Route path="/user/auth" element={<UserInfoAuth />} />
-            <Route path="/user/edit" element={<UserInfoChange />} />
-            <Route path="/network" element={<Network />} />
+            {routes}
             <Route
               path="*"
               element={<Redirect setHeaderVisible={setHeaderVisible} />}
