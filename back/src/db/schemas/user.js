@@ -29,7 +29,12 @@ const UserSchema = new Schema(
       max: 300,
       default: "짧은 자기 소개를 추가해 주세요.",
     },
-    profileImg: {
+    profileImgSrc: {
+      type: String,
+      required: false,
+      default: "latteIsHere",
+    },
+    File: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
       ref: "File",

@@ -1,3 +1,4 @@
+import { User } from "../db";
 import { File } from "../db/models/FileUpload";
 
 class fileService {
@@ -19,34 +20,33 @@ class fileService {
   }
 
   /* UPDATE */
-  static async updateEdu(obj_id, newInput) {
+  static async updateFile(newInput) {
     /* for return */
-    let file;
-    const { fileName, fileExt, fileSrc, fileSize } = newInput;
-    //check school
+    const { user_id, fileName, fileExt, fileSrc, fileSize } = newInput;
+    let file = await File.findbyUserId(user_id);
+
+    //file = await File.updateFile(user_id, changedFile);
     if (fileName) {
       const fieldToUpdate = "fileName";
       const newValue = fileName;
-      file = await File.update({ obj_id, fieldToUpdate, newValue });
+      file = await File.updateFile(user_id, fieldToUpdate, newValue);
     }
-    //check major
-    if (fileName) {
-      const fieldToUpdate = "fileName";
-      const newValue = fileName;
-      file = await File.update({ obj_id, fieldToUpdate, newValue });
+    if (fileExt) {
+      const fieldToUpdate = "fileExt";
+      const newValue = fileExt;
+      file = await File.updateFile(user_id, fieldToUpdate, newValue);
     }
-    //check position
-    if (fileName) {
-      const fieldToUpdate = "fileName";
-      const newValue = fileName;
-      file = await File.update({ obj_id, fieldToUpdate, newValue });
+    if (fileSrc) {
+      const fieldToUpdate = "fileSrc";
+      const newValue = fileSrc;
+      file = await File.updateFile(user_id, fieldToUpdate, newValue);
     }
-    if (fileName) {
-      const fieldToUpdate = "fileName";
-      const newValue = fileName;
-      file = await File.update({ obj_id, fieldToUpdate, newValue });
+    if (fileSize) {
+      const fieldToUpdate = "fileSize";
+      const newValue = fileSize;
+      file = await File.updateFile(user_id, fieldToUpdate, newValue);
     }
-    return fi;
+    return file;
   }
 }
 
