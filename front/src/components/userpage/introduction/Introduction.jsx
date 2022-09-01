@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useMemo, useReducer } from "react";
 import { Card, Row, Col, Form, FloatingLabel, Button } from "react-bootstrap";
 import introductionReducer from "./introductionReducer";
-import { NoticeContext } from "../../../App";
+import { NoticeContext } from "../../Portfolio";
 import introductionHandler from "./introductionHandler";
 import { TYPES } from "../../util/util";
 // 리네이밍

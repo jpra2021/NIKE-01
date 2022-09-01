@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import AwardForm from "./AwardForm";
 import AwardInfo from "./AwardInfo";
-import { NoticeContext } from "../../../App";
+import { NoticeContext } from "../../Portfolio";
 import AwardReducer from "./AwardReducer";
 import awardHandler from "./awardHandler";
 import { TYPES } from "../../util/util";

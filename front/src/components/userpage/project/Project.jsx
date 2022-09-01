@@ -2,7 +2,7 @@ import { useState, useReducer, useContext, useMemo, useEffect } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
-import { NoticeContext } from "../../../App";
+import { NoticeContext } from "../../Portfolio";
 import projectsReducer from "./projectsReducer";
 import projectsHandler from "./projectsHandler";
 import { TYPES } from "../../util/util";

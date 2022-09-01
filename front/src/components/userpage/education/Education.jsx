@@ -2,7 +2,7 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import React, { useReducer, useState, useContext, useMemo, useEffect } from "react";
 import EducationForm from "./EducationForm";
 import EducationInfo from "./EducationInfo";
-import { NoticeContext } from "../../../App";
+import { NoticeContext } from "../../Portfolio";
 import educationReducer from "./educationReducer";
 import educationHandler from "./educationHandler";
 import { TYPES } from "../../util/util";

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext } from "../../App";
+import { NoticeContext } from "../Portfolio";
 import * as API from "../../api";
 
 function UserInfoChange() {

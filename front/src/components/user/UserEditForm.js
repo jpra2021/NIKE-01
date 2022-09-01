@@ -50,15 +50,6 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             />
           </Form.Group>
 
-          {/* <Form.Group controlId="userEditEmail" className="mb-3">
-            <Form.Control
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group> */}
-
           <Form.Group controlId="userEditDescription">
             <Form.Text>인사말</Form.Text>
             <Form.Control

@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext, UserStateContext } from "../../App";
+import { NoticeContext } from "../Portfolio";
+import { UserStateContext } from "../../App";
+
 import * as API from "../../api";
 
 const UserInfoAuth = () => {

@@ -9,8 +9,7 @@ import LoginForm from "./components/user/LoginForm";
 import Network from "./components/user/Network";
 import RegisterForm from "./components/user/RegisterForm";
 import Portfolio from "./components/Portfolio";
-import Notification from "./components/notice/NoticeList";
-import noticeReducer from "./components/notice/noticeReducer";
+
 import Redirect from "./components/Redirect";
 import Loading from "./components/Loading";
 import UserInfoAuth from "./components/user/UserInfoAuth";
@@ -18,15 +17,12 @@ import UserInfoChange from "./components/user/UserInfoChange";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
-export const NoticeContext = createContext(null);
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
   const [userState, dispatch] = useReducer(loginReducer, {
     user: null,
   });
-  const [notices, setNotices] = useReducer(noticeReducer, []);
-
   // redirect page에서 header를 안 보이게 하는 용도
   const [headerVisible, setHeaderVisible] = useState(true);
 
@@ -66,25 +62,22 @@ function App() {
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
-        <NoticeContext.Provider value={{ notices, setNotices }}>
-          <Router>
-            <Notification />
-            <Header headerVisible={headerVisible} />
-            <Routes>
-              <Route path="/" exact element={<Portfolio />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/users/:userId" element={<Portfolio />} />
-              <Route path="/user/auth" element={<UserInfoAuth />} />
-              <Route path="/user/edit" element={<UserInfoChange />} />
-              <Route path="/network" element={<Network />} />
-              <Route
-                path="*"
-                element={<Redirect setHeaderVisible={setHeaderVisible} />}
-              />
-            </Routes>
-          </Router>
-        </NoticeContext.Provider>
+        <Router>
+          <Header headerVisible={headerVisible} />
+          <Routes>
+            <Route path="/" exact element={<Portfolio />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/users/:userId" element={<Portfolio />} />
+            <Route path="/user/auth" element={<UserInfoAuth />} />
+            <Route path="/user/edit" element={<UserInfoChange />} />
+            <Route path="/network" element={<Network />} />
+            <Route
+              path="*"
+              element={<Redirect setHeaderVisible={setHeaderVisible} />}
+            />
+          </Routes>
+        </Router>
       </UserStateContext.Provider>
     </DispatchContext.Provider>
   );

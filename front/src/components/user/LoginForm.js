@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext } from "../../App";
+import { NoticeContext } from "../Portfolio";
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
