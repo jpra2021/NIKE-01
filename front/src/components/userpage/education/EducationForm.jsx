@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { NoticeContext } from "../../../App";
+import { NoticeContext } from "../../Portfolio";
 import { TYPES } from "../../util/util";
 
 const DEGREE_TYPES = {
@@ -22,22 +22,22 @@ function EducationForm({ education_id, handler, type, handleForm, index }) {
 
     useEffect(() => {
         if (type === TYPES.edit) {
-            handler.load( index, setFormData );
+            handler.load(index, setFormData);
         }
     }, []);
 
     const handleFormChange = (e) => {
-      const { name, value } = e.target;
+        const { name, value } = e.target;
 
-      setFormData((current) => {
-        const newState = {
-            ...current,
-            [name]: value
-        }
+        setFormData((current) => {
+            const newState = {
+                ...current,
+                [name]: value,
+            };
 
-        return newState;
-      });
-    }
+            return newState;
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -47,7 +47,10 @@ function EducationForm({ education_id, handler, type, handleForm, index }) {
         if (school === "") {
             setNotices({
                 type: "warn",
-                payload: {title: "학력", message: "학교 이름이 비어있습니다."},
+                payload: {
+                    title: "학력",
+                    message: "학교 이름이 비어있습니다.",
+                },
             });
 
             return;
@@ -56,7 +59,7 @@ function EducationForm({ education_id, handler, type, handleForm, index }) {
         if (major === "") {
             setNotices({
                 type: "warn",
-                payload: {title: "학력", message: "전공이 비어있습니다."},
+                payload: { title: "학력", message: "전공이 비어있습니다." },
             });
 
             return;
@@ -65,14 +68,21 @@ function EducationForm({ education_id, handler, type, handleForm, index }) {
         if (degree === "") {
             setNotices({
                 type: "warn",
-                payload: {title: "학력", message: "학력이 비어있습니다."},
+                payload: { title: "학력", message: "학력이 비어있습니다." },
             });
 
             return;
         }
 
         if (type === TYPES.edit) {
-            handler.edit(education_id, school, major, degree, handleForm, index);
+            handler.edit(
+                education_id,
+                school,
+                major,
+                degree,
+                handleForm,
+                index
+            );
         } else {
             handler.add(school, major, degree, handleForm, index);
         }

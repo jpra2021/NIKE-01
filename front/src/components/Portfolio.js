@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef, createContext, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 
@@ -11,6 +11,10 @@ import Education from "./userpage/education/Education";
 import Award from "./userpage/Award/Award";
 import Loading from "./Loading";
 import Introduction from "./userpage/introduction/Introduction";
+import noticeReducer from "../components/notice/noticeReducer";
+import Notification from "../components/notice/NoticeList";
+
+export const NoticeContext = createContext(null);
 
 function loadData(ownerId) {
   return Promise.all([
@@ -26,11 +30,13 @@ function Portfolio() {
   const params = useParams();
   // useState 훅을 통해 portfolioOwner 상태를 생성함.
   const [portfolioOwner, setPortfolioOwner] = useState(null);
-  const [portfolioData, setPortfolioData] = useState({});
+  // const [portfolioData, setPortfolioData] = useState({});
+  const portfolioData = useRef(null);
   // fetchPorfolioOwner 함수가 완료된 이후에만 (isFetchCompleted가 true여야) 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면, isFetchCompleted가 false이면 "loading..."만 반환되어서, 화면에 이 로딩 문구만 뜨게 됨.
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const userState = useContext(UserStateContext);
+  const [notices, setNotices] = useReducer(noticeReducer, []);
 
   const fetchPorfolioOwner = async (ownerId) => {
     // 유저 id를 가지고 "/users/유저id" 엔드포인트로 요청해 사용자 정보를 불러옴.
@@ -39,15 +45,16 @@ function Portfolio() {
     const ownerData = owner.data;
     // portfolioOwner을 해당 사용자 정보로 세팅함.
     setPortfolioOwner(ownerData);
+    
 
     const dataList = await loadData(ownerId);
 
-    setPortfolioData({
+    portfolioData.current = {
       education: dataList[0],
       award: dataList[1],
       project: dataList[2],
       certificate: dataList[3],
-    });
+    };
 
     // fetchPorfolioOwner 과정이 끝났으므로, isFetchCompleted를 true로 바꿈.
     setIsFetchCompleted(true);
@@ -71,48 +78,51 @@ function Portfolio() {
       // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
       fetchPorfolioOwner(ownerId);
     }
-  }, [params, userState, navigate]);
+  }, [portfolioData, userState]);
 
   if (!isFetchCompleted) {
     return <Loading />;
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
-          <User
-            portfolioOwnerId={portfolioOwner.user_id}
-            isEditable={portfolioOwner.user_id === userState.user?.user_id}
-          />
-        </Col>
-        <Col>
-          <Introduction
-            initialData={portfolioData.education} isEditable={portfolioOwner.user_id === userState.user?.user_id}
-          />
-          <div className="mb-2" />
-          <Education
-            initialData={portfolioData.education}
-            isEditable={portfolioOwner.user_id === userState.user?.user_id}
-          />
-          <div className="mb-2" />
-          <Award
-            initialData={portfolioData.award}
-            isEditable={portfolioOwner.user_id === userState.user?.user_id}
-          />
-          <div className="mb-2" />
-          <Project
-            initialData={portfolioData.project}
-            isEditable={portfolioOwner.user_id === userState.user?.user_id}
-          />
-          <div className="mb-2" />
-          <Certificate
-            initialData={portfolioData.certificate}
-            isEditable={portfolioOwner.user_id === userState.user?.user_id}
-          />
-        </Col>
-      </Row>
-    </Container>
+    <NoticeContext.Provider value={{ notices, setNotices }}>
+      <Container fluid>
+        <Notification />
+        <Row>
+          <Col md="3" lg="3">
+            <User
+              portfolioOwnerId={portfolioOwner.user_id}
+              isEditable={portfolioOwner.user_id === userState.user?.user_id}
+            />
+          </Col>
+          <Col>
+            <Introduction
+              initialData={userState.user} isEditable={portfolioOwner.user_id === userState.user?.user_id}
+            />
+            <div className="mb-2" />
+            <Education
+              initialData={portfolioData.current.education}
+              isEditable={portfolioOwner.user_id === userState.user?.user_id}
+            />
+            <div className="mb-2" />
+            <Award
+              initialData={portfolioData.current.award}
+              isEditable={portfolioOwner.user_id === userState.user?.user_id}
+            />
+            <div className="mb-2" />
+            <Project
+              initialData={portfolioData.current.project}
+              isEditable={portfolioOwner.user_id === userState.user?.user_id}
+            />
+            <div className="mb-2" />
+            <Certificate
+              initialData={portfolioData.current.certificate}
+              isEditable={portfolioOwner.user_id === userState.user?.user_id}
+            />
+          </Col>
+        </Row>
+      </Container>
+    </NoticeContext.Provider>
   );
 }
 

@@ -2,7 +2,7 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import React, { useReducer, useState, useContext, useMemo, useEffect } from "react";
 import EducationForm from "./EducationForm";
 import EducationInfo from "./EducationInfo";
-import { NoticeContext } from "../../../App";
+import { NoticeContext } from "../../Portfolio";
 import educationReducer from "./educationReducer";
 import educationHandler from "./educationHandler";
 import { TYPES } from "../../util/util";
@@ -21,6 +21,10 @@ function Education({ initialData, isEditable }) {
     handler.init(initialData);
   }, []);
 
+  const educationList = useMemo(() => {
+    return educations.map((education, idx) => (<EducationInfo key={idx} education={education} index={idx} handler={handler} />));
+  }, [educations]);
+
   const handleForm = () => {
     setIsForm((current) => !current);
   };
@@ -28,15 +32,7 @@ function Education({ initialData, isEditable }) {
     <Card>
       <Card.Body>
         <Card.Title>학력</Card.Title>
-        {educations.map((education, idx) => (
-          <EducationInfo
-            key={idx}
-            education={education}
-            index={idx}
-            handler={handler}
-          />
-        ))}
-
+        {educationList}
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
             <Col sm="20">

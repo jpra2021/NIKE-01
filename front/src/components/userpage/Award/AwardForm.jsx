@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { NoticeContext } from "../../../App";
+import { NoticeContext } from "../../Portfolio";
 import { TYPES } from "../../util/util";
 
 function AwardForm({ award_id, handler, type, handleForm, index }) {

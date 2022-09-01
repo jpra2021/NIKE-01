@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import AwardForm from "./AwardForm";
 import AwardInfo from "./AwardInfo";
-import { NoticeContext } from "../../../App";
+import { NoticeContext } from "../../Portfolio";
 import AwardReducer from "./AwardReducer";
 import awardHandler from "./awardHandler";
 import { TYPES } from "../../util/util";
@@ -31,13 +31,15 @@ function Award({ initialData, isEditable }) {
     handler.init(initialData);
   }, []);
 
+  const awardList = useMemo(() => {
+    return awards.map((award, idx) => (<AwardInfo key={idx} award={award} index={idx} handler={handler} />));
+  }, [awards]);
+
   return (
     <Card>
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
-        {awards.map((award, idx) => (
-          <AwardInfo key={idx} award={award} index={idx} handler={handler} />
-        ))}
+        {awardList}
 
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
