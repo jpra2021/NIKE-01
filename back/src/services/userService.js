@@ -169,6 +169,13 @@ class userAuthService {
     }
     return user;
   }
+
+  static async updateImg(user_id, chnagedSrc) {
+    let user = await User.findById(user_id);
+    const fieldToUpdate = "profileImgSrc";
+    user = await User.update(user_id, fieldToUpdate, chnagedSrc);
+    return user;
+  }
 }
 
 export { userAuthService };

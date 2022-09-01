@@ -19,12 +19,12 @@ class File {
   }
 
   /*--UPDATE--*/
-  static async updateFile(user_id, newValue) {
+  static async updateFile(user_id, fieldToUpdate, newValue) {
     const filter = { user_id: user_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
-    const updatedFile = await FileModel.findByIdAndUpdate(
+    const updatedFile = await FileModel.findOneAndUpdate(
       filter,
       update,
       option
