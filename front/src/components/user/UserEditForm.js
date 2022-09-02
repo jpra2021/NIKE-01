@@ -6,15 +6,29 @@ import { useNavigate } from "react-router-dom";
 function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user?.name);
-  //useState로 email 상태를 생성함.
-  // const [email, setEmail] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
+
+  // userState로 img 상태를 생성함.
+  const [uploadImg, setUploadImg] = useState({
+    preview: "",
+    data: null,
+  });
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 유저가 업로드한 이미지가 있다면 post 요청
+    if (uploadImg.data !== null) {
+      const formData = new FormData();
+      formData.append("file", uploadImg.data);
+
+      await Api.delete("delete");
+      await Api.imgDefault("settingDefaultImg", { user_id: user.user_id });
+      await Api.imgPut("upload", formData);
+    }
 
     // "users/유저id" 엔드포인트로 PUT 요청함.
     const res = await Api.put("users/edit", {
@@ -36,11 +50,34 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     navigate("/user/auth");
   };
 
+  const handleImgChange = (e) => {
+    const imgPreview = URL.createObjectURL(e.target.files[0]);
+    const imgFile = e.target.files[0];
+
+    setUploadImg({
+      preview: imgPreview,
+      data: imgFile,
+    });
+    console.log(imgPreview, imgFile);
+  };
+
   return (
     <Card className="mb-2">
       <Card.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="useEditName" className="mb-3">
+          {uploadImg.preview && (
+            <img src={uploadImg.preview} alt="preview_image" width="140px" />
+          )}
+          <Form.Group controlId="userEditImage" className="mb-3 mt-2">
+            <Form.Control
+              type="file"
+              size="sm"
+              accept="uploadImg/*"
+              onChange={handleImgChange}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="userEditName" className="mb-3">
             <Form.Text>이름</Form.Text>
             <Form.Control
               type="text"
