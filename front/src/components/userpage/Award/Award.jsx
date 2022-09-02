@@ -34,7 +34,6 @@ function Award({ initialData, isEditable }) {
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
         {awardList}
-
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
             <Col sm="20">

@@ -17,7 +17,7 @@ const Project = ({ initialData, isEditable }) => {
 
   useEffect(() => {
     handler.init(initialData);
-  }, []);
+  }, [initialData]);
 
   const projectList = useMemo(() => {
     return projects.map((_, idx) => (
@@ -38,12 +38,7 @@ const Project = ({ initialData, isEditable }) => {
     <Card>
       <Card.Body>
         <Card.Title>프로젝트</Card.Title>
-        <Accordion>
-          <Accordion.Header>프로젝트</Accordion.Header>
-          <Accordion.Body>
-            {projectList}
-          </Accordion.Body>
-        </Accordion>
+        {projectList}
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
             <Col sm="20">

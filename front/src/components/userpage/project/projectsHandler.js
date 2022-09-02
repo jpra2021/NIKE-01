@@ -58,7 +58,7 @@ const projectsHandler = (dispatcher) => {
     });
   };
 
-  const init = (initialData) => {
+  const init = async (initialData) => {
     initialData.data.map((data) => {
       const { _id, title, detail, date } = data;
 

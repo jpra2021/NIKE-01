@@ -36,7 +36,7 @@ const Introduction = ({ initialData, isEditable }) => {
     handler.add(intro.text);
     handleEditMode();
   };
-  console.log(intro);
+
   return (
     <Card>
       <Card.Body>

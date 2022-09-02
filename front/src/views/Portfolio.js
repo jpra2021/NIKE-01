@@ -3,8 +3,6 @@ import React, {
   useState,
   useEffect,
   useRef,
-  createContext,
-  useReducer,
 } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
@@ -34,8 +32,9 @@ function Portfolio() {
   const params = useParams();
   // useState 훅을 통해 portfolioOwner 상태를 생성함.
   const [portfolioOwner, setPortfolioOwner] = useState(null);
-  // const [portfolioData, setPortfolioData] = useState({});
-  const portfolioData = useRef(null);
+  // const portfolioData = useRef();
+  const [ portfolioData, setPortFolioData ] = useState();
+
   // fetchPorfolioOwner 함수가 완료된 이후에만 (isFetchCompleted가 true여야) 컴포넌트가 구현되도록 함.
   // 아래 코드를 보면, isFetchCompleted가 false이면 "loading..."만 반환되어서, 화면에 이 로딩 문구만 뜨게 됨.
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -50,14 +49,21 @@ function Portfolio() {
     setPortfolioOwner(ownerData);
 
     const dataList = await loadData(ownerId);
+    // portfolioData.current = {
+    //   intro: dataList[0],
+    //   education: dataList[1],
+    //   award: dataList[2],
+    //   project: dataList[3],
+    //   certificate: dataList[4],
+    // };
 
-    portfolioData.current = {
+    setPortFolioData({
       intro: dataList[0],
       education: dataList[1],
       award: dataList[2],
       project: dataList[3],
       certificate: dataList[4],
-    };
+    });
 
     // fetchPorfolioOwner 과정이 끝났으므로, isFetchCompleted를 true로 바꿈.
     setIsFetchCompleted(true);
@@ -70,18 +76,26 @@ function Portfolio() {
       return;
     }
 
+    setPortFolioData(null);
+
     if (params.userId) {
+
       // 만약 현재 URL이 "/users/:userId" 라면, 이 userId를 유저 id로 설정함.
       const ownerId = params.userId;
       // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
       fetchPorfolioOwner(ownerId);
     } else {
+
       // 이외의 경우, 즉 URL이 "/" 라면, 전역 상태의 user.id를 유저 id로 설정함.
       const ownerId = userState.user.user_id;
       // 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
       fetchPorfolioOwner(ownerId);
     }
-  }, [portfolioData, userState, navigate, params]);
+  }, [userState, params, navigate]);
+
+  if (portfolioData === null) {
+    return null;
+  }
 
   if (!isFetchCompleted) {
     return <Loading />;
@@ -98,27 +112,28 @@ function Portfolio() {
         </Col>
         <Col>
           <Intro
-            initialData={portfolioData.current.intro}
+            initialData={portfolioData.intro}
             isEditable={portfolioOwner.user_id === userState.user?.user_id}
+            test={portfolioData}
           />
           <div className="mb-2" />
           <Education
-            initialData={portfolioData.current.education}
+            initialData={portfolioData.education}
             isEditable={portfolioOwner.user_id === userState.user?.user_id}
           />
           <div className="mb-2" />
           <Award
-            initialData={portfolioData.current.award}
+            initialData={portfolioData.award}
             isEditable={portfolioOwner.user_id === userState.user?.user_id}
           />
           <div className="mb-2" />
           <Project
-            initialData={portfolioData.current.project}
+            initialData={portfolioData.project}
             isEditable={portfolioOwner.user_id === userState.user?.user_id}
           />
           <div className="mb-2" />
           <Certificate
-            initialData={portfolioData.current.certificate}
+            initialData={portfolioData.certificate}
             isEditable={portfolioOwner.user_id === userState.user?.user_id}
           />
         </Col>
