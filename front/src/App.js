@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useReducer, createContext, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  createContext,
+  useMemo,
+} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import * as Api from "./api";
@@ -51,11 +57,11 @@ function App() {
   }, []);
 
   const routes = useMemo(() => {
-    return RAUTES_VALUES.map(({path, component}, idx) => {
+    return RAUTES_VALUES.map(({ path, component }, idx) => {
       const Component = component;
-      return <Route key={idx} path={path} element={<Component />}/>
+      return <Route key={idx} path={path} element={<Component />} />;
     });
-  });
+  }, []);
 
   if (!isFetchCompleted) {
     return <Loading />;

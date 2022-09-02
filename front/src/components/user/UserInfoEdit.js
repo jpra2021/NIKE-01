@@ -24,7 +24,7 @@ function UserInfoChange() {
       navigate("/");
       return;
     }
-  }, []);
+  }, [navigate, state]);
 
   const validateEmail = (email) => {
     return email
