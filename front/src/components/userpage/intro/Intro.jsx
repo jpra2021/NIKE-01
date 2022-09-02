@@ -36,7 +36,7 @@ const Introduction = ({ initialData, isEditable }) => {
         handler.add(intro.text);
         handleEditMode();
     };
-
+    console.log(intro)
     return (
         <Card>
             <Card.Body>
@@ -58,19 +58,18 @@ const Introduction = ({ initialData, isEditable }) => {
                                     className="mb-4"
                                 />
                             </FloatingLabel >
-                            {!isEditable && 
-                                (<Row className="justify-content-between align-items-center mb-2" style={{resize: "none", height: "fit-content", overflow: "hidden"}}>
-                                    <Col>
-                                        {intro.text}
-                                    </Col>
-                                </Row>)
-                            }
                             {editMode &&
                                 <Button size="sm" variant="outline-info" onClick={handleClick}>확인</Button>
                             }
                         </Form>
-                    </Row>
-                }
+                    </Row>}
+                    {!isEditable && 
+                        (<Row className="justify-content-between align-items-center mb-2" style={{resize: "none", height: "fit-content", overflow: "hidden"}}>
+                            <Col>
+                                {intro.text}
+                            </Col>
+                        </Row>)
+                    }
             </Card.Body>
         </Card>
     );
