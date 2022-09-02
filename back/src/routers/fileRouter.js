@@ -86,7 +86,7 @@ fileRouter.put(
 
       const newFile = await fileService.updateFile(newFileValue);
       // const changedSrc = await newFile.fileSrc;
-      const changedSrc = `http://localhost:5001/LocalFile/${fileName}`;
+      const changedSrc = `http://kdt-ai5-team01.elicecoding.com:5001/LocalFile/${fileName}`;
       await userAuthService.updateImg(user_id, changedSrc);
 
       if (newFile.errorMessage) {
