@@ -118,10 +118,11 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 width: "180px",
                 height: "30px",
                 fontSize: "12px",
+                lineHeight: "12px"
               }}
               onClick={redirectToUserInfo}
             >
-              이메일과 비밀번호 변경하기
+              이메일 / 비밀번호 변경
             </Button>
           </Form.Group>
         </Form>
