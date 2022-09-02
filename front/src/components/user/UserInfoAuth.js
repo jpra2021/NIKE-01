@@ -1,16 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext } from "../Portfolio";
 import { UserStateContext } from "../../App";
+// import { toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 import * as API from "../../api";
 
 const UserInfoAuth = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
-  const { setNotices } = useContext(NoticeContext);
   const userState = useContext(UserStateContext);
+  const [show, setShow] = useState(false);
 
   /* 유저가 로그인 했는 지 확인하는 로직 */
   useEffect(() => {
@@ -18,12 +19,13 @@ const UserInfoAuth = () => {
       navigate("/login", { replace: true });
       return;
     }
-  }, []);
+  }, [navigate, userState.user]);
 
   const isPasswordValid = password.length >= 4;
 
   const handleChange = (e) => {
     setPassword(e.target.value);
+    setShow(false);
   };
 
   const checkPassword = async (password) => {
@@ -31,20 +33,30 @@ const UserInfoAuth = () => {
     const { ok } = res.data;
 
     if (ok) {
-      setNotices({
-        type: "success",
-        payload: { title: "인증 성공!", message: "인증에 성공하였습니다." },
-      });
+      // toast.success("인증에 성공하였습니다.", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      // });
+
       navigate("/user/edit", { replace: true, state: { isAuth: true } });
       return;
     } else {
-      setNotices({
-        type: "warn",
-        payload: {
-          title: "인증 실패!",
-          message: "이메일 또는 비밀번호가 올바르지 않습니다.",
-        },
-      });
+      // toast.warn("비밀번호가 올바르지 않습니다.", {
+      //   position: "top-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      // });
+
+      setShow(true);
     }
   };
 
@@ -75,9 +87,14 @@ const UserInfoAuth = () => {
                 value={password}
                 onChange={handleChange}
               />
-              {!isPasswordValid && (
+              {!isPasswordValid && !show && (
                 <Form.Text className="text-success">
                   비밀번호는 4글자 이상으로 설정해 주세요.
+                </Form.Text>
+              )}
+              {show && (
+                <Form.Text className="text-danger">
+                  비밀번호가 올바르지 않습니다.
                 </Form.Text>
               )}
             </Form.Group>
