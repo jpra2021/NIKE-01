@@ -28,7 +28,7 @@ function AwardForm({ awards, index, handler, type, handleForm }) {
       return;
     }
 
-    console.log(awards, title)
+    console.log(awards, title);
     if (overlapCheck(awards, title)) {
       notice(NOTICE_TYPES.warn, "입력");
 

@@ -1,9 +1,4 @@
-import React, {
-  useReducer,
-  useState,
-  useMemo,
-  useEffect,
-} from "react";
+import React, { useReducer, useState, useMemo, useEffect } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import AwardForm from "./AwardForm";
 import AwardInfo from "./AwardInfo";
@@ -25,9 +20,11 @@ function Award({ initialData, isEditable }) {
   }, []);
 
   const awardList = useMemo(() => {
-    return awards.map((_, idx) => (<AwardInfo key={idx} awards={awards} index={idx} handler={handler} />));
+    return awards.map((_, idx) => (
+      <AwardInfo key={idx} awards={awards} index={idx} handler={handler} />
+    ));
   }, [awards]);
-  
+
   const handleForm = () => {
     setIsForm(() => !isForm);
   };

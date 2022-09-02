@@ -1,7 +1,6 @@
 import { TYPES, overlapCheck } from "../../util/util";
 import { NOTICE_TYPES, notice } from "../../notice/notice";
 
-
 /*
     Data structure
 
@@ -13,77 +12,76 @@ import { NOTICE_TYPES, notice } from "../../notice/notice";
     }, ...]
 */
 
-
 const educationReducer = () => {
-    const reducer = (state, action) => {
-        const { education_id, school, major, degree, index } = action.payload;
+  const reducer = (state, action) => {
+    const { education_id, school, major, degree, index } = action.payload;
 
-        switch (action.type) {
-            case TYPES.add: {
-                const newEducation = {
-                    education_id: "",
-                    school,
-                    major,
-                    degree
-                }
+    switch (action.type) {
+      case TYPES.add: {
+        const newEducation = {
+          education_id: "",
+          school,
+          major,
+          degree,
+        };
 
-                notice(NOTICE_TYPES.success, "입력");
+        notice(NOTICE_TYPES.success, "입력");
 
-                return [...state, newEducation];
-            }
+        return [...state, newEducation];
+      }
 
-            case TYPES.remove: {
-                const newState = state.filter(
-                    (education) => !(education.school === school)
-                );
+      case TYPES.remove: {
+        const newState = state.filter(
+          (education) => !(education.school === school)
+        );
 
-                return newState;
-            }
+        return newState;
+      }
 
-            case TYPES.edit: {
-                const newState = [...state];
+      case TYPES.edit: {
+        const newState = [...state];
 
-                const editedEducation = {
-                    ...newState[index],
-                    school,
-                    major,
-                    degree,
-                };
-                newState[index] = editedEducation;
+        const editedEducation = {
+          ...newState[index],
+          school,
+          major,
+          degree,
+        };
+        newState[index] = editedEducation;
 
-                notice(NOTICE_TYPES.success, "편집");
+        notice(NOTICE_TYPES.success, "편집");
 
-                return newState;
-            }
+        return newState;
+      }
 
-            case TYPES.load: {
-                const { setFormData } = action.payload;
-                const education = state[index];
+      case TYPES.load: {
+        const { setFormData } = action.payload;
+        const education = state[index];
 
-                setFormData({ ...education });
+        setFormData({ ...education });
 
-                return state;
-            }
+        return state;
+      }
 
-            case TYPES.setID: {
-                const newState = [...state];
-                const target = newState[index];
+      case TYPES.setID: {
+        const newState = [...state];
+        const target = newState[index];
 
-                newState[index] = { ...target, education_id };
+        newState[index] = { ...target, education_id };
 
-                return newState;
-            }
+        return newState;
+      }
 
-            case TYPES.init: {
-                return [...state, { education_id, school, major, degree }];
-            }
+      case TYPES.init: {
+        return [...state, { education_id, school, major, degree }];
+      }
 
-            default:
-                return state;
-        }
-    };
+      default:
+        return state;
+    }
+  };
 
-    return reducer;
+  return reducer;
 };
 
 export default educationReducer;

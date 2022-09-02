@@ -2,34 +2,34 @@ import { TYPES } from "../../util/util";
 import { NOTICE_TYPES, notice } from "../../notice/notice";
 
 const introductionReducer = () => {
-    const reducer = (state, action) => {
-        const { introduction_id, text } = action.payload;
+  const reducer = (state, action) => {
+    const { introduction_id, text } = action.payload;
 
-        switch (action.type) {
-            case TYPES.add: {
-                notice(NOTICE_TYPES.success, "입력");
+    switch (action.type) {
+      case TYPES.add: {
+        notice(NOTICE_TYPES.success, "입력");
 
-                return { ...state};
-            }
+        return { ...state };
+      }
 
-            case TYPES.edit: {
-                return { ...state, text};
-            }
+      case TYPES.edit: {
+        return { ...state, text };
+      }
 
-            case TYPES.setID: {
-                return { ...state, introduction_id };
-            }
+      case TYPES.setID: {
+        return { ...state, introduction_id };
+      }
 
-            case TYPES.init: {
-                return {introduction_id, text};
-            }
+      case TYPES.init: {
+        return { introduction_id, text };
+      }
 
-            default:
-                return state;
-        }
-    };
+      default:
+        return state;
+    }
+  };
 
-    return reducer;
+  return reducer;
 };
 
 export default introductionReducer;

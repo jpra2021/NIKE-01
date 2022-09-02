@@ -1,7 +1,6 @@
 import { TYPES, overlapCheck } from "../../util/util";
 import { NOTICE_TYPES, notice } from "../../notice/notice";
 
-
 /*
     Data structure
 
@@ -13,7 +12,6 @@ import { NOTICE_TYPES, notice } from "../../notice/notice";
     }, ...]
 */
 
-
 const AwardReducer = () => {
   const reducer = (state, action) => {
     const { award_id, title, description, index } = action.payload;
@@ -23,8 +21,8 @@ const AwardReducer = () => {
         const newAward = {
           award_id: "",
           title,
-          description
-        }
+          description,
+        };
 
         notice(NOTICE_TYPES.success, "입력");
 

@@ -1,5 +1,11 @@
 import { Card, Row, Col, Button } from "react-bootstrap";
-import React, { useReducer, useState, useContext, useMemo, useEffect } from "react";
+import React, {
+  useReducer,
+  useState,
+  useContext,
+  useMemo,
+  useEffect,
+} from "react";
 import EducationForm from "./EducationForm";
 import EducationInfo from "./EducationInfo";
 import educationReducer from "./educationReducer";
@@ -12,7 +18,7 @@ function Education({ initialData, isEditable }) {
   const reducer = useMemo(() => educationReducer(), []);
   const [educations, dispatch] = useReducer(reducer, initialState);
   const handler = useMemo(() => educationHandler(dispatch), [dispatch]);
-  
+
   const [isForm, setIsForm] = useState(false);
 
   useEffect(() => {
@@ -20,7 +26,14 @@ function Education({ initialData, isEditable }) {
   }, []);
 
   const educationList = useMemo(() => {
-    return educations.map((_, idx) => (<EducationInfo key={idx} educations={educations} index={idx} handler={handler} />));
+    return educations.map((_, idx) => (
+      <EducationInfo
+        key={idx}
+        educations={educations}
+        index={idx}
+        handler={handler}
+      />
+    ));
   }, [educations]);
 
   const handleForm = () => {

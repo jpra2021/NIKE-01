@@ -33,7 +33,7 @@ const UserInfoAuth = () => {
 
     if (ok) {
       notice(NOTICE_TYPES.success, "인증");
-      
+
       navigate("/user/edit", { replace: true, state: { isAuth: true } });
       return;
     } else {

@@ -34,11 +34,7 @@ function EducationInfo({ educations, index, handler }) {
           </span>
         </Col>
         <Col className="col-lg-1">
-          <Button
-            size="sm"
-            variant="outline-info"
-            onClick={handleForm}
-          >
+          <Button size="sm" variant="outline-info" onClick={handleForm}>
             편집
           </Button>
           <div className="mb-2" />

@@ -25,7 +25,7 @@ const awardHandler = (dispatcher) => {
 
   const remove = async (award_id, title) => {
     dispatch({ type: TYPES.remove, payload: { title } });
-    
+
     try {
       await API.delete("users/award", award_id);
     } catch (err) {

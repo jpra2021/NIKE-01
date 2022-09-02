@@ -4,7 +4,6 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { NOTICE_TYPES, notice } from "../components/notice/notice";
 import * as API from "../api";
 
-
 function UserInfoChange() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -77,7 +76,7 @@ function UserInfoChange() {
         });
       }
 
-      notice(NOTICE_TYPES.warn, "변경")
+      notice(NOTICE_TYPES.warn, "변경");
 
       navigate("/");
       return;
