@@ -46,8 +46,8 @@ fileRouter.get("/load/:id", login_required, async (req, res, next) => {
       console.log("파일이 없습니다.");
     }
     const fileSrc = fileValue[0].fileSrc;
-    console.log(fileValue);
-    res.sendFile(fileSrc);
+    //console.log("GET으로 받는 파일 주소:", fileSrc);
+    res.json({ path: fileSrc });
   } catch (error) {
     next(error);
   }
@@ -80,13 +80,14 @@ fileRouter.put(
       const user_id = req.currentUserId;
       const fileName = req.file.filename;
       const fileExt = req.file.fieldname;
-      const fileSrc = req.file.path;
+      const fileSrc = path.join(__dirname, req.file.path);
       const fileSize = req.file.size;
       const newFileValue = { user_id, fileName, fileExt, fileSrc, fileSize };
 
       //console.log("nefFileValue:", newFileValue);
 
       const newFile = await fileService.updateFile(newFileValue);
+      //console.log("newFile:", newFile.fileSrc);
       const changedSrc = await newFile.fileSrc;
       await userAuthService.updateImg(user_id, changedSrc);
 
@@ -95,7 +96,7 @@ fileRouter.put(
         return;
       }
       console.log("updated to LocalFile and database");
-      res.json({ ok: true });
+      res.json({ ok: true }); //path를 바로 보내는 방법도 생각
     } catch (error) {
       next(error);
     }

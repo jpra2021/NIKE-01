@@ -29,22 +29,22 @@ class fileService {
     if (fileName) {
       const fieldToUpdate = "fileName";
       const newValue = fileName;
-      file = await File.updateFile(user_id, fieldToUpdate, newValue);
+      file = await File.updateFile({ user_id, fieldToUpdate, newValue });
     }
     if (fileExt) {
       const fieldToUpdate = "fileExt";
       const newValue = fileExt;
-      file = await File.updateFile(user_id, fieldToUpdate, newValue);
+      file = await File.updateFile({ user_id, fieldToUpdate, newValue });
     }
     if (fileSrc) {
       const fieldToUpdate = "fileSrc";
       const newValue = fileSrc;
-      file = await File.updateFile(user_id, fieldToUpdate, newValue);
+      file = await File.updateFile({ user_id, fieldToUpdate, newValue });
     }
     if (fileSize) {
       const fieldToUpdate = "fileSize";
       const newValue = fileSize;
-      file = await File.updateFile(user_id, fieldToUpdate, newValue);
+      file = await File.updateFile({ user_id, fieldToUpdate, newValue });
     }
     return file;
   }

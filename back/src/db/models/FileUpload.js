@@ -7,8 +7,8 @@ class File {
     return newFile;
   }
   /* GET - from user */
-  static async findbyUserId(user_id) {
-    const user = await FileModel.find({ user_id: user_id });
+  static async findbyUserId(input) {
+    const user = await FileModel.find({ user_id: input });
     return user;
   }
 
@@ -19,7 +19,7 @@ class File {
   }
 
   /*--UPDATE--*/
-  static async updateFile(user_id, fieldToUpdate, newValue) {
+  static async updateFile({ user_id, fieldToUpdate, newValue }) {
     const filter = { user_id: user_id };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };

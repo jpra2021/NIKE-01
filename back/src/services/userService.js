@@ -171,9 +171,12 @@ class userAuthService {
   }
 
   static async updateImg(user_id, chnagedSrc) {
+    console.log("여기왔니? 왜안오니?");
     let user = await User.findById(user_id);
     const fieldToUpdate = "profileImgSrc";
-    user = await User.update(user_id, fieldToUpdate, chnagedSrc);
+    const newValue = chnagedSrc;
+    user = await User.update({ user_id, fieldToUpdate, newValue });
+    console.log("유저서비스/이미지업뎃", user);
     return user;
   }
 }
