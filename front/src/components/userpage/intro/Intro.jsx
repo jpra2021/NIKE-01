@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext, useMemo, useReducer } from "react";
+import { useState, useEffect, useMemo, useReducer } from "react";
 import { Card, Row, Col, Form, FloatingLabel, Button } from "react-bootstrap";
-import introductionReducer from "./introductionReducer";
-import introductionHandler from "./introductionHandler";
+import introductionReducer from "./introReducer";
+import introductionHandler from "./introHandler";
 
-// 리네이밍
 const Introduction = ({ initialData, isEditable }) => {
     const reducer = useMemo(() => introductionReducer(), []);
     const [intro, dispatch] = useReducer(reducer, { text: ""});

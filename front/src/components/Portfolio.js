@@ -17,9 +17,7 @@ import Certificate from "./userpage/certificate/Certificate";
 import Education from "./userpage/education/Education";
 import Award from "./userpage/award/Award";
 import Loading from "./Loading";
-import Introduction from "./userpage/introduction/Introduction";
-
-export const NoticeContext = createContext(null);
+import Intro from "./userpage/intro/Intro";
 
 function loadData(ownerId) {
   return Promise.all([
@@ -97,7 +95,7 @@ function Portfolio() {
           />
         </Col>
         <Col>
-          <Introduction
+          <Intro
             initialData={userState.user}
             isEditable={portfolioOwner.user_id === userState.user?.user_id}
           />

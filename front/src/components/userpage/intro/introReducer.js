@@ -1,17 +1,13 @@
 import { TYPES } from "../../util/util";
+import { NOTICE_TYPES, notice } from "../../notice/notice";
 
-const introductionReducer = (dispatch) => {
-    const setNotices = dispatch;
-
+const introductionReducer = () => {
     const reducer = (state, action) => {
         const { introduction_id, text } = action.payload;
 
         switch (action.type) {
             case TYPES.add: {
-                setNotices({
-                    type: "success",
-                    payload: { title: "소개", message: "입력되었습니다." },
-                });
+                notice(NOTICE_TYPES.success, "입력");
 
                 return { ...state};
             }

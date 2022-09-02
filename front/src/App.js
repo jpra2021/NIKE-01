@@ -16,6 +16,7 @@ import Redirect from "./components/Redirect";
 import Loading from "./components/Loading";
 import { RAUTES_VALUES } from "./routes/routes";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);

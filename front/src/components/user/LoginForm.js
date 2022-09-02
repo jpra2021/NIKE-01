@@ -52,9 +52,12 @@ function LoginForm() {
         type: "LOGIN_SUCCESS",
         payload: user,
       });
+
+      notice(NOTICE_TYPES.success, "로그인");
       
       navigate("/", { replace: true });
     } catch (err) {
+      notice(NOTICE_TYPES.warn, "로그인");
 
       console.log("로그인에 실패하였습니다.\n", err);
     }
