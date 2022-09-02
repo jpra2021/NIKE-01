@@ -51,16 +51,19 @@ http://kdt-ai5-team01.elicecoding.com:3000/
 **이메일/비밀번호 변경 기능**
     <details>
         <summary>자세히 보기</summary>
+        ![Animation01](https://user-images.githubusercontent.com/60812240/188225241-8d2cbafe-d47e-40d0-a350-1db4fafa7f2a.gif)
     </details>
 
 **게시물 상태 변경 시, Toast 메세지 등장**
     <details>
         <summary>자세히 보기</summary>
+        ![Animation02](https://user-images.githubusercontent.com/60812240/188225287-16108d53-fdb9-4dcb-8d64-582a81d67483.gif)
     </details>
 
 **유효하지 않은 페이지 접근 시, Redirect**
     <details>
         <summary>자세히 보기</summary>
+        ![Animation03](https://user-images.githubusercontent.com/60812240/188225318-3cd3e4ea-0e9f-49bb-a328-de480b0ac96e.gif)
     </details>
 
 **로딩페이지 구현**
@@ -72,6 +75,7 @@ http://kdt-ai5-team01.elicecoding.com:3000/
 **유저 프로링 사진 변경 기능**
     <details>
         <summary>자세히 보기</summary>
+        ![Animation04](https://user-images.githubusercontent.com/60812240/188225353-8a2dd386-e367-4b8f-8d07-0e8fef62ba88.gif)
     </details>
 
 
