@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect, useContext } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { NoticeContext } from "../../Portfolio";
-import { TYPES, formatDateStr } from "../../util/util";
+import { TYPES, overlapCheck, formatDateStr } from "../../util/util";
+import { NOTICE_TYPES, notice } from "../../notice/notice";
 
-const CertificateForm = ({ certificate_id, handler, type, handleForm, index }) => {
+const CertificateForm = ({ certificates, index, handler, type, handleForm }) => {
     const [ title, setTitle ] = useState("");
     const [ detail, setDetail ] = useState("");
     const [ date, setDate ] = useState(new Date());
-    const { setNotices } = useContext(NoticeContext);
     const period = useRef("");
     
     useEffect (() => {
@@ -25,20 +24,30 @@ const CertificateForm = ({ certificate_id, handler, type, handleForm, index }) =
         e.preventDefault();
 
         if (title === "") {
-            setNotices({type: "warn", payload: {title: "자격증", message: "제목이 비어있습니다."}});
+            notice(NOTICE_TYPES.warn, "입력");
 
             return;
         }
 
         if (detail === "") {
-            setNotices({type: "warn", payload: {title: "자격증", message: "내용이 비어있습니다."}});
+            notice(NOTICE_TYPES.warn, "입력");
+
+            return;
+        }
+
+        if (overlapCheck(certificates, title)) {
+            notice(NOTICE_TYPES.warn, "입력");
 
             return;
         }
 
         const periodValue = period.current
+
+
         
         if (type === TYPES.edit) {
+            const certificate_id = certificates[index].certificate_id;
+
             handler.edit(certificate_id, title, detail, periodValue, handleForm, index);
         } else {
             handler.add(title, detail, periodValue, handleForm, index);

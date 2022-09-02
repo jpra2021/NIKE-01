@@ -4,13 +4,14 @@ import CertificateForm from "./CertificateForm";
 import CertificateInfo from "./CertificateInfo";
 import certificateReducer from "./certificatesReducer";
 import certificatesHandler from "./certificatesHandler";
+import { TYPES } from "../../util/util";
 
 const initialState = [];
 
 const Certificate = ({ initialData, isEditable }) => {
     const reducer = useMemo(() => (certificateReducer()), [])
     const [ certificates, dispatch ] = useReducer(reducer, initialState);
-    const handler = useMemo(() => certificatesHandler(dispatch));
+    const handler = useMemo(() => certificatesHandler(dispatch), [dispatch]);
 
     const [ isForm, setIsForm ] = useState(false);
     
@@ -19,7 +20,7 @@ const Certificate = ({ initialData, isEditable }) => {
     }, []);
     
     const certificateList  = useMemo(() => {
-        return certificates.map((certificate, idx) => (<CertificateInfo key={idx} certificate={certificate} index={idx} handler={handler} />));
+        return certificates.map((_, idx) => (<CertificateInfo key={idx} certificates={certificates} index={idx} handler={handler} />));
     }, [certificates]);
 
     const handleForm = () => {        
@@ -38,7 +39,7 @@ const Certificate = ({ initialData, isEditable }) => {
                         </Col>
                     </Row>
                 }
-                {isForm && <CertificateForm handler={handler} type="add" handleForm={handleForm} index={certificates.length}/>}
+                {isForm && <CertificateForm certificates={certificates} index={certificates.length} handler={handler} type={TYPES.add} handleForm={handleForm} />}
             </Card.Body>
         </Card>
     );

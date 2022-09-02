@@ -27,8 +27,12 @@ const certificatesHandler = (dispatcher) => {
 
     const remove = async (certificate_id, title) => {
         dispatch({type: TYPES.remove, payload: {certificate_id, title}});
-        console.log("delete는 바디가 없음")
-        await API.delete("users/certificate", certificate_id);
+
+        try {
+            await API.delete("users/certificate", certificate_id);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const edit = async (certificate_id, title, detail, date, handleForm, index) => {

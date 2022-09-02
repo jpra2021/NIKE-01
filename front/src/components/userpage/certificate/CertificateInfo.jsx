@@ -3,9 +3,9 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import CertificateForm from "./CertificateForm";
 import { TYPES } from "../../util/util";
 
-const CertificateInfo = ({ certificate, index, handler }) => {
+const CertificateInfo = ({ certificates, index, handler }) => {
     const [ isEditing, setIsEditing ] = useState(false);
-    const { certificate_id, title, detail, date } = certificate;
+    const { certificate_id, title, detail, date } = certificates[index];
 
     const handleForm = () => {
         setIsEditing(() => !isEditing);
@@ -13,7 +13,7 @@ const CertificateInfo = ({ certificate, index, handler }) => {
 
     if (isEditing) {
         return (
-            <CertificateForm certificate_id={certificate_id} handler={handler} type={TYPES.edit} handleForm={handleForm} index={index} />
+            <CertificateForm certificates={certificates} index={index} handler={handler} type={TYPES.edit} handleForm={handleForm} />
         );
     }
 
