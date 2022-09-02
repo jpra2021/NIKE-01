@@ -1,31 +1,33 @@
 import * as API from "../../../api";
-import { TYPES, overlapCheck } from "../../util/util";
+import { TYPES } from "../../util/util";
 
 const projectsHandler = (dispatcher) => {
     const dispatch = dispatcher;
     
     const add = async (title, detail, date, handleForm, index) => {
         dispatch({type: TYPES.add, payload: {title, detail, date}});
-        console.log("added")
 
         handleForm();
 
-        const res = await API.post("users/project", 
-            {
-                title,
-                detail,
-                date
-            });
+        try {
+            const res = await API.post("users/project", 
+                {
+                    title,
+                    detail,
+                    date
+                });
 
-        const project_id = await res.data._id;
+            const project_id = await res.data._id;
 
-        dispatch({type: TYPES.setID, payload: {project_id, index}});
+            dispatch({type: TYPES.setID, payload: {project_id, index}});
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const remove = async (project_id, title) => {
         dispatch({type: TYPES.remove, payload: {title}});
 
-        console.log(project_id)
         try {
             await API.delete("users/project", project_id);
         } catch (err) {
@@ -38,12 +40,16 @@ const projectsHandler = (dispatcher) => {
 
         handleForm();
         
-        await API.put("users/project", {
-            _id: project_id,
-            title,
-            detail,
-            date,
-        });
+        try {
+            await API.put("users/project", {
+                _id: project_id,
+                title,
+                detail,
+                date,
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const load = (index, setTitle, setDetail, setStartDate, setEndDate) => {

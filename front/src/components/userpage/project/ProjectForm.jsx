@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { TYPES, formatDateStr } from "../../util/util";
+import { TYPES, overlapCheck, formatDateStr } from "../../util/util";
+import { NOTICE_TYPES, notice } from "../../notice/notice";
 
-const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
+const ProjectForm = ({ projects, index, handler, type, handleForm }) => {
     const [ title, setTitle ] = useState("");
     const [ detail, setDetail ] = useState("");
     const [ startDate, setStartDate ] = useState(new Date());
@@ -27,19 +28,25 @@ const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
         e.preventDefault();
 
         if (title === "") {
-            // setNotices({type: "warn", payload: {title: "프로젝트", message: "제목이 비어있습니다."}});
+            notice(NOTICE_TYPES.warn, "입력");
 
             return;
         }
 
         if (detail === "") {
-            // setNotices({type: "warn", payload: {title: "프로젝트", message: "내용이 비어있습니다."}});
+            notice(NOTICE_TYPES.warn, "입력");
             
             return;
         }
 
         if (startDate.getTime() > endDate.getTime()) {
-            // setNotices({type: "warn", payload: {title: "프로젝트", message: "종료일보다 시작일이 더 큽니다."}});
+            notice(NOTICE_TYPES.warn, "입력");
+
+            return;
+        }
+
+        if (overlapCheck(projects, title)) {
+            notice(NOTICE_TYPES.warn, "입력");
 
             return;
         }
@@ -47,6 +54,8 @@ const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
         const date = period.current
 
         if (type === TYPES.edit) {
+            const project_id = projects[index].project_id;
+            
             handler.edit(project_id, title, detail, date, handleForm, index);
         } else {
             handler.add(title, detail, date, handleForm, index);

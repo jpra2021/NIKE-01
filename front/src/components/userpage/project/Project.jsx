@@ -1,18 +1,17 @@
-import { useState, useReducer, useContext, useMemo, useEffect } from "react";
+import { useState, useReducer, useMemo, useEffect } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
 import projectsReducer from "./projectsReducer";
 import projectsHandler from "./projectsHandler";
 import { TYPES } from "../../util/util";
-import { NOTICE_TYPES, notice } from "../../notice/notice";
 
 const initialState = [];
 
 const Project = ({ initialData, isEditable }) => {
     const reducer = useMemo(() => (projectsReducer()), [])
     const [ projects, dispatch ] = useReducer(reducer, initialState);
-    const handler = useMemo(() => projectsHandler(dispatch, projects), [dispatch]);
+    const handler = useMemo(() => projectsHandler(dispatch), [dispatch]);
 
     const [ isForm, setIsForm ] = useState(false);
     
@@ -22,7 +21,7 @@ const Project = ({ initialData, isEditable }) => {
 
     console.log("project reload!")
     const projectList = useMemo(() => {
-        return projects.map(({meta, project}, idx) => (<ProjectInfo key={idx} project_id={meta.project_id} project={project} index={idx} handler={handler} />));
+        return projects.map((_, idx) => (<ProjectInfo key={idx} projects={projects} index={idx} handler={handler} />));
     }, [projects]);
     
     const handleForm = () => {   
@@ -41,7 +40,7 @@ const Project = ({ initialData, isEditable }) => {
                         </Col>
                     </Row>
                 }
-                {isForm && <ProjectForm handler={handler} type={TYPES.add} handleForm={handleForm} index={projects.length} />}
+                {isForm && <ProjectForm projects={projects} index={projects.length} handler={handler} type={TYPES.add} handleForm={handleForm} />}
             </Card.Body>
         </Card>
     );
