@@ -25,8 +25,8 @@ function UserEditForm({ user, setIsEditing, setUser }) {
       const formData = new FormData();
       formData.append("file", uploadImg.data);
 
-      await Api.delete("delete");
-      await Api.imgDefault("settingDefaultImg", { user_id: user.user_id });
+      // await Api.delete("delete");
+      // await Api.imgDefault("settingDefaultImg", { user_id: user.user_id });
       await Api.imgPut("upload", formData);
     }
 
