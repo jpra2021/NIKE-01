@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { UserStateContext } from "../../App";
-import { NOTICE_TYPES, notice } from "../notice/notice";
+import { UserStateContext } from "../App";
+import { NOTICE_TYPES, notice } from "../components/notice/notice";
 
-import * as API from "../../api";
+import * as API from "../api";
 
 const UserInfoAuth = () => {
   const navigate = useNavigate();

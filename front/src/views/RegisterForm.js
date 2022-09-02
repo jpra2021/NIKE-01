@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NOTICE_TYPES, notice } from "../notice/notice";
+import { NOTICE_TYPES, notice } from "../components/notice/notice";
 
-import * as Api from "../../api";
+import * as Api from "../api";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -67,6 +67,21 @@ function RegisterForm() {
       <Row className="justify-content-md-center mt-5">
         <Col lg={8}>
           <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="registerName" className="mt-3">
+              <Form.Label>이름</Form.Label>
+              <Form.Control
+                type="text"
+                autoComplete="off"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              {!isNameValid && (
+                <Form.Text className="text-success">
+                  이름은 2글자 이상으로 설정해 주세요.
+                </Form.Text>
+              )}
+            </Form.Group>
+
             <Form.Group controlId="registerEmail">
               <Form.Label>이메일 주소</Form.Label>
               <Form.Control
@@ -108,21 +123,6 @@ function RegisterForm() {
               {!isPasswordSame && (
                 <Form.Text className="text-success">
                   비밀번호가 일치하지 않습니다.
-                </Form.Text>
-              )}
-            </Form.Group>
-
-            <Form.Group controlId="registerName" className="mt-3">
-              <Form.Label>이름</Form.Label>
-              <Form.Control
-                type="text"
-                autoComplete="off"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {!isNameValid && (
-                <Form.Text className="text-success">
-                  이름은 2글자 이상으로 설정해 주세요.
                 </Form.Text>
               )}
             </Form.Group>

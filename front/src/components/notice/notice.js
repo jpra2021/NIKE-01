@@ -3,12 +3,12 @@ import { ToastContainer, toast } from "react-toastify";
 
 export const NOTICE_TYPES = {
     success: "SUCCESS",
-    warn: "WARN"
-}
+    warn: "WARN",
+};
 
 export const notice = (type, target) => {
     switch (type) {
-        case (NOTICE_TYPES.success): {
+        case NOTICE_TYPES.success: {
             toast.success(`${target}에 성공했어요!`, {
                 position: "top-right",
                 autoClose: 3000,
@@ -22,7 +22,7 @@ export const notice = (type, target) => {
             break;
         }
 
-        case (NOTICE_TYPES.warn): {
+        case NOTICE_TYPES.warn: {
             toast.error(`${target}에 실패했어요!`, {
                 position: "top-right",
                 autoClose: 3000,
@@ -36,4 +36,4 @@ export const notice = (type, target) => {
             break;
         }
     }
-}
+};

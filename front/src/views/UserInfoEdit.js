@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NOTICE_TYPES, notice } from "../notice/notice";
-import * as API from "../../api";
+import { NOTICE_TYPES, notice } from "../components/notice/notice";
+import * as API from "../api";
 
 
 function UserInfoChange() {

@@ -1,9 +1,9 @@
-import Portfolio from "../components/Portfolio";
-import LoginForm from "../components/user/LoginForm";
-import Network from "../components/user/Network";
-import RegisterForm from "../components/user/RegisterForm";
-import UserInfoAuth from "../components/user/UserInfoAuth";
-import UserInfoEdit from "../components/user/UserInfoEdit";
+import Portfolio from "../views/Portfolio";
+import LoginForm from "../views/LoginForm";
+import Network from "../views/Network";
+import RegisterForm from "../views/RegisterForm";
+import UserInfoAuth from "../views/UserInfoAuth";
+import UserInfoEdit from "../views/UserInfoEdit";
 
 export const ROUTES = {
     HOME: {
