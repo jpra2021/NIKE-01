@@ -19,7 +19,6 @@ const Project = ({ initialData, isEditable }) => {
         handler.init(initialData);
     }, []);
 
-    console.log("project reload!")
     const projectList = useMemo(() => {
         return projects.map((_, idx) => (<ProjectInfo key={idx} projects={projects} index={idx} handler={handler} />));
     }, [projects]);
@@ -27,7 +26,7 @@ const Project = ({ initialData, isEditable }) => {
     const handleForm = () => {   
         setIsForm((current) => !current);
     }
-    console.log(projects);
+
     return (
         <Card>
             <Card.Body>

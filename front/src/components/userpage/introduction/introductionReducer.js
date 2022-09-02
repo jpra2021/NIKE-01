@@ -8,7 +8,6 @@ const introductionReducer = (dispatch) => {
 
         switch (action.type) {
             case TYPES.add: {
-                console.log("hi")
                 setNotices({
                     type: "success",
                     payload: { title: "소개", message: "입력되었습니다." },

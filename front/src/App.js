@@ -15,6 +15,7 @@ import Header from "./components/Header";
 import Redirect from "./components/Redirect";
 import Loading from "./components/Loading";
 import { RAUTES_VALUES } from "./routes/routes";
+import { ToastContainer } from "react-toastify";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -70,6 +71,17 @@ function App() {
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover
+        />
         <Router>
           <Header headerVisible={headerVisible} />
           <Routes>

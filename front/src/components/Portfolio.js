@@ -15,10 +15,9 @@ import User from "./user/User";
 import Project from "./userpage/project/Project";
 import Certificate from "./userpage/certificate/Certificate";
 import Education from "./userpage/education/Education";
-import Award from "./userpage/Award/Award";
+import Award from "./userpage/award/Award";
 import Loading from "./Loading";
 import Introduction from "./userpage/introduction/Introduction";
-import { ToastContainer } from "react-toastify";
 
 export const NoticeContext = createContext(null);
 
@@ -90,17 +89,6 @@ function Portfolio() {
 
   return (
     <Container fluid>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover
-      />
       <Row>
         <Col md="3" lg="3">
           <User

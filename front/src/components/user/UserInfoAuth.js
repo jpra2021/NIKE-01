@@ -2,8 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { UserStateContext } from "../../App";
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { NOTICE_TYPES, notice } from "../notice/notice";
 
 import * as API from "../../api";
 
@@ -33,28 +32,12 @@ const UserInfoAuth = () => {
     const { ok } = res.data;
 
     if (ok) {
-      // toast.success("인증에 성공하였습니다.", {
-      //   position: "top-right",
-      //   autoClose: 3000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      // });
-
+      notice(NOTICE_TYPES.success, "인증");
+      
       navigate("/user/edit", { replace: true, state: { isAuth: true } });
       return;
     } else {
-      // toast.warn("비밀번호가 올바르지 않습니다.", {
-      //   position: "top-right",
-      //   autoClose: 3000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      // });
+      notice(NOTICE_TYPES.warn, "인증");
 
       setShow(true);
     }

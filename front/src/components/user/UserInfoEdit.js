@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { NOTICE_TYPES, notice } from "../notice/notice";
 import * as API from "../../api";
+
 
 function UserInfoChange() {
   const navigate = useNavigate();
@@ -77,23 +77,7 @@ function UserInfoChange() {
         });
       }
 
-      // setNotices({
-      //   type: "success",
-      //   payload: {
-      //     title: "변경 성공!",
-      //     message: "변경되었습니다.",
-      //   },
-      // });
-
-      toast.success("변경되었습니다.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      notice(NOTICE_TYPES.warn, "변경")
 
       navigate("/");
       return;

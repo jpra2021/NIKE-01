@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import { NOTICE_TYPES, notice } from "../notice/notice";
 
 import * as Api from "../../api";
 
@@ -57,7 +58,7 @@ function RegisterForm() {
       // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (err) {
-      console.log("회원가입에 실패하였습니다.", err);
+      notice(NOTICE_TYPES.warn, "회원가입");
     }
   };
 

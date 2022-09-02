@@ -27,8 +27,6 @@ export const overlapCheck = (state, title, date, school, degree) => {
     );
   }
 
-  console.log("filtered : ", filtered);
-
   if (filtered.length === 1) {
     return true;
   }
