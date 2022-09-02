@@ -8,7 +8,7 @@ http://kdt-ai5-team01.elicecoding.com:3000/
 
 ## API 문서
 
-[Nike API Document](https://app.swaggerhub.com/apis-docs/fbwldbs93/nike/1.0.0#/)
+[Nike API Document](https://documenter.getpostman.com/view/22978485/VUxRQS7T)
 
 
 
