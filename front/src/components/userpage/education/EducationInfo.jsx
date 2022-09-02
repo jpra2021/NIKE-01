@@ -3,9 +3,9 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import EducationForm from "./EducationForm";
 import { TYPES } from "../../util/util";
 
-function EducationInfo({ education, index, handler }) {
+function EducationInfo({ educations, index, handler }) {
   const [isEditing, setIsEditing] = useState(false);
-  const { education_id, school, major, degree } = education;
+  const { education_id, school, major, degree } = educations[index];
 
   const handleForm = () => {
     setIsEditing((current) => !current);
@@ -14,11 +14,11 @@ function EducationInfo({ education, index, handler }) {
   if (isEditing) {
     return (
       <EducationForm
-        education_id={education_id}
+        educations={educations}
+        index={index}
         handler={handler}
         type={TYPES.edit}
         handleForm={handleForm}
-        index={index}
       />
     );
   }

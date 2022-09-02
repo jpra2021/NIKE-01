@@ -11,7 +11,7 @@ const initialState = [];
 function Education({ initialData, isEditable }) {
   const reducer = useMemo(() => educationReducer(), []);
   const [educations, dispatch] = useReducer(reducer, initialState);
-  const handler = useMemo(() => educationHandler(dispatch));
+  const handler = useMemo(() => educationHandler(dispatch), [dispatch]);
   
   const [isForm, setIsForm] = useState(false);
 
@@ -20,7 +20,7 @@ function Education({ initialData, isEditable }) {
   }, []);
 
   const educationList = useMemo(() => {
-    return educations.map((education, idx) => (<EducationInfo key={idx} education={education} index={idx} handler={handler} />));
+    return educations.map((_, idx) => (<EducationInfo key={idx} educations={educations} index={idx} handler={handler} />));
   }, [educations]);
 
   const handleForm = () => {
@@ -43,10 +43,11 @@ function Education({ initialData, isEditable }) {
 
         {isForm && (
           <EducationForm
+            educations={educations}
+            index={educations.length}
             handler={handler}
             type={TYPES.add}
             handleForm={handleForm}
-            index={educations.length}
           />
         )}
       </Card.Body>

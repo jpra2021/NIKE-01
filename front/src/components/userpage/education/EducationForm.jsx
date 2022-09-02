@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { NoticeContext } from "../../Portfolio";
-import { TYPES } from "../../util/util";
+import { TYPES, overlapCheck } from "../../util/util";
+import { NOTICE_TYPES, notice } from "../../notice/notice";
 
 const DEGREE_TYPES = {
     attend: "재학중",
@@ -10,15 +10,12 @@ const DEGREE_TYPES = {
     doctor: "박사졸업",
 };
 
-function EducationForm({ education_id, handler, type, handleForm, index }) {
+function EducationForm({ educations, index, handler, type, handleForm }) {
     const [formData, setFormData] = useState({
-        // 용의자 1
         school: "",
         major: "",
         degree: DEGREE_TYPES.attend,
     });
-
-    const { setNotices } = useContext(NoticeContext);
 
     useEffect(() => {
         if (type === TYPES.edit) {
@@ -45,36 +42,26 @@ function EducationForm({ education_id, handler, type, handleForm, index }) {
         const { school, major, degree } = formData;
 
         if (school === "") {
-            setNotices({
-                type: "warn",
-                payload: {
-                    title: "학력",
-                    message: "학교 이름이 비어있습니다.",
-                },
-            });
+            notice(NOTICE_TYPES.warn, "입력");
 
             return;
         }
 
         if (major === "") {
-            setNotices({
-                type: "warn",
-                payload: { title: "학력", message: "전공이 비어있습니다." },
-            });
+            notice(NOTICE_TYPES.warn, "입력");
 
             return;
         }
 
         if (degree === "") {
-            setNotices({
-                type: "warn",
-                payload: { title: "학력", message: "학력이 비어있습니다." },
-            });
+            notice(NOTICE_TYPES.warn, "입력");
 
             return;
         }
 
         if (type === TYPES.edit) {
+            const education_id = educations[index].education_id;
+
             handler.edit(
                 education_id,
                 school,

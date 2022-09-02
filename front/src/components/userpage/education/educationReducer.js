@@ -1,31 +1,35 @@
 import { TYPES, overlapCheck } from "../../util/util";
+import { NOTICE_TYPES, notice } from "../../notice/notice";
 
-const educationReducer = (dispatch) => {
-    const setNotices = dispatch;
 
+/*
+    Data structure
+
+    educations = [{
+        education_id: ...,
+        school: ...,
+        major: ...,
+        degree: ...
+    }, ...]
+*/
+
+
+const educationReducer = () => {
     const reducer = (state, action) => {
         const { education_id, school, major, degree, index } = action.payload;
 
         switch (action.type) {
             case TYPES.add: {
-                if (overlapCheck(state, school)) {
-                    setNotices({
-                        type: "warn",
-                        payload: {
-                            title: "학력",
-                            message: "이미 존재하는 수상내역입니다.",
-                        },
-                    });
-
-                    return state;
+                const newEducation = {
+                    education_id: "",
+                    school,
+                    major,
+                    degree
                 }
 
-                setNotices({
-                    type: "success",
-                    payload: { title: "학력", message: "추가되었습니다." },
-                });
+                notice(NOTICE_TYPES.success, "입력");
 
-                return [...state, { school, major, degree }];
+                return [...state, newEducation];
             }
 
             case TYPES.remove: {
@@ -33,25 +37,10 @@ const educationReducer = (dispatch) => {
                     (education) => !(education.school === school)
                 );
 
-                setNotices({
-                    type: "success",
-                    payload: { title: "학력", message: "삭제되었습니다." },
-                });
-
                 return newState;
             }
 
             case TYPES.edit: {
-                if (overlapCheck(state, school)) {
-                    setNotices({
-                        type: "warn",
-                        payload: {
-                            title: "학력",
-                            message: "이미 존재하는 학력입니다.",
-                        },
-                    });
-                }
-
                 const newState = [...state];
 
                 const editedEducation = {
@@ -62,10 +51,7 @@ const educationReducer = (dispatch) => {
                 };
                 newState[index] = editedEducation;
 
-                setNotices({
-                    type: "success",
-                    payload: { title: "학력", message: "수정되었습니다." },
-                });
+                notice(NOTICE_TYPES.success, "편집");
 
                 return newState;
             }

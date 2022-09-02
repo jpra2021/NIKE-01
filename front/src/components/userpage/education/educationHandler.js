@@ -28,7 +28,11 @@ const educationHandler = (dispatcher) => {
     const remove = async (education_id, school) => {
         dispatch({type: TYPES.remove, payload: {school}});
 
-        await API.delete("users/education", education_id);
+        try {
+            await API.delete("users/education", education_id);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const edit = async (education_id, school, major, degree, handleForm, index) => {
