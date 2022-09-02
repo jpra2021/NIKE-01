@@ -1,5 +1,5 @@
 import { useState, useReducer, useMemo, useEffect } from "react";
-import { Card, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col, Button, Accordion } from "react-bootstrap";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
 import projectsReducer from "./projectsReducer";
@@ -38,7 +38,12 @@ const Project = ({ initialData, isEditable }) => {
     <Card>
       <Card.Body>
         <Card.Title>프로젝트</Card.Title>
-        {projectList}
+        <Accordion>
+          <Accordion.Header>프로젝트</Accordion.Header>
+          <Accordion.Body>
+            {projectList}
+          </Accordion.Body>
+        </Accordion>
         {isEditable && (
           <Row className="mt-3 mb-4 text-center">
             <Col sm="20">
