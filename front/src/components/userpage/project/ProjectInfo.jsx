@@ -3,9 +3,9 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm"
 import { TYPES } from "../../util/util";
 
-const ProjectInfo = ({ project, index, handler }) => {
+const ProjectInfo = ({ project_id, project, index, handler }) => {
     const [ isEditing, setIsEditing ] = useState(false);
-    const { project_id, title, detail, date } = project;
+    const { title, detail, date } = project;
 
     const handleForm = () => {
         setIsEditing((current) => !current);

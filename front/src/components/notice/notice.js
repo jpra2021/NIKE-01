@@ -6,10 +6,10 @@ export const NOTICE_TYPES = {
     warn: "WARN"
 }
 
-export const notice = (type) => {
+export const notice = (type, target) => {
     switch (type) {
         case (NOTICE_TYPES.success): {
-            toast.success("입력에 성공했어요!", {
+            toast.success(`${target}에 성공했어요!`, {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: true,
@@ -23,7 +23,7 @@ export const notice = (type) => {
         }
 
         case (NOTICE_TYPES.warn): {
-            toast.error("입력에 실패했어요!", {
+            toast.error(`${target}에 실패했어요!`, {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: true,
@@ -32,6 +32,8 @@ export const notice = (type) => {
                 draggable: false,
                 progress: 0,
             });
+
+            break;
         }
     }
 }

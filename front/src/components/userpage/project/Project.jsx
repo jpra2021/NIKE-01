@@ -2,34 +2,33 @@ import { useState, useReducer, useContext, useMemo, useEffect } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
-import { NoticeContext } from "../../Portfolio";
 import projectsReducer from "./projectsReducer";
 import projectsHandler from "./projectsHandler";
 import { TYPES } from "../../util/util";
+import { NOTICE_TYPES, notice } from "../../notice/notice";
 
 const initialState = [];
 
 const Project = ({ initialData, isEditable }) => {
-    const { setNotices } = useContext(NoticeContext);
-    const reducer = useMemo(() => (projectsReducer(setNotices)), [])
+    const reducer = useMemo(() => (projectsReducer()), [])
     const [ projects, dispatch ] = useReducer(reducer, initialState);
-    const handler = useMemo(() => projectsHandler(dispatch), [dispatch]);
+    const handler = useMemo(() => projectsHandler(dispatch, projects), [dispatch]);
 
     const [ isForm, setIsForm ] = useState(false);
     
     useEffect(() => {
         handler.init(initialData);
     }, []);
-    
+
     console.log("project reload!")
     const projectList = useMemo(() => {
-        return projects.map((project, idx) => (<ProjectInfo key={idx} project={project} index={idx} handler={handler} />));
+        return projects.map(({meta, project}, idx) => (<ProjectInfo key={idx} project_id={meta.project_id} project={project} index={idx} handler={handler} />));
     }, [projects]);
     
     const handleForm = () => {   
         setIsForm((current) => !current);
     }
-
+    console.log(projects);
     return (
         <Card>
             <Card.Body>

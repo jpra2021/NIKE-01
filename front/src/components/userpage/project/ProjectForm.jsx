@@ -1,7 +1,6 @@
-import { useState, useRef, useEffect, useContext } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Form, FormControl, Row, Col, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { NoticeContext } from "../../Portfolio";
 import { TYPES, formatDateStr } from "../../util/util";
 
 const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
@@ -9,7 +8,6 @@ const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
     const [ detail, setDetail ] = useState("");
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
-    const { setNotices } = useContext(NoticeContext);
     const period = useRef("");
 
     useEffect (() => {
@@ -29,19 +27,19 @@ const ProjectForm = ({ project_id, handler, type, handleForm, index }) => {
         e.preventDefault();
 
         if (title === "") {
-            setNotices({type: "warn", payload: {title: "프로젝트", message: "제목이 비어있습니다."}});
+            // setNotices({type: "warn", payload: {title: "프로젝트", message: "제목이 비어있습니다."}});
 
             return;
         }
 
         if (detail === "") {
-            setNotices({type: "warn", payload: {title: "프로젝트", message: "내용이 비어있습니다."}});
+            // setNotices({type: "warn", payload: {title: "프로젝트", message: "내용이 비어있습니다."}});
             
             return;
         }
 
         if (startDate.getTime() > endDate.getTime()) {
-            setNotices({type: "warn", payload: {title: "프로젝트", message: "종료일보다 시작일이 더 큽니다."}});
+            // setNotices({type: "warn", payload: {title: "프로젝트", message: "종료일보다 시작일이 더 큽니다."}});
 
             return;
         }

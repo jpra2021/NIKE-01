@@ -1,34 +1,36 @@
 import * as API from "../../../api";
-import { TYPES } from "../../util/util";
+import { TYPES, overlapCheck } from "../../util/util";
 
 const projectsHandler = (dispatcher) => {
     const dispatch = dispatcher;
-
+    
     const add = async (title, detail, date, handleForm, index) => {
         dispatch({type: TYPES.add, payload: {title, detail, date}});
-        
+        console.log("added")
+
         handleForm();
 
-        try {
-            const res = await API.post("users/project", 
-                {
-                    title,
-                    detail,
-                    date
-                });
+        const res = await API.post("users/project", 
+            {
+                title,
+                detail,
+                date
+            });
 
-            const project_id = await res.data._id;
+        const project_id = await res.data._id;
 
-            dispatch({type: TYPES.setID, payload: {project_id, index}});
-        } catch (err) {
-            console.log(err);
-        }
+        dispatch({type: TYPES.setID, payload: {project_id, index}});
     }
 
     const remove = async (project_id, title) => {
         dispatch({type: TYPES.remove, payload: {title}});
 
-        await API.delete("users/project", project_id);
+        console.log(project_id)
+        try {
+            await API.delete("users/project", project_id);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const edit = async (project_id, title, detail, date, handleForm, index) => {
@@ -36,16 +38,12 @@ const projectsHandler = (dispatcher) => {
 
         handleForm();
         
-        try {
-            await API.put("users/project", {
-                _id: project_id,
-                title,
-                detail,
-                date,
-            });
-        } catch (err) {
-            console.log(err);
-        }
+        await API.put("users/project", {
+            _id: project_id,
+            title,
+            detail,
+            date,
+        });
     }
 
     const load = (index, setTitle, setDetail, setStartDate, setEndDate) => {
