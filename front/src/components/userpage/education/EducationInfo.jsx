@@ -3,7 +3,7 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import EducationForm from "./EducationForm";
 import { TYPES } from "../../util/util";
 
-function EducationInfo({ educations, index, handler }) {
+function EducationInfo({ educations, index, handler, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
   const { education_id, school, major, degree } = educations[index];
 
@@ -34,17 +34,21 @@ function EducationInfo({ educations, index, handler }) {
           </span>
         </Col>
         <Col className="col-lg-1">
-          <Button size="sm" variant="outline-info" onClick={handleForm}>
-            편집
-          </Button>
-          <div className="mb-2" />
-          <Button
-            size="sm"
-            variant="outline-danger"
-            onClick={() => handler.remove(education_id, school)}
-          >
-            삭제
-          </Button>
+          {isEditable &&
+            <>
+              <Button size="sm" variant="outline-info" onClick={handleForm}>
+                편집
+              </Button>
+              <div className="mb-2" />
+              <Button
+                size="sm"
+                variant="outline-danger"
+                onClick={() => handler.remove(education_id, school)}
+              >
+                삭제
+              </Button>
+            </>
+          }
         </Col>
       </Row>
     </Card.Text>

@@ -26,6 +26,7 @@ const Certificate = ({ initialData, isEditable }) => {
         certificates={certificates}
         index={idx}
         handler={handler}
+        isEditable={isEditable}
       />
     ));
   }, [certificates]);

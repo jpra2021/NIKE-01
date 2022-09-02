@@ -3,7 +3,7 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm";
 import { TYPES } from "../../util/util";
 
-const ProjectInfo = ({ projects, index, handler }) => {
+const ProjectInfo = ({ projects, index, handler, isEditable }) => {
   const [isEditing, setIsEditing] = useState(false);
   const { project_id, title, detail, date } = projects[index];
 
@@ -34,17 +34,17 @@ const ProjectInfo = ({ projects, index, handler }) => {
           <span className="text-muted">{date}</span>
         </Col>
         <Col className="col-lg-1">
-          <Button size="sm" variant="outline-info" onClick={handleForm}>
-            편집
-          </Button>
-          <div className="mb-2" />
-          <Button
-            size="sm"
-            variant="outline-danger"
-            onClick={() => handler.remove(project_id, title)}
-          >
-            삭제
-          </Button>
+          {isEditable &&
+            <>
+              <Button size="sm" variant="outline-info" onClick={handleForm}>
+                편집
+              </Button>
+              <div className="mb-2" />
+              <Button size="sm" variant="outline-danger" onClick={() => handler.remove(project_id, title)}>
+                삭제
+              </Button>
+            </>
+          }
         </Col>
       </Row>
     </Card.Text>

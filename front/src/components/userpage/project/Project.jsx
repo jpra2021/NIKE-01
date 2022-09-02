@@ -26,6 +26,7 @@ const Project = ({ initialData, isEditable }) => {
         projects={projects}
         index={idx}
         handler={handler}
+        isEditable={isEditable}
       />
     ));
   }, [projects]);

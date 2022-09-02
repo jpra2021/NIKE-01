@@ -3,7 +3,7 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import CertificateForm from "./CertificateForm";
 import { TYPES } from "../../util/util";
 
-const CertificateInfo = ({ certificates, index, handler }) => {
+const CertificateInfo = ({ certificates, index, handler, isEditable }) => {
   const [isEditing, setIsEditing] = useState(false);
   const { certificate_id, title, detail, date } = certificates[index];
 
@@ -34,21 +34,25 @@ const CertificateInfo = ({ certificates, index, handler }) => {
           <span className="text-muted">{date}</span>
         </Col>
         <Col className="col-lg-1">
-          <Button
-            size="sm"
-            variant="outline-info"
-            onClick={(e) => setIsEditing(() => !isEditing)}
-          >
-            편집
-          </Button>
-          <div className="mb-2" />
-          <Button
-            size="sm"
-            variant="outline-danger"
-            onClick={(e) => handler.remove(certificate_id, title)}
-          >
-            삭제
-          </Button>
+          {isEditable &&
+            <>
+              <Button
+                size="sm"
+                variant="outline-info"
+                onClick={(e) => setIsEditing(() => !isEditing)}
+              >
+                편집
+              </Button>
+              <div className="mb-2" />
+              <Button
+                size="sm"
+                variant="outline-danger"
+                onClick={(e) => handler.remove(certificate_id, title)}
+              >
+                삭제
+              </Button>
+            </>
+          }
         </Col>
       </Row>
     </Card.Text>

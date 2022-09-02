@@ -32,6 +32,7 @@ function Education({ initialData, isEditable }) {
         educations={educations}
         index={idx}
         handler={handler}
+        isEditable={isEditable}
       />
     ));
   }, [educations]);

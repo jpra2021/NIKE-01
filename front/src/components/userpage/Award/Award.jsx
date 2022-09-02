@@ -21,7 +21,7 @@ function Award({ initialData, isEditable }) {
 
   const awardList = useMemo(() => {
     return awards.map((_, idx) => (
-      <AwardInfo key={idx} awards={awards} index={idx} handler={handler} />
+      <AwardInfo key={idx} awards={awards} index={idx} handler={handler} isEditable={isEditable} />
     ));
   }, [awards]);
 
