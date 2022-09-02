@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { NoticeContext } from "../Portfolio";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import * as API from "../../api";
 
 function UserInfoChange() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { setNotices } = useContext(NoticeContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -77,12 +77,22 @@ function UserInfoChange() {
         });
       }
 
-      setNotices({
-        type: "success",
-        payload: {
-          title: "변경 성공!",
-          message: "변경되었습니다.",
-        },
+      // setNotices({
+      //   type: "success",
+      //   payload: {
+      //     title: "변경 성공!",
+      //     message: "변경되었습니다.",
+      //   },
+      // });
+
+      toast.success("변경되었습니다.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
 
       navigate("/");
