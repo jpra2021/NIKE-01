@@ -1,11 +1,10 @@
-import { Card, Row, Col, Button } from "react-bootstrap";
 import React, {
   useReducer,
   useState,
-  useContext,
   useMemo,
   useEffect,
 } from "react";
+import { Card, Row, Col, Button } from "react-bootstrap";
 import AwardForm from "./AwardForm";
 import AwardInfo from "./AwardInfo";
 import AwardReducer from "./AwardReducer";
@@ -17,21 +16,21 @@ const initialState = [];
 function Award({ initialData, isEditable }) {
   const reducer = useMemo(() => AwardReducer(), []);
   const [awards, dispatch] = useReducer(reducer, initialState);
-  const handler = useMemo(() => awardHandler(dispatch));
+  const handler = useMemo(() => awardHandler(dispatch), [dispatch]);
 
   const [isForm, setIsForm] = useState(false);
-
-  const handleForm = () => {
-    setIsForm(() => !isForm);
-  };
 
   useEffect(() => {
     handler.init(initialData);
   }, []);
 
   const awardList = useMemo(() => {
-    return awards.map((award, idx) => (<AwardInfo key={idx} award={award} index={idx} handler={handler} />));
+    return awards.map((_, idx) => (<AwardInfo key={idx} awards={awards} index={idx} handler={handler} />));
   }, [awards]);
+  
+  const handleForm = () => {
+    setIsForm(() => !isForm);
+  };
 
   return (
     <Card>
@@ -51,10 +50,11 @@ function Award({ initialData, isEditable }) {
 
         {isForm && (
           <AwardForm
+            awards={awards}
+            index={awards.length}
             handler={handler}
             type={TYPES.add}
             handleForm={handleForm}
-            index={awards.length}
           />
         )}
       </Card.Body>

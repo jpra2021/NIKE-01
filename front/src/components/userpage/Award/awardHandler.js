@@ -25,8 +25,12 @@ const awardHandler = (dispatcher) => {
 
   const remove = async (award_id, title) => {
     dispatch({ type: TYPES.remove, payload: { title } });
-    console.log("delete는 바디가 없음");
-    await API.delete("users/award", award_id);
+    
+    try {
+      await API.delete("users/award", award_id);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const edit = async (award_id, title, description, handleForm, index) => {

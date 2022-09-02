@@ -1,56 +1,45 @@
 import { TYPES, overlapCheck } from "../../util/util";
+import { NOTICE_TYPES, notice } from "../../notice/notice";
 
-const AwardReducer = (dispatch) => {
-  const setNotices = dispatch;
 
+/*
+    Data structure
+
+    awards = [{
+        award_id: ...,
+        title: ...,
+        detail: ...,
+        date: ...
+    }, ...]
+*/
+
+
+const AwardReducer = () => {
   const reducer = (state, action) => {
     const { award_id, title, description, index } = action.payload;
 
     switch (action.type) {
       case TYPES.add: {
-        if (overlapCheck(state, title)) {
-          setNotices({
-            type: "warn",
-            payload: {
-              title: "수상이력",
-              message: "이미 존재하는 수상내역입니다.",
-            },
-          });
-
-          return state;
+        const newAward = {
+          award_id: "",
+          title,
+          description
         }
 
-        setNotices({
-          type: "success",
-          payload: { title: "수상이력", message: "추가되었습니다." },
-        });
+        notice(NOTICE_TYPES.success, "입력");
 
-        return [...state, { title, description }];
+        return [...state, newAward];
       }
 
       case TYPES.remove: {
         const newState = state.filter((award) => !(award.title === title));
 
-        setNotices({
-          type: "success",
-          payload: { title: "수상이력", message: "삭제되었습니다." },
-        });
+        notice(NOTICE_TYPES.success, "삭제");
 
         return newState;
       }
 
       case TYPES.edit: {
-        if (overlapCheck(state, title)) {
-          setNotices({
-            type: "warn",
-            payload: {
-              title: "수상이력",
-              message: "이미 존재하는 수상내역입니다.",
-            },
-          });
-          return state;
-        }
-
         const newState = [...state];
 
         const editedAward = {
@@ -58,12 +47,10 @@ const AwardReducer = (dispatch) => {
           title,
           description,
         };
+
         newState[index] = editedAward;
 
-        setNotices({
-          type: "success",
-          payload: { title: "수상이력", message: "수정되었습니다." },
-        });
+        notice(NOTICE_TYPES.success, "편집");
 
         return newState;
       }
@@ -81,6 +68,8 @@ const AwardReducer = (dispatch) => {
       case TYPES.setID: {
         const newState = [...state];
         const target = newState[index];
+
+        target.award_id = award_id;
 
         newState[index] = { ...target, award_id };
 

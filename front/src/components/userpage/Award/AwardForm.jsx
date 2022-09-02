@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { NoticeContext } from "../../Portfolio";
-import { TYPES } from "../../util/util";
+import { TYPES, overlapCheck } from "../../util/util";
+import { NOTICE_TYPES, notice } from "../../notice/notice";
 
-function AwardForm({ award_id, handler, type, handleForm, index }) {
+function AwardForm({ awards, index, handler, type, handleForm }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const { setNotices } = useContext(NoticeContext);
 
   useEffect(() => {
     if (type === TYPES.edit) {
@@ -18,24 +17,27 @@ function AwardForm({ award_id, handler, type, handleForm, index }) {
     e.preventDefault();
 
     if (title === "") {
-      setNotices({
-        type: "warn",
-        payload: { title: "수상이력", message: "수상내역이 비어있습니다." },
-      });
+      notice(NOTICE_TYPES.warn, "입력");
 
       return;
     }
 
     if (description === "") {
-      setNotices({
-        type: "warn",
-        payload: { title: "수상이력", message: "상세내역이 비어있습니다." },
-      });
+      notice(NOTICE_TYPES.warn, "입력");
+
+      return;
+    }
+
+    console.log(awards, title)
+    if (overlapCheck(awards, title)) {
+      notice(NOTICE_TYPES.warn, "입력");
 
       return;
     }
 
     if (type === TYPES.edit) {
+      const award_id = awards[index].award_id;
+
       handler.edit(award_id, title, description, handleForm, index);
     } else {
       handler.add(title, description, handleForm, index);

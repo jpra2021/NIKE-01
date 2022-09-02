@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import AwardForm from "./AwardForm";
 import { TYPES } from "../../util/util";
 
-function AwardInfo({ award, index, handler }) {
+function AwardInfo({ awards, index, handler }) {
   const [isEditing, setIsEditing] = useState(false);
-  const { award_id, title, description } = award;
+  const { award_id, title, description } = awards[index];
 
   const handleForm = () => {
     setIsEditing(() => !isEditing);
@@ -14,11 +14,11 @@ function AwardInfo({ award, index, handler }) {
   if (isEditing) {
     return (
       <AwardForm
-        award_id={award_id}
+        awards={awards}
+        index={index}
         handler={handler}
         type={TYPES.edit}
         handleForm={handleForm}
-        index={index}
       />
     );
   }
