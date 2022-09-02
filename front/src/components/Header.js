@@ -28,17 +28,22 @@ function Header({ headerVisible }) {
       <Nav activeKey={location.pathname}>
         <Nav.Item className="me-auto mb-5">
           <Nav.Link disabled>
-            안녕하세요, 포트폴리오 공유 서비스입니다.
+            <img
+              src={process.env.PUBLIC_URL + "/img/logo.png"}
+              alt="nike logo"
+              width="70px"
+              style={{ marginLeft: "12px" }}
+            />
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
+        <Nav.Item className="mt-1">
           <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
         </Nav.Item>
-        <Nav.Item>
+        <Nav.Item className="mt-1">
           <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
         </Nav.Item>
         {isLogin && (
-          <Nav.Item>
+          <Nav.Item className="mt-1">
             <Nav.Link onClick={logout}>로그아웃</Nav.Link>
           </Nav.Item>
         )}

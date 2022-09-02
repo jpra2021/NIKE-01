@@ -13,10 +13,7 @@ const uploadSingle = file_upload.single("file");
 /* setting Default */
 fileRouter.post("/settingDefaultImg", async (req, res, next) => {
   try {
-    const defaultFileLink = path.join(
-      __dirname,
-      `../../defaultImage/latte_default.png`
-    );
+    const defaultFileLink = `defaultImage/latte_default.png`;
     const user_id = req.body.user_id;
     const fileName = path.basename(defaultFileLink);
     const fileExt = path.extname(defaultFileLink);
@@ -46,8 +43,8 @@ fileRouter.get("/load/:id", login_required, async (req, res, next) => {
       console.log("파일이 없습니다.");
     }
     const fileSrc = fileValue[0].fileSrc;
-    console.log(fileValue);
-    res.sendFile(fileSrc);
+    //console.log("GET으로 받는 파일 주소:", fileSrc);
+    res.json({ path: fileSrc });
   } catch (error) {
     next(error);
   }
@@ -61,6 +58,7 @@ fileRouter.delete(
     try {
       const user_id = req.currentUserId;
       const user = await fileService.deleteFile(user_id);
+      await userAuthService.updateImg(user_id, "latteIsHere");
       res.status(201).json({ message: "deleted!" });
     } catch (error) {
       next(error);
@@ -81,13 +79,14 @@ fileRouter.put(
       const fileName = req.file.filename;
       const fileExt = req.file.fieldname;
       const fileSrc = req.file.path;
+      //const fileSrc = path.join(__dirname, filePath);
+      console.log("라우터의 파일src", fileSrc);
       const fileSize = req.file.size;
       const newFileValue = { user_id, fileName, fileExt, fileSrc, fileSize };
 
-      //console.log("nefFileValue:", newFileValue);
-
       const newFile = await fileService.updateFile(newFileValue);
-      const changedSrc = await newFile.fileSrc;
+      // const changedSrc = await newFile.fileSrc;
+      const changedSrc = `http://localhost:5001/LocalFile/${fileName}`;
       await userAuthService.updateImg(user_id, changedSrc);
 
       if (newFile.errorMessage) {
@@ -95,7 +94,7 @@ fileRouter.put(
         return;
       }
       console.log("updated to LocalFile and database");
-      res.json({ ok: true });
+      res.json({ ok: true }); //path를 바로 보내는 방법도 생각
     } catch (error) {
       next(error);
     }

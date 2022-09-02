@@ -54,13 +54,13 @@ function LoginForm() {
         payload: user,
       });
       // 로그인 성공 토스트 메세지
-      // setNotices({
-      //   type: "success",
-      //   payload: {
-      //     title: "로그인 성공",
-      //     message: `${user.name}님, 환영합니다.`,
-      //   },
-      // });
+      // // setNotices({
+      // //   type: "success",
+      // //   payload: {
+      // //     title: "로그인 성공",
+      // //     message: `${user.name}님, 환영합니다.`,
+      // //   },
+      // // });
       // 기본 페이지로 이동함.
 
       toast.success("로그인 성공", {
