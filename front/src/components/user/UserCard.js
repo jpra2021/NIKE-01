@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import { useEffect, useState } from "react";
+import { NOTICE_TYPES, notice } from "../notice/notice";
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     await Api.imgDefault("settingDefaultImg", { user_id: user.user_id }).then(
       () => setIsDefaultImg(true)
     );
+    notice(NOTICE_TYPES.success, "삭제");
   };
 
   return (
