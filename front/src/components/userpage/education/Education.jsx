@@ -2,7 +2,6 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import React, { useReducer, useState, useContext, useMemo, useEffect } from "react";
 import EducationForm from "./EducationForm";
 import EducationInfo from "./EducationInfo";
-import { NoticeContext } from "../../Portfolio";
 import educationReducer from "./educationReducer";
 import educationHandler from "./educationHandler";
 import { TYPES } from "../../util/util";
@@ -10,8 +9,7 @@ import { TYPES } from "../../util/util";
 const initialState = [];
 
 function Education({ initialData, isEditable }) {
-  const { setNotices } = useContext(NoticeContext);
-  const reducer = useMemo(() => educationReducer(setNotices), []);
+  const reducer = useMemo(() => educationReducer(), []);
   const [educations, dispatch] = useReducer(reducer, initialState);
   const handler = useMemo(() => educationHandler(dispatch));
   

@@ -1,13 +1,11 @@
 import { useState, useEffect, useContext, useMemo, useReducer } from "react";
 import { Card, Row, Col, Form, FloatingLabel, Button } from "react-bootstrap";
 import introductionReducer from "./introductionReducer";
-import { NoticeContext } from "../../Portfolio";
 import introductionHandler from "./introductionHandler";
 import { TYPES } from "../../util/util";
 // 리네이밍
 const Introduction = ({ initialData, isEditable }) => {
-    const { setNotices } = useContext(NoticeContext);
-    const reducer = useMemo(() => introductionReducer(setNotices), []);
+    const reducer = useMemo(() => introductionReducer(), []);
     const [intro, dispatch] = useReducer(reducer, { text: ""});
     const handler = useMemo(() => introductionHandler(dispatch));
     const [ editMode, setEditMode ] = useState(false);
