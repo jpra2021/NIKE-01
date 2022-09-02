@@ -13,10 +13,7 @@ const uploadSingle = file_upload.single("file");
 /* setting Default */
 fileRouter.post("/settingDefaultImg", async (req, res, next) => {
   try {
-    const defaultFileLink = path.join(
-      __dirname,
-      `../../defaultImage/latte_default.png`
-    );
+    const defaultFileLink = `defaultImage/latte_default.png`;
     const user_id = req.body.user_id;
     const fileName = path.basename(defaultFileLink);
     const fileExt = path.extname(defaultFileLink);
@@ -61,6 +58,7 @@ fileRouter.delete(
     try {
       const user_id = req.currentUserId;
       const user = await fileService.deleteFile(user_id);
+      await userAuthService.updateImg(user_id, "latteIsHere");
       res.status(201).json({ message: "deleted!" });
     } catch (error) {
       next(error);
@@ -80,14 +78,13 @@ fileRouter.put(
       const user_id = req.currentUserId;
       const fileName = req.file.filename;
       const fileExt = req.file.fieldname;
-      const fileSrc = path.join(__dirname, req.file.path);
+      const fileSrc = req.file.path;
+      //const fileSrc = path.join(__dirname, filePath);
+      console.log("라우터의 파일src", fileSrc);
       const fileSize = req.file.size;
       const newFileValue = { user_id, fileName, fileExt, fileSrc, fileSize };
 
-      //console.log("nefFileValue:", newFileValue);
-
       const newFile = await fileService.updateFile(newFileValue);
-      //console.log("newFile:", newFile.fileSrc);
       const changedSrc = await newFile.fileSrc;
       await userAuthService.updateImg(user_id, changedSrc);
 

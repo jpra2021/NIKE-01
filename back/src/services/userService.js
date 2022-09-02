@@ -78,7 +78,6 @@ class userAuthService {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById(user_id);
     // const { name, email, password, description, introduction } = toUpdate;
-    console.log("불러온 유저의 정보:", user);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -171,12 +170,10 @@ class userAuthService {
   }
 
   static async updateImg(user_id, chnagedSrc) {
-    console.log("여기왔니? 왜안오니?");
     let user = await User.findById(user_id);
     const fieldToUpdate = "profileImgSrc";
     const newValue = chnagedSrc;
     user = await User.update({ user_id, fieldToUpdate, newValue });
-    console.log("유저서비스/이미지업뎃", user);
     return user;
   }
 }
