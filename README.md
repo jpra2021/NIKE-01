@@ -1,50 +1,78 @@
-# 레이서 포트폴리오 서비스
+# Team01 - NIKE
+![NIKE_Logo](https://user-images.githubusercontent.com/60812240/188057539-a5d74ea7-e41e-4f03-ad0a-cea54b6d9ba0.png)
 
-이 프로젝트는 자기자신의 포트폴리오를 작성하고, 또한 다른 사람의 포트폴리오를 확인할 수 있는 웹 서비스입니다. \
-웹 구현 예시: http://kdt-ai-first-project.elicecoding.com/
 
-> 위 IP 주소는 프로젝트 진행 기간에만 유효합니다.
+## 사이트 링크
+http://kdt-ai5-team01.elicecoding.com:3000/
 
-**5개 MVP**로 구성됩니다.
 
-> 현재는 USer MVP 코드만 있습니다.
+## API 문서
 
-- User (회원가입, 로그인 등 사용자 관련)
-- Award (포트폴리오 중 상장 이력 관련)
-- Certificate (포트폴리오 중 자격증 관련)
-- Project (포트폴리오 중 프로젝트 관련)
-- Education (포트폴리오 중 교육, 학교 관련)
+[Nike API Document](https://app.swaggerhub.com/apis-docs/fbwldbs93/nike/1.0.0#/)
 
-## 주요 사용 기술
 
-1. 프론트엔드
 
-- React (create-react-app으로 구현되었습니다.)
-- React Bootstrap
-- axios
+## 팀원
 
-2. 백엔드
+| 1팀 팀장/프론트 | 프론트 | 백엔드 팀장 | 백엔드 |
+| --- | --- | --- | --- |
+| 김영준 | 지은혜 | 이지원 | 류지윤 |
 
-- Express (nodemon, babel-node로 실행됩니다.)
-- Mongodb, Mongoose
+## 개발 기간
 
-## 설치 방법
+- 2022/08/22 ~ 2022/09/02
 
-1. 프론트 엔드 서버 실행
+## 협업 툴
+<img src="https://img.shields.io/badge/Zira-blue?style=flat-square&logo=Zira&logoColor=blue"/>
+<img src="https://img.shields.io/badge/Postman-orange?style=flat-square&logo=Postman&logoColor=black"/>
 
-```bash
-cd front
-yarn
-yarn start
-```
+## 사용 언어
 
-2. 백엔드 서버 실행
+- 프론트엔드 <br/>
+    <img src="https://img.shields.io/badge/React-black?style=flat-square&logo=React&logoColor=61dbfb"/>
+    <img src="https://img.shields.io/badge/Bootstrap-563d7c?style=flat-square&logo=Bootstrap&logoColor=white"/>
 
-```bash
-back 폴더 내부 README 참고
-```
+- 백엔드 <br/>
+    <img src="https://img.shields.io/badge/ExpressJs-lightgrey?style=flat-square&logo=Express&logoColor=black"/>
+    <img src="https://img.shields.io/badge/MongoDB-lightgrey?style=flat-square&logo=MongoDB&logoColor=green"/>
+        
 
----
 
-본 프로젝트에서 제공하는 모든 코드 등의는 저작권법에 의해 보호받는 ㈜엘리스의 자산이며, 무단 사용 및 도용, 복제 및 배포를 금합니다.
-Copyright 2022 엘리스 Inc. All rights reserved.
+## 필수 MVP 구현
+
+- User [회원가입, 로그인]
+- Education [학력]
+- Project [프로젝트]
+- Award [수상이력]
+- Certificate [자격증]
+
+## 추가 기능
+
+**이메일/비밀번호 변경 기능**
+    <details>
+        <summary>자세히 보기</summary>
+    </details>
+
+**게시물 상태 변경 시, Toast 메세지 등장**
+    <details>
+        <summary>자세히 보기</summary>
+    </details>
+
+**유효하지 않은 페이지 접근 시, Redirect**
+    <details>
+        <summary>자세히 보기</summary>
+    </details>
+
+**로딩페이지 구현**
+    <details>
+        <summary>자세히 보기</summary> 
+        ![loading](https://user-images.githubusercontent.com/60812240/188062554-79e9c162-d75d-471c-9ee0-b642aa45d220.gif)
+    </details>
+
+**유저 프로링 사진 변경 기능**
+    <details>
+        <summary>자세히 보기</summary>
+    </details>
+
+
+
