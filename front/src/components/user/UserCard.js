@@ -45,7 +45,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             <Card.Img
               style={{ width: "10rem", height: "8rem" }}
               className="mb-3"
-              // src={<=========유저가 이미지 등록 시, 여기에 소스 들어와야 함=============>}
+              src={imgSrc}
               alt="custom image"
             />
           )}

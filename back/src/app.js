@@ -18,6 +18,8 @@ app.use(cors());
 // express.urlencoded: 주로 Form submit 에 의해 만들어지는 URL-Encoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// 'LocalFile'안에 데이터(정적 파일)들을 웹브라우저의 요청에 따라 서비스를 제공
+app.use("/LocalFile", express.static("LocalFile"));
 
 // 기본 페이지
 app.get("/", (req, res) => {
