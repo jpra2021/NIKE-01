@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { TYPES, overlapCheck } from "../../util/util";
 import { NOTICE_TYPES, notice } from "../../notice/notice";
@@ -54,6 +54,12 @@ function EducationForm({ educations, index, handler, type, handleForm }) {
     }
 
     if (degree === "") {
+      notice(NOTICE_TYPES.warn, "입력");
+
+      return;
+    }
+
+    if (overlapCheck(educations, school)) {
       notice(NOTICE_TYPES.warn, "입력");
 
       return;

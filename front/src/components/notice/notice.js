@@ -1,5 +1,4 @@
-import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 export const NOTICE_TYPES = {
   success: "SUCCESS",
@@ -34,6 +33,18 @@ export const notice = (type, target) => {
       });
 
       break;
+    }
+
+    default: {
+      toast.error(`토스트 사용에 실패했어요!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: 0,
+      });
     }
   }
 };

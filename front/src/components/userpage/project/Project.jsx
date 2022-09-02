@@ -1,5 +1,5 @@
 import { useState, useReducer, useMemo, useEffect } from "react";
-import { Card, Row, Col, Button, Accordion } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
 import ProjectForm from "./ProjectForm";
 import ProjectInfo from "./ProjectInfo";
 import projectsReducer from "./projectsReducer";
@@ -17,7 +17,7 @@ const Project = ({ initialData, isEditable }) => {
 
   useEffect(() => {
     handler.init(initialData);
-  }, [initialData]);
+  }, []);
 
   const projectList = useMemo(() => {
     return projects.map((_, idx) => (

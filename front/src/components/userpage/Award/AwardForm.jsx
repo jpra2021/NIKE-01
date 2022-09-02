@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { TYPES, overlapCheck } from "../../util/util";
 import { NOTICE_TYPES, notice } from "../../notice/notice";
@@ -11,7 +11,7 @@ function AwardForm({ awards, index, handler, type, handleForm }) {
     if (type === TYPES.edit) {
       handler.load(index, setTitle, setDescription);
     }
-  }, []);
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +28,6 @@ function AwardForm({ awards, index, handler, type, handleForm }) {
       return;
     }
 
-    console.log(awards, title);
     if (overlapCheck(awards, title)) {
       notice(NOTICE_TYPES.warn, "입력");
 

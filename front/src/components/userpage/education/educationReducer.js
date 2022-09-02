@@ -1,4 +1,4 @@
-import { TYPES, overlapCheck } from "../../util/util";
+import { TYPES } from "../../util/util";
 import { NOTICE_TYPES, notice } from "../../notice/notice";
 
 /*
