@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { useNavigate } from "react-router-dom";
+import { NOTICE_TYPES, notice } from "../notice/notice";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
   //useState로 name 상태를 생성함.
@@ -43,6 +44,8 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
     // isEditing을 false로 세팅함.
     setIsEditing(false);
+
+    notice(NOTICE_TYPES.success, "편집");
   };
 
   const redirectToUserInfo = () => {
@@ -58,7 +61,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
       preview: imgPreview,
       data: imgFile,
     });
-    console.log(imgPreview, imgFile);
+    // console.log(imgPreview, imgFile);
   };
 
   return (
