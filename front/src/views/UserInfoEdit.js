@@ -76,7 +76,7 @@ function UserInfoChange() {
         });
       }
 
-      notice(NOTICE_TYPES.warn, "변경");
+      notice(NOTICE_TYPES.success, "변경");
 
       navigate("/");
       return;
