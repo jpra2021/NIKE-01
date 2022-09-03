@@ -59,7 +59,10 @@ userAuthRouter.get(
     try {
       // 전체 사용자 목록을 얻음
       const users = await userAuthService.getUsers();
-      res.status(200).send(users);
+      //console.log(users);
+      const reversedUsers = [...users].reverse();
+      //console.log(reversedUsers);
+      res.status(200).send(reversedUsers);
     } catch (error) {
       next(error);
     }
