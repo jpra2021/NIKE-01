@@ -12,7 +12,7 @@ const Introduction = ({ initialData, isEditable }) => {
 
   useEffect(() => {
     handler.init(initialData);
-  });
+  }, []);
 
   const handleEditMode = () => {
     setEditMode((current) => !current);
