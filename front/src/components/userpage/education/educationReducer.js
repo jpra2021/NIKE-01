@@ -35,6 +35,8 @@ const educationReducer = () => {
           (education) => !(education.school === school)
         );
 
+        notice(NOTICE_TYPES.success, "삭제");
+
         return newState;
       }
 
