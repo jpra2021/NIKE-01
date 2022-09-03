@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import AwardForm from "./AwardForm";
 import { TYPES } from "../../util/util";
-
+//edit
 function AwardInfo({ awards, index, handler, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
   const { award_id, title, description } = awards[index];
@@ -32,7 +32,7 @@ function AwardInfo({ awards, index, handler, isEditable }) {
           <span className="text-muted">{description}</span>
         </Col>
         <Col className="col-lg-1">
-          {isEditable &&
+          {isEditable && (
             <>
               <Button
                 size="sm"
@@ -48,9 +48,9 @@ function AwardInfo({ awards, index, handler, isEditable }) {
                 onClick={(e) => handler.remove(award_id, title)}
               >
                 삭제
-              </Button>  
+              </Button>
             </>
-          }
+          )}
         </Col>
       </Row>
     </Card.Text>
