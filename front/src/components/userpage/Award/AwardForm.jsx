@@ -11,7 +11,7 @@ function AwardForm({ awards, index, handler, type, handleForm }) {
     if (type === TYPES.edit) {
       handler.load(index, setTitle, setDescription);
     }
-  });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
